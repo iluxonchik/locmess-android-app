@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pt.ulisboa.tecnico.cmov.locmess.SignUpActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="Username"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        style="@style/MyEditTextStyle"
+        android:layout_width="380dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textView1"
+        android:inputType="text"
+        android:text=""
+        tools:layout_editor_absoluteX="15dp"
+        tools:layout_editor_absoluteY="77dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextLogUser"
+        android:text="PassWord"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="128dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextLogUser"
+        android:text="Re-Enter Pasword"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="233dp" />
+
+    <EditText
+        android:id="@+id/editText2"
+        style="@style/MyEditTextStyle"
+        android:layout_width="380dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textView2"
+        android:inputType="text"
+        android:text=""
+        tools:layout_editor_absoluteX="15dp"
+        tools:layout_editor_absoluteY="289dp" />
+
+    <EditText
+        android:id="@+id/editText3"
+        style="@style/MyEditTextStyle"
+        android:layout_width="380dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textView2"
+        android:inputType="text"
+        android:text=""
+        tools:layout_editor_absoluteX="15dp"
+        tools:layout_editor_absoluteY="182dp" />
+
+    <Button
+        android:id="@+id/buttonSignup"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/buttonLogin"
+        android:text="Signup"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="421dp" />
+</android.support.constraint.ConstraintLayout>
