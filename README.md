@@ -1,7 +1,7 @@
 # CMU
 LOCMESS
 
-# Developed by group 10
+# Developed by group ??
 * 78134 - Illya Gerasymchuk
-* 79039 - Diogo Silva
+* 79019 - Valentyn Hulevych
 * 87785 - Roberto Ponte
