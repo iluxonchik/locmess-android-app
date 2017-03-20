@@ -21,7 +21,8 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:text="Messages"
         android:layout_marginTop="60dp"
-        android:id="@+id/buttonMessagesMenu" />
+        android:id="@+id/buttonMessagesMenu"
+        android:onClick="messages"/>
 
     <Button
         android:layout_width="350dp"
@@ -31,7 +32,8 @@
         android:text="Locations"
         android:layout_marginTop="25dp"
         android:id="@+id/buttonLocationsMenu"
-        android:layout_below="@+id/buttonMessagesMenu" />
+        android:layout_below="@+id/buttonMessagesMenu"
+        android:onClick="locations"/>
 
     <Button
         android:layout_width="350dp"
@@ -41,6 +43,7 @@
         android:text="Profile"
         android:layout_marginTop="25dp"
         android:id="@+id/buttonProfileMenu"
-        android:layout_below="@+id/buttonLocationsMenu" />
+        android:layout_below="@+id/buttonLocationsMenu"
+        android:onClick="profile"/>
 
 </RelativeLayout>
