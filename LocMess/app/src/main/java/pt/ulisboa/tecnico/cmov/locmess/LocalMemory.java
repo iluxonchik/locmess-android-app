@@ -12,6 +12,7 @@ public class LocalMemory {
 
     private static LocalMemory instance;
     private List<String> keys = new ArrayList<>();
+    private List<Location> locations = new ArrayList<>();
 
     private String loggedUserMail;
     private String loggedUserPassword;
@@ -76,6 +77,30 @@ public class LocalMemory {
         for(int i=0;i<keys.size();i++){
             if(keys.get(i).equals(oldKey))
                 keys.set(i,newKey);
+        }
+    }
+
+    public List<Location> getLocations() {
+        return locations;
+    }
+
+    public void addLocation(Location l){
+        for(int i=0;i<locations.size();i++){
+            if(locations.get(i).getName().equals(l.getName()))
+                return;
+        }
+        locations.add(l);
+    }
+
+    public void loadLocations(List<Location> l){
+        locations=l;
+    }
+
+
+    public void removeLocation(String name){
+        for(int i=0;i<locations.size();i++){
+            if(locations.get(i).equals(name))
+                locations.remove(i);
         }
     }
 

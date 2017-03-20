@@ -23,6 +23,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void locations(View v) {
-
+        Intent intent = new Intent(this, MainLocationsActivity.class);
+        startActivity(intent);
     }
 }

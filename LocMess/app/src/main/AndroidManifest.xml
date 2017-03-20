@@ -21,7 +21,12 @@
             android:name=".MainProfileActivity"
             android:label="@string/title_activity_main_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ViewKeyActivity"></activity>
+        <activity android:name=".ViewKeyActivity" />
+        <activity
+            android:name=".MainLocationsActivity"
+            android:label="@string/title_activity_main_locations"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ViewLocationActivity"></activity>
     </application>
 
 </manifest>

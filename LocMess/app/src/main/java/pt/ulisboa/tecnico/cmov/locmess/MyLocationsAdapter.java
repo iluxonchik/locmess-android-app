@@ -1,9 +1,5 @@
 package pt.ulisboa.tecnico.cmov.locmess;
 
-/**
- * Created by Valentyn on 20-03-2017.
- */
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -17,13 +13,17 @@ import android.widget.ListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyProfileAdapter extends BaseAdapter implements ListAdapter {
+/**
+ * Created by Valentyn on 20-03-2017.
+ */
+
+public class MyLocationsAdapter extends BaseAdapter implements ListAdapter {
     private List<String> list = new ArrayList<String>();
     private Context context;
 
 
 
-    public MyProfileAdapter(List<String> list, Context context) {
+    public MyLocationsAdapter(List<String> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -62,13 +62,10 @@ public class MyProfileAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
 
-                Intent myIntent = new Intent(context, ViewKeyActivity.class);
-                String[] element = elementBtn.getText().toString().split(":");
-                String key = element[0];
-                String value = element[1];
+                Intent myIntent = new Intent(context, ViewLocationActivity.class);
+                String location = elementBtn.getText().toString();
 
-                myIntent.putExtra("KEY", key);
-                myIntent.putExtra("VALUE", value);
+                myIntent.putExtra("LOCATION", location);
 
                 context.startActivity(myIntent);
 
@@ -79,8 +76,8 @@ public class MyProfileAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
 
-                LocalMemory.getInstance().removeKey(list.get(position));
-                Intent myIntent = new Intent(context, MainProfileActivity.class);
+                LocalMemory.getInstance().removeLocation(list.get(position));
+                Intent myIntent = new Intent(context, MainLocationsActivity.class);
                 context.startActivity(myIntent);
                 Activity a = (Activity) context;
                 a.finish();
@@ -91,3 +88,4 @@ public class MyProfileAdapter extends BaseAdapter implements ListAdapter {
         return view;
     }
 }
+
