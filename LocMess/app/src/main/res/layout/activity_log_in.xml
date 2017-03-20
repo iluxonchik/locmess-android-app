@@ -48,19 +48,23 @@
     <Button
         android:layout_width="350dp"
         android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
         style="@style/Widget.AppCompat.Button.Colored"
         android:text="Login"
         android:layout_marginTop="25dp"
         android:id="@+id/buttonLogin"
-        android:layout_below="@+id/editTextLogPass" />
+        android:layout_below="@+id/editTextLogPass"
+        android:onClick="logIn"/>
 
     <Button
         android:layout_width="350dp"
         android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
         style="@style/Widget.AppCompat.Button.Colored"
         android:text="Register"
         android:layout_marginTop="10dp"
         android:id="@+id/buttonRegister"
-        android:layout_below="@+id/buttonLogin" />
+        android:layout_below="@+id/buttonLogin"
+        android:onClick="register" />
 
 </RelativeLayout>

@@ -1,78 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_sign_up"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="60dp"
+    android:paddingRight="60dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/background"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     tools:context="pt.ulisboa.tecnico.cmov.locmess.SignUpActivity">
 
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:text="Username"
-        tools:layout_editor_absoluteY="16dp"
-        tools:layout_editor_absoluteX="16dp" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:id="@+id/textView3"/>
 
     <EditText
-        android:id="@+id/editTextUsername"
-        style="@style/MyEditTextStyle"
-        android:layout_width="380dp"
-        android:layout_height="30dp"
-        android:layout_below="@+id/textView1"
         android:inputType="text"
         android:text=""
-        tools:layout_editor_absoluteX="15dp"
-        tools:layout_editor_absoluteY="77dp" />
+        android:layout_marginTop="15dp"
+        android:id="@+id/editTextRegisterUser"
+        android:layout_below="@+id/textView3"
+        style="@style/MyEditTextStyle" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextLogUser"
-        android:text="PassWord"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="128dp" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="PassWord"
+    android:layout_below="@+id/editTextRegisterUser"
+    android:layout_marginTop="30dp"
+    android:id="@+id/textView4"/>
+
+    <EditText
+        android:inputType="text"
+        android:text=""
+        android:layout_marginTop="15dp"
+        android:id="@+id/editTextRegisterPass"
+        android:layout_below="@+id/textView4"
+        style="@style/MyEditTextStyle" />
 
     <TextView
-        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextLogUser"
-        android:text="Re-Enter Pasword"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="233dp" />
+        android:text="Confirm PassWord"
+        android:layout_below="@+id/editTextRegisterPass"
+        android:layout_marginTop="30dp"
+        android:id="@+id/textView5"/>
 
     <EditText
-        android:id="@+id/editText2"
-        style="@style/MyEditTextStyle"
-        android:layout_width="380dp"
-        android:layout_height="30dp"
-        android:layout_below="@+id/textView2"
         android:inputType="text"
         android:text=""
-        tools:layout_editor_absoluteX="15dp"
-        tools:layout_editor_absoluteY="289dp" />
-
-    <EditText
-        android:id="@+id/editText3"
-        style="@style/MyEditTextStyle"
-        android:layout_width="380dp"
-        android:layout_height="30dp"
-        android:layout_below="@+id/textView2"
-        android:inputType="text"
-        android:text=""
-        tools:layout_editor_absoluteX="15dp"
-        tools:layout_editor_absoluteY="182dp" />
+        android:layout_marginTop="15dp"
+        android:id="@+id/editTextConfirmRegisterPass"
+        android:layout_below="@+id/textView5"
+        style="@style/MyEditTextStyle" />
 
     <Button
-        android:id="@+id/buttonSignup"
-        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="350dp"
         android:layout_height="60dp"
-        android:layout_below="@+id/buttonLogin"
-        android:text="Signup"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="421dp" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_centerHorizontal="true"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Register"
+        android:layout_marginTop="25dp"
+        android:id="@+id/buttonRegisterAct"
+        android:layout_below="@+id/editTextConfirmRegisterPass"
+        android:onClick="logIn"/>
+
+
+</RelativeLayout>
