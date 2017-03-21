@@ -26,7 +26,8 @@
             android:name=".MainLocationsActivity"
             android:label="@string/title_activity_main_locations"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ViewLocationActivity"></activity>
+        <activity android:name=".ViewLocationActivity" />
+        <activity android:name=".AddLocationActivity"></activity>
     </application>
 
 </manifest>

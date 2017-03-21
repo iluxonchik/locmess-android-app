@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.cmov.locmess;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -35,8 +36,8 @@ public class MainLocationsActivity extends AppCompatActivity {
     }
 
     public void addLocation(View v) {
-        //Intent intent = new Intent(this, ViewLocationActivity.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, AddLocationActivity.class);
+        startActivity(intent);
     }
 
 }
