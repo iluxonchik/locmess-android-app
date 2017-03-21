@@ -80,9 +80,18 @@ public class LocalMemory {
         }
     }
 
+    public Location getLocation(String name) {
+        for(int i=0;i<locations.size();i++){
+            if(locations.get(i).getName().equals(name))
+                return locations.get(i);
+        }
+        return null;
+    }
+
     public List<Location> getLocations() {
         return locations;
     }
+
 
     public void addLocation(Location l){
         for(int i=0;i<locations.size();i++){
@@ -99,7 +108,7 @@ public class LocalMemory {
 
     public void removeLocation(String name){
         for(int i=0;i<locations.size();i++){
-            if(locations.get(i).equals(name))
+            if(locations.get(i).getName().equals(name))
                 locations.remove(i);
         }
     }

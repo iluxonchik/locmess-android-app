@@ -1,20 +1,118 @@
 package pt.ulisboa.tecnico.cmov.locmess;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddLocationActivity extends AppCompatActivity {
+
+    private Context context;
+    private List<String> foundDevices = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
+
+        context=this;
+
+        Spinner spinner = (Spinner)findViewById(R.id.spinnerType);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String type = adapterView.getSelectedItem().toString();
+
+                EditText latitudeE = (EditText) findViewById(R.id.editTextLatitude);
+                EditText longitudeE = (EditText) findViewById(R.id.editTextLongitude);
+                EditText radiousE = (EditText) findViewById(R.id.editTextRadious);
+                TextView tv12 = (TextView) findViewById(R.id.textView12);
+                TextView tv13 = (TextView) findViewById(R.id.textView13);
+                TextView tv14 = (TextView) findViewById(R.id.textView14);
+                TextView tv19 = (TextView) findViewById(R.id.textView19);
+                CheckBox checkbox = (CheckBox)findViewById(R.id.checkboxUseCurrentLocation);
+                ListView listV = (ListView) findViewById(R.id.listViewFoundDevices);
+
+
+                if(type.equals("GPS")) {
+                    latitudeE.setVisibility(View.VISIBLE);
+                    longitudeE.setVisibility(View.VISIBLE);
+                    radiousE.setVisibility(View.VISIBLE);
+                    tv12.setVisibility(View.VISIBLE);
+                    tv13.setVisibility(View.VISIBLE);
+                    tv14.setVisibility(View.VISIBLE);
+                    checkbox.setVisibility(View.VISIBLE);
+                    tv19.setVisibility(View.INVISIBLE);
+                    listV.setVisibility(View.INVISIBLE);
+
+                }
+                else {
+                    latitudeE.setVisibility(View.INVISIBLE);
+                    longitudeE.setVisibility(View.INVISIBLE);
+                    radiousE.setVisibility(View.INVISIBLE);
+                    tv12.setVisibility(View.INVISIBLE);
+                    tv13.setVisibility(View.INVISIBLE);
+                    tv14.setVisibility(View.INVISIBLE);
+                    checkbox.setVisibility(View.INVISIBLE);
+                    tv19.setVisibility(View.VISIBLE);
+                    listV.setVisibility(View.VISIBLE);
+
+                    foundDevices.add("Museu Prado");
+                    foundDevices.add("Tasca do Zé");
+                    foundDevices.add("IST");
+
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1,foundDevices);
+                    listV.setAdapter(arrayAdapter);
+
+                }
+
+
+            }
+
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                return;
+            }
+        });
     }
 
     public void addLocation(View v) {
+        String name = ((EditText) findViewById(R.id.editTextLocationName)).getText().toString();
+        String latitude = ((EditText) findViewById(R.id.editTextLatitude)).getText().toString();
+        String longitude = ((EditText) findViewById(R.id.editTextLongitude)).getText().toString();
+        String radious = ((EditText) findViewById(R.id.editTextRadious)).getText().toString();
+        Spinner spinner = (Spinner)findViewById(R.id.spinnerType);
+
+        if(spinner.getSelectedItem().toString().equals("GPS"))
+             LocalMemory.getInstance().addLocation(new GpsLocation(name,Double.parseDouble(latitude),Double.parseDouble(longitude),Double.parseDouble(radious)));
+        else
+            LocalMemory.getInstance().addLocation(new WifiLocation(name,foundDevices));
+
         Intent intent = new Intent(this, MainLocationsActivity.class);
         startActivity(intent);
     }
+
+    public void useCurrentLocation(View v) {
+        double lat = 0;
+        double longi = 0;
+        double rad = 10;
+        EditText latitudeE = (EditText) findViewById(R.id.editTextLatitude);
+        EditText longitudeE = (EditText) findViewById(R.id.editTextLongitude);
+        EditText radiousE = (EditText) findViewById(R.id.editTextRadious);
+        latitudeE.setText(""+lat);
+        longitudeE.setText(""+longi);
+        radiousE.setText(""+rad);
+    }
+
 }

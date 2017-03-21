@@ -5,26 +5,26 @@ package pt.ulisboa.tecnico.cmov.locmess;
  */
 
 public class GpsLocation extends Location {
-    private long latitude;
-    private long longitude;
-    private long radious;
+    private double latitude;
+    private double longitude;
+    private double radious;
 
-    public GpsLocation(String name,long lat,long longi,long rad){
+    public GpsLocation(String name,double lat,double longi,double rad){
         super(name);
         latitude=lat;
         longitude=longi;
         radious=rad;
     }
 
-    public long getLatitude(){
+    public double getLatitude(){
         return latitude;
     }
 
-    public long getLongitude(){
+    public double getLongitude(){
         return longitude;
     }
 
-    public long getRadious(){
+    public double getRadious(){
         return radious;
     }
 }

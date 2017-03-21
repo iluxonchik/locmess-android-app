@@ -48,23 +48,20 @@
         android:entries="@array/array_types"
         android:background="#A9E2F3" />
 
-    <Button
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        style="@style/Widget.AppCompat.Button.Colored"
+    <CheckBox android:id="@+id/checkboxUseCurrentLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Use Current Location"
         android:layout_marginTop="30dp"
-        android:id="@+id/buttonUseGpsLocation"
         android:layout_below="@+id/spinnerType"
-        android:onClick="useGPSLocation"/>
+        android:onClick="useCurrentLocation"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Latitude"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/buttonUseGpsLocation"
+        android:layout_below="@+id/checkboxUseCurrentLocation"
         android:id="@+id/textView12"/>
 
     <EditText
@@ -118,6 +115,23 @@
         android:id="@+id/buttonAddLocation"
         android:layout_below="@+id/editTextRadious"
         android:onClick="addLocation"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List of Points"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/spinnerType"
+        android:id="@+id/textView19"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/textView19"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="15dp"
+        android:id="@+id/listViewFoundDevices"
+        android:clickable="true" />
 
 
 </RelativeLayout>

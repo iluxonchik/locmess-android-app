@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.cmov.locmess;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +9,7 @@ import java.util.List;
 public class WifiLocation extends Location {
     private List<String> points;
 
-    public WifiLocation(String name, ArrayList<String> poi){
+    public WifiLocation(String name, List<String> poi){
         super(name);
         points=poi;
     }
