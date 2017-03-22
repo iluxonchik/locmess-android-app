@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_log_in"
     android:layout_width="match_parent"
@@ -13,58 +14,106 @@
     android:focusableInTouchMode="true"
     tools:context="pt.ulisboa.tecnico.cmov.locmess.LogInActivity">
 
+    <!--
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username"
         android:layout_alignParentTop="true"
         android:layout_marginTop="60dp"
-        android:id="@+id/textView1"/>
+        android:id="@+id/textView1" />
+     -->
 
     <EditText
+        android:id="@+id/etUser"
+        style="@style/MyEditTextStyle"
+        android:drawableLeft="@drawable/ic_user"
+        android:hint="Username"
         android:inputType="text"
-        android:text=""
-        android:layout_marginTop="15dp"
-        android:id="@+id/editTextLogUser"
-        android:layout_below="@+id/textView1"
-        style="@style/MyEditTextStyle" />
+        android:layout_marginTop="51dp"
+        android:layout_below="@+id/imageView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
+    <!--
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PassWord"
-        android:layout_below="@+id/editTextLogUser"
+        android:id="@+id/textView2"
+        android:layout_above="@+id/editTextLogPass"
+        android:layout_alignLeft="@+id/editTextLogPass"
+        android:layout_alignStart="@+id/editTextLogPass"
+        android:layout_marginBottom="54dp" />
+     -->
+
+    <Button
+        android:id="@+id/buttonLogin"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="42dp"
+        android:onClick="logIn"
+        android:text="Login"
+        android:layout_below="@+id/etPassword"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/buttonRegister"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="19dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:onClick="register"
+        android:text="Register"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="false"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_locmess"
         android:layout_marginTop="30dp"
-        android:id="@+id/textView2"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
-        android:inputType="text"
-        android:text=""
-        android:layout_marginTop="15dp"
-        android:id="@+id/editTextLogPass"
-        android:layout_below="@+id/textView2"
-        style="@style/MyEditTextStyle" />
+        android:id="@+id/etPassword"
+        style="@style/MyEditTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="23dp"
+        android:drawableLeft="@drawable/ic_password"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_below="@+id/etUser"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-    <Button
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:text="Login"
-        android:layout_marginTop="25dp"
-        android:id="@+id/buttonLogin"
-        android:layout_below="@+id/editTextLogPass"
-        android:onClick="logIn"/>
-
-    <Button
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:text="Register"
-        android:layout_marginTop="10dp"
-        android:id="@+id/buttonRegister"
+    <EditText
+        android:id="@+id/editText5"
+        style="@android:style/Widget.Material.GridView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/buttonLogin"
-        android:onClick="register" />
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="No account yet? Create one"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
 
 </RelativeLayout>

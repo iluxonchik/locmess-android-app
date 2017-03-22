@@ -70,8 +70,8 @@ public class ViewLocationActivity extends AppCompatActivity {
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1,wifiL.getPoints());
             lv.setAdapter(arrayAdapter);
-        }
 
+        }
     }
 
     public void postMessage(View v) {
