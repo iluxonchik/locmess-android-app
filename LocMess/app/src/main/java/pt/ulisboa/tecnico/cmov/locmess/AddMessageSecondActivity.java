@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -35,6 +37,16 @@ public class AddMessageSecondActivity extends AppCompatActivity {
 
         DatePicker dp = (DatePicker) findViewById(datePicker);
         dp.setEnabled(false);
+
+        RelativeLayout linear=(RelativeLayout) findViewById(R.id.layoutProfilePreferences);
+
+        List<String> keys = LocalMemory.getInstance().getKeys();
+        for(int i=0;i<keys.size();i++){
+            CheckBox checkBox = new CheckBox(context);
+            checkBox.setText(keys.get(i));
+            linear.addView(checkBox);
+        }
+
     }
 
     public void useTimeLimit(View v) {
@@ -71,7 +83,18 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         if(ck.isChecked())
             date= new MyDate(day,month,year);
 
-        Message msg = new Message(0,title,LocalMemory.getInstance().getLoggedUserMail(),location,text,centralized,black_list,keys,date);
+        ViewGroup vg = (ViewGroup)v.getParent();
+        for(int i=0;i<vg.getChildCount();i++) {
+            View vchi = vg.getChildAt(i);
+
+            if (vchi instanceof CheckBox) {
+                if(((CheckBox) vchi).isChecked())
+                    keys.add(((CheckBox) vchi).getText().toString());
+
+            }
+        }
+
+            Message msg = new Message(0,title,LocalMemory.getInstance().getLoggedUserMail(),location,text,centralized,black_list,keys,date);
 
         LocalMemory.getInstance().addMessage(msg);
         Intent intent = new Intent(this, MainMessagesActivity.class);

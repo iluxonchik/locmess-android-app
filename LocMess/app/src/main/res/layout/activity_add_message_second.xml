@@ -64,21 +64,26 @@
         android:layout_marginTop="10dp"
         android:id="@+id/textView27"/>
 
-    <ListView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_below="@+id/textView27"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="5dp"
-        android:id="@+id/listViewProfilePreferences"
-        android:clickable="true" />
+        android:id="@+id/scrollPreferences">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/layoutProfilePreferences"
+            android:clickable="true" />
+    </ScrollView>
 
     <CheckBox android:id="@+id/checkboxUseTimeLimit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Use Time Limit"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/listViewProfilePreferences"
+        android:layout_below="@+id/scrollPreferences"
         android:onClick="useTimeLimit"/>
 
     <DatePicker
