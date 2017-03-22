@@ -13,10 +13,12 @@ public class LocalMemory {
     private static LocalMemory instance;
     private List<String> keys = new ArrayList<>();
     private List<Location> locations = new ArrayList<>();
+    private List<Message> messages = new ArrayList<>();
 
-    private String loggedUserMail;
-    private String loggedUserPassword;
-    private String sessionKey;
+
+    private String loggedUserMail="";
+    private String loggedUserPassword="";
+    private String sessionKey="";
 
     public LocalMemory(){
 
@@ -79,6 +81,40 @@ public class LocalMemory {
                 keys.set(i,newKey);
         }
     }
+
+    public Message getMessage(int id) {
+        for(int i=0;i<messages.size();i++){
+            if(messages.get(i).getId()==id)
+                return messages.get(i);
+        }
+        return null;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+
+    public void addMessage(Message m){
+        for(int i=0;i<messages.size();i++){
+            if(messages.get(i).getId()==m.getId())
+                return;
+        }
+        messages.add(m);
+    }
+
+    public void loadMessages(List<Message> l){
+        messages=l;
+    }
+
+
+    public void removeMessage(int id){
+        for(int i=0;i<messages.size();i++){
+            if(messages.get(i).getId()==id)
+                messages.remove(i);
+        }
+    }
+
 
     public Location getLocation(String name) {
         for(int i=0;i<locations.size();i++){

@@ -2,10 +2,22 @@
     <string name="app_name">LocMess</string>
     <string name="title_activity_main_profile">MainProfileActivity</string>
     <string name="title_activity_main_locations">MainLocationsActivity</string>
+    <string name="title_activity_main_messages">MainMessagesActivity</string>
+
 
     <string-array name="array_types">
         <item>GPS</item>
         <item>Wi-fi</item>
+    </string-array>
+
+    <string-array name="array_delivery_mode">
+        <item>Centralized</item>
+        <item>Descentralized</item>
+    </string-array>
+
+    <string-array name="array_policy_type">
+        <item>Black list</item>
+        <item>White list</item>
     </string-array>
 
 </resources>

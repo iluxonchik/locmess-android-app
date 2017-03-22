@@ -19,7 +19,8 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void messages(View v) {
-
+        Intent intent = new Intent(this, MainMessagesActivity.class);
+        startActivity(intent);
     }
 
     public void locations(View v) {

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_message_second"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="60dp"
+    android:paddingRight="60dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/background"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    tools:context="pt.ulisboa.tecnico.cmov.locmess.AddMessageSecondActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delivery Mode"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView25"/>
+
+    <Spinner
+        android:id="@+id/spinnerDeliveryMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView25"
+        android:layout_marginTop="5dp"
+        android:addStatesFromChildren="false"
+        android:textSize="20sp"
+        android:entries="@array/array_delivery_mode"
+        android:background="#A9E2F3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Policy Type"
+        android:layout_below="@+id/spinnerDeliveryMode"
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView26"/>
+
+    <Spinner
+        android:id="@+id/spinnerPolicyType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView26"
+        android:layout_marginTop="5dp"
+        android:addStatesFromChildren="false"
+        android:textSize="20sp"
+        android:entries="@array/array_policy_type"
+        android:background="#A9E2F3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile Preferences:"
+        android:layout_below="@+id/spinnerPolicyType"
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView27"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/textView27"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="5dp"
+        android:id="@+id/listViewProfilePreferences"
+        android:clickable="true" />
+
+    <CheckBox android:id="@+id/checkboxUseTimeLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use Time Limit"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/listViewProfilePreferences"
+        android:onClick="useTimeLimit"/>
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/checkboxUseTimeLimit"
+        android:id="@+id/datePicker"
+        android:layout_centerHorizontal="true"
+        style="@style/date_picker_theme" />
+
+    <Button
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="SEND"
+        android:layout_marginTop="15dp"
+        android:id="@+id/buttonSendMessage"
+        android:layout_below="@+id/datePicker"
+        android:onClick="sendMessage"/>
+
+</RelativeLayout>
+
+    </ScrollView>
+
+

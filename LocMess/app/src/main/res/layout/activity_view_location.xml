@@ -80,6 +80,17 @@
         android:textColor="#000000"
         android:id="@+id/textViewLRadious"/>
 
+    <Button
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Post a Message"
+        android:layout_marginTop="30dp"
+        android:id="@+id/buttonPostMessage"
+        android:layout_below="@+id/textView18"
+        android:onClick="postMessage"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

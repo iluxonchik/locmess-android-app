@@ -27,7 +27,14 @@
             android:label="@string/title_activity_main_locations"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ViewLocationActivity" />
-        <activity android:name=".AddLocationActivity"></activity>
+        <activity android:name=".AddLocationActivity" />
+        <activity
+            android:name=".MainMessagesActivity"
+            android:label="@string/title_activity_main_locations"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddMessageActivity" />
+        <activity android:name=".ViewMessageActivity" />
+        <activity android:name=".AddMessageSecondActivity"></activity>
     </application>
 
 </manifest>
