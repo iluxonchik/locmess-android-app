@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.cmov.locmess;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -76,11 +75,8 @@ public class MyLocationsAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
 
-                LocalMemory.getInstance().removeLocation(list.get(position));
-                Intent myIntent = new Intent(context, MainLocationsActivity.class);
-                context.startActivity(myIntent);
-                Activity a = (Activity) context;
-                a.finish();
+                Manager m = LocalMemory.getInstance().getManager();
+                m.removeLocation(context,list.get(position));
 
             }
         });

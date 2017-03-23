@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.cmov.locmess;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -78,11 +77,9 @@ public class MyMessagesAdapter extends BaseAdapter implements ListAdapter {
             public void onClick(View v) {
 
                 String[] splited = list.get(position).toString().split(":");
-                LocalMemory.getInstance().removeMessage(Integer.parseInt(splited[0]));
-                Intent myIntent = new Intent(context, MainMessagesActivity.class);
-                context.startActivity(myIntent);
-                Activity a = (Activity) context;
-                a.finish();
+
+                Manager m = LocalMemory.getInstance().getManager();
+                m.removeMessage(context,Integer.parseInt(splited[0]));
 
             }
         });

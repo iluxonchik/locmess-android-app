@@ -44,6 +44,7 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         for(int i=0;i<keys.size();i++){
             CheckBox checkBox = new CheckBox(context);
             checkBox.setText(keys.get(i));
+            //Alinhar as chekboxes para não estarem sobrepostas
             linear.addView(checkBox);
         }
 
@@ -94,11 +95,9 @@ public class AddMessageSecondActivity extends AppCompatActivity {
             }
         }
 
-            Message msg = new Message(0,title,LocalMemory.getInstance().getLoggedUserMail(),location,text,centralized,black_list,keys,date);
+        Manager m = LocalMemory.getInstance().getManager();
+        m.sendMessage(context,0,title,LocalMemory.getInstance().getLoggedUserMail(),location,text,centralized,black_list,keys,date);
 
-        LocalMemory.getInstance().addMessage(msg);
-        Intent intent = new Intent(this, MainMessagesActivity.class);
-        startActivity(intent);
     }
 
 }

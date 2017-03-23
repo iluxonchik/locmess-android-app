@@ -1,7 +1,6 @@
 package pt.ulisboa.tecnico.cmov.locmess;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -94,13 +93,13 @@ public class AddLocationActivity extends AppCompatActivity {
         String radious = ((EditText) findViewById(R.id.editTextRadious)).getText().toString();
         Spinner spinner = (Spinner)findViewById(R.id.spinnerType);
 
-        if(spinner.getSelectedItem().toString().equals("GPS"))
-             LocalMemory.getInstance().addLocation(new GpsLocation(name,Double.parseDouble(latitude),Double.parseDouble(longitude),Double.parseDouble(radious)));
-        else
-            LocalMemory.getInstance().addLocation(new WifiLocation(name,foundDevices));
+        Manager m = LocalMemory.getInstance().getManager();
 
-        Intent intent = new Intent(this, MainLocationsActivity.class);
-        startActivity(intent);
+        if(spinner.getSelectedItem().toString().equals("GPS"))
+            m.addGpsLocation(context,name, latitude, longitude, radious);
+        else
+            m.addWifiLocation(context, name, foundDevices);
+
     }
 
     public void useCurrentLocation(View v) {

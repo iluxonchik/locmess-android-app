@@ -11,6 +11,7 @@ import java.util.List;
 public class LocalMemory {
 
     private static LocalMemory instance;
+    private Manager manager = new Manager();
     private List<String> keys = new ArrayList<>();
     private List<Location> locations = new ArrayList<>();
     private List<Message> messages = new ArrayList<>();
@@ -149,6 +150,9 @@ public class LocalMemory {
         }
     }
 
+    public Manager getManager(){
+        return manager;
+    }
 
 
     public static synchronized LocalMemory getInstance(){

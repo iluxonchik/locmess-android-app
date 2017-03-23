@@ -4,7 +4,6 @@ package pt.ulisboa.tecnico.cmov.locmess;
  * Created by Valentyn on 20-03-2017.
  */
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -79,11 +78,8 @@ public class MyProfileAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
 
-                LocalMemory.getInstance().removeKey(list.get(position));
-                Intent myIntent = new Intent(context, MainProfileActivity.class);
-                context.startActivity(myIntent);
-                Activity a = (Activity) context;
-                a.finish();
+                Manager m = LocalMemory.getInstance().getManager();
+                m.removeKey(context,list.get(position));
 
             }
         });
