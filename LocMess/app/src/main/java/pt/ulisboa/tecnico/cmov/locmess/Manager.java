@@ -3,8 +3,10 @@ package pt.ulisboa.tecnico.cmov.locmess;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -13,27 +15,20 @@ import java.util.List;
 
 public class Manager {
     public void login(Context context ,String mail,String pass){
-
-        Intent intent = new Intent(context, MainMenuActivity.class);
-        context.startActivity(intent);
-
         LocalMemory.getInstance().setLoggedUserMail(mail);
         LocalMemory.getInstance().setLoggedUserPass(pass);
     }
 
-    public void register(Context context, String mail, String pass, String confirm_pass){
-        if(mail.length()<5) {
-            Toast.makeText(context, "The mail must have at least 5 characters.", Toast.LENGTH_LONG).show();
-            return;
-        }
-        else if(pass.length()<6) {
+    public void register(Context context, String user, String pass, String confirm_pass){
+        if(pass.length()<6) {
             Toast.makeText(context, "The password must have at least 6 characters.", Toast.LENGTH_LONG).show();
             return;
         }
         else if(!confirm_pass.equals(pass)) {
-            Toast.makeText(context, "The passwords are different.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Password do not match.", Toast.LENGTH_LONG).show();
             return;
         }
+
 
         Intent intent = new Intent(context, MainMenuActivity.class);
         context.startActivity(intent);
