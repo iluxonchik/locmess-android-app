@@ -1,9 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="pt.ulisboa.tecnico.cmov.locmess.ViewMessageActivity">
 
-</android.support.constraint.ConstraintLayout>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_view_location"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="@color/background"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        tools:context="pt.ulisboa.tecnico.cmov.locmess.ViewMessageActivity">
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID:"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView28"/>
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_below="@+id/textView28"
+        android:layout_marginTop="5dp"
+        android:textColor="#000000"
+        android:id="@+id/textViewMId"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title:"
+            android:layout_below="@+id/textViewMId"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView29"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_below="@+id/textView29"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"
+            android:id="@+id/textViewMTitle"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autor:"
+            android:layout_below="@+id/textViewMTitle"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView30"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_below="@+id/textView30"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"
+            android:id="@+id/textViewMAutor"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location:"
+            android:layout_below="@+id/textViewMAutor"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView31"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_below="@+id/textView31"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"
+            android:id="@+id/textViewMLocation"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Text:"
+            android:layout_below="@+id/textViewMLocation"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView32"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_below="@+id/textView32"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"
+            android:id="@+id/textViewMText"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delivery Mode:"
+            android:layout_below="@+id/textViewMText"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView33"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_below="@+id/textView33"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"
+            android:id="@+id/textViewMDelivery"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Policy Type:"
+            android:layout_below="@+id/textViewMDelivery"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView34"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_below="@+id/textView34"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"
+            android:id="@+id/textViewMPolicy"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Keys:"
+            android:layout_below="@+id/textViewMPolicy"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView35"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@+id/textView35"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/listViewListPreferencesView"
+            android:clickable="true" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expiring Date:"
+            android:layout_below="@+id/listViewListPreferencesView"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView36"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_below="@+id/textView36"
+            android:layout_marginTop="5dp"
+            android:textColor="#000000"
+            android:id="@+id/textViewMDate"/>
+
+</RelativeLayout>
+
+</ScrollView>

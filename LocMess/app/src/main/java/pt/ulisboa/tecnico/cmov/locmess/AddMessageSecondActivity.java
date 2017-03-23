@@ -88,7 +88,7 @@ public class AddMessageSecondActivity extends AppCompatActivity {
             View vchi = vg.getChildAt(i);
 
             if (vchi instanceof CheckBox) {
-                if(((CheckBox) vchi).isChecked())
+                if(((CheckBox) vchi).isChecked() && !((CheckBox) vchi).getText().toString().equals("Use Time Limit") )
                     keys.add(((CheckBox) vchi).getText().toString());
 
             }
