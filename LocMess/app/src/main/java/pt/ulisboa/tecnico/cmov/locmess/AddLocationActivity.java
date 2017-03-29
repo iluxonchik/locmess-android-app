@@ -11,24 +11,27 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddLocationActivity extends AppCompatActivity {
+public class AddLocationActivity extends AppCompatActivity{
 
     private Context context;
     private List<String> foundDevices = new ArrayList<String>();
+    private GetGpsLocation getGpsLocation;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
+        context = this;
 
-        context=this;
+        getGpsLocation = new GetGpsLocation(context);
 
-        Spinner spinner = (Spinner)findViewById(R.id.spinnerType);
+        Spinner spinner = (Spinner) findViewById(R.id.spinnerType);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -41,11 +44,11 @@ public class AddLocationActivity extends AppCompatActivity {
                 TextView tv13 = (TextView) findViewById(R.id.textView13);
                 TextView tv14 = (TextView) findViewById(R.id.textView14);
                 TextView tv19 = (TextView) findViewById(R.id.textView19);
-                CheckBox checkbox = (CheckBox)findViewById(R.id.checkboxUseCurrentLocation);
+                CheckBox checkbox = (CheckBox) findViewById(R.id.checkboxUseCurrentLocation);
                 ListView listV = (ListView) findViewById(R.id.listViewFoundDevices);
 
 
-                if(type.equals("GPS")) {
+                if (type.equals("GPS")) {
                     latitudeE.setVisibility(View.VISIBLE);
                     longitudeE.setVisibility(View.VISIBLE);
                     radiousE.setVisibility(View.VISIBLE);
@@ -56,8 +59,7 @@ public class AddLocationActivity extends AppCompatActivity {
                     tv19.setVisibility(View.INVISIBLE);
                     listV.setVisibility(View.INVISIBLE);
 
-                }
-                else {
+                } else {
                     latitudeE.setVisibility(View.INVISIBLE);
                     longitudeE.setVisibility(View.INVISIBLE);
                     radiousE.setVisibility(View.INVISIBLE);
@@ -72,7 +74,7 @@ public class AddLocationActivity extends AppCompatActivity {
                     foundDevices.add("Tasca do Zé");
                     foundDevices.add("IST");
 
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1,foundDevices);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, foundDevices);
                     listV.setAdapter(arrayAdapter);
 
                 }
@@ -91,27 +93,24 @@ public class AddLocationActivity extends AppCompatActivity {
         String latitude = ((EditText) findViewById(R.id.editTextLatitude)).getText().toString();
         String longitude = ((EditText) findViewById(R.id.editTextLongitude)).getText().toString();
         String radious = ((EditText) findViewById(R.id.editTextRadious)).getText().toString();
-        Spinner spinner = (Spinner)findViewById(R.id.spinnerType);
+        Spinner spinner = (Spinner) findViewById(R.id.spinnerType);
 
         Manager m = LocalMemory.getInstance().getManager();
 
-        if(spinner.getSelectedItem().toString().equals("GPS"))
-            m.addGpsLocation(context,name, latitude, longitude, radious);
+        if (spinner.getSelectedItem().toString().equals("GPS"))
+            m.addGpsLocation(context, name, latitude, longitude, radious);
         else
             m.addWifiLocation(context, name, foundDevices);
 
     }
 
     public void useCurrentLocation(View v) {
-        double lat = 0;
-        double longi = 0;
-        double rad = 10;
+        double rad = 0;
         EditText latitudeE = (EditText) findViewById(R.id.editTextLatitude);
         EditText longitudeE = (EditText) findViewById(R.id.editTextLongitude);
         EditText radiousE = (EditText) findViewById(R.id.editTextRadious);
-        latitudeE.setText(""+lat);
-        longitudeE.setText(""+longi);
-        radiousE.setText(""+rad);
+        latitudeE.setText("" + getGpsLocation.getLatitude());
+        longitudeE.setText("" + getGpsLocation.getLongitude());
+        radiousE.setText("" + rad);
     }
-
 }

@@ -44,9 +44,8 @@
         android:layout_below="@+id/textView11"
         android:layout_marginTop="5dp"
         android:addStatesFromChildren="false"
-        android:textSize="20sp"
         android:entries="@array/array_types"
-        android:background="#A9E2F3" />
+        android:textSize="20sp" />
 
     <CheckBox android:id="@+id/checkboxUseCurrentLocation"
         android:layout_width="wrap_content"
