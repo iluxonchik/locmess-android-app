@@ -14,7 +14,14 @@ import java.util.List;
  */
 
 public class Manager {
-    public void login(Context context ,String mail,String pass){
+
+    //server variables
+
+    public Manager() {
+        //here start the connection to the server
+    }
+
+    public void login(Context context , String mail, String pass){
         LocalMemory.getInstance().setLoggedUserMail(mail);
         LocalMemory.getInstance().setLoggedUserPass(pass);
     }
@@ -28,16 +35,25 @@ public class Manager {
             Toast.makeText(context, "Password do not match.", Toast.LENGTH_LONG).show();
             return;
         }
+        ServerConnection sc = new ServerConnection(context);
+        sc.execute();
 
 
         Intent intent = new Intent(context, MainMenuActivity.class);
         context.startActivity(intent);
     }
 
-    public void addGpsLocation(Context context ,String name,String latitude, String longitude, String radious){
-        LocalMemory.getInstance().addLocation(new GpsLocation(name,Double.parseDouble(latitude),Double.parseDouble(longitude),Double.parseDouble(radious)));
-        Intent intent = new Intent(context, MainLocationsActivity.class);
-        context.startActivity(intent);
+    public boolean addGpsLocation(Context context, String name, String latitude, String longitude, String radius){
+        if(name.equals("") ) {
+            Toast.makeText(context, "Please insert a name", Toast.LENGTH_LONG).show();
+            return false;
+        } else if(radius.equals("0.0")){
+            Toast.makeText(context, "Please insert a radius", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        LocalMemory.getInstance().addLocation(new GpsLocation(name,Double.parseDouble(latitude),Double.parseDouble(longitude),Double.parseDouble(radius)));
+        return true;
+        // Send to the server a new locaiton
     }
 
     public void addWifiLocation(Context context , String name, List<String> foundDevices){

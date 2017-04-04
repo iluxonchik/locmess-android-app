@@ -102,11 +102,11 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_below="@+id/textView20"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="10dp"
         android:id="@+id/listViewListDevices"
-        android:clickable="true" />
+        android:clickable="true"
+        android:layout_alignTop="@+id/textViewLLatitude"
+        android:layout_toRightOf="@+id/textViewLLatitude"
+        android:layout_toEndOf="@+id/textViewLLatitude" />
 
 
 </RelativeLayout>

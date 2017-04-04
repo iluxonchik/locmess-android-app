@@ -24,8 +24,7 @@
         <activity android:name=".ViewKeyActivity" />
         <activity
             android:name=".MainLocationsActivity"
-            android:label="@string/title_activity_main_locations"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_main_locations"/>
         <activity android:name=".ViewLocationActivity" />
         <activity android:name=".AddLocationActivity" />
         <activity
@@ -39,6 +38,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-feature android:name="android.hardware.location.gps" />
 
 </manifest>

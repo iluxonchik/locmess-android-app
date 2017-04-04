@@ -14,8 +14,8 @@ import android.support.v4.app.ActivityCompat;
 
 public class GetGpsLocation implements LocationListener{
     Context context;
-    double latitude = 0;
-    double longitude = 0;
+    double latitude = 0.0;
+    double longitude = 0.0;
 
     public GetGpsLocation(Context context) {
         this.context = context;
@@ -49,9 +49,10 @@ public class GetGpsLocation implements LocationListener{
 
     @Override
     public void onLocationChanged(Location location) {
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-
+        if(location!=null){
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
     }
 
     @Override

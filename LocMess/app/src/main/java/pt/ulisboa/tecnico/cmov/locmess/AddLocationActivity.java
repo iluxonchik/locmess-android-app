@@ -1,9 +1,12 @@
 package pt.ulisboa.tecnico.cmov.locmess;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -29,7 +32,7 @@ public class AddLocationActivity extends AppCompatActivity{
         setContentView(R.layout.activity_add_location);
         context = this;
 
-        getGpsLocation = new GetGpsLocation(context);
+
 
         Spinner spinner = (Spinner) findViewById(R.id.spinnerType);
 
@@ -88,6 +91,16 @@ public class AddLocationActivity extends AppCompatActivity{
         });
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            Intent intent = new Intent(context, MainLocationsActivity.class);
+            finish();
+            context.startActivity(intent);
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     public void addLocation(View v) {
         String name = ((EditText) findViewById(R.id.editTextLocationName)).getText().toString();
         String latitude = ((EditText) findViewById(R.id.editTextLatitude)).getText().toString();
@@ -97,20 +110,34 @@ public class AddLocationActivity extends AppCompatActivity{
 
         Manager m = LocalMemory.getInstance().getManager();
 
-        if (spinner.getSelectedItem().toString().equals("GPS"))
-            m.addGpsLocation(context, name, latitude, longitude, radious);
-        else
+        if (spinner.getSelectedItem().toString().equals("GPS")) {
+            if(!m.addGpsLocation(context, name, latitude, longitude, radious)) {
+                Intent intent = new Intent(context, MainLocationsActivity.class);
+                finish();
+                context.startActivity(intent);
+            }
+        }
+        else {
             m.addWifiLocation(context, name, foundDevices);
+        }
 
     }
 
     public void useCurrentLocation(View v) {
+        CheckBox checkBox = (CheckBox) findViewById(R.id.checkboxUseCurrentLocation);
+        if(!checkBox.isChecked()) return;
+
         double rad = 0;
+
+        getGpsLocation = new GetGpsLocation(context);
+
         EditText latitudeE = (EditText) findViewById(R.id.editTextLatitude);
         EditText longitudeE = (EditText) findViewById(R.id.editTextLongitude);
         EditText radiousE = (EditText) findViewById(R.id.editTextRadious);
+
         latitudeE.setText("" + getGpsLocation.getLatitude());
         longitudeE.setText("" + getGpsLocation.getLongitude());
         radiousE.setText("" + rad);
     }
+
 }
