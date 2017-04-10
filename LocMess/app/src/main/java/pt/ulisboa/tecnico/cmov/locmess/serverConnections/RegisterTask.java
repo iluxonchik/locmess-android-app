@@ -98,7 +98,7 @@ public class RegisterTask extends AsyncTask<String, Void, String> implements Ser
     protected void onPostExecute(String s) {
         Toast.makeText(context, "was" + s , Toast.LENGTH_LONG).show();
         Log.e("resutl",s);
-        delegate.TaskCompletionResult(s, context);
+        delegate.RegisterTaskComplete(s, context);
     }
 
     @Override

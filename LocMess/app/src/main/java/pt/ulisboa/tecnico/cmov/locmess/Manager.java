@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.LoginTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RegisterTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.TaskDelegate;
 
@@ -23,9 +24,14 @@ public class Manager implements TaskDelegate{
     public Manager() {
     }
 
-    public void login(Context context , String mail, String pass){
-        LocalMemory.getInstance().setLoggedUserMail(mail);
+    public void login(Context context , String user, String pass){
+        LocalMemory.getInstance().setLoggedUserMail(user);
         LocalMemory.getInstance().setLoggedUserPass(pass);
+
+        LoginTask loginTask = new LoginTask(context, this);
+        loginTask.execute(user,pass);
+
+
     }
 
     public void register(Context context, String user, String pass, String confirm_pass){
@@ -109,7 +115,15 @@ public class Manager implements TaskDelegate{
 
 
     @Override
-    public void TaskCompletionResult(String result, Context context) {
+    public void RegisterTaskComplete(String result, Context context) {
+        //TODO: If the result is ok finish this activity and start the next one otherwise message the user
+        Intent intent = new Intent(context, MainMenuActivity.class);
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void LoginTaskComplete(String result, Context context) {
+        //TODO: If the result is ok finish this activity and start the next one otherwise message the user
         Intent intent = new Intent(context, MainMenuActivity.class);
         context.startActivity(intent);
     }

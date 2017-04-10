@@ -42,9 +42,5 @@ public class LogInActivity extends AppCompatActivity {
 
         Manager m = LocalMemory.getInstance().getManager();
         m.login(context,userE.getText().toString(),passE.getText().toString());
-
-        Intent intent = new Intent(context, MainMenuActivity.class);
-        context.startActivity(intent);
-
     }
 }

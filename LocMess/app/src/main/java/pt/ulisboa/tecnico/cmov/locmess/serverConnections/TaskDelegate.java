@@ -7,5 +7,6 @@ import android.content.Context;
  */
 
 public interface TaskDelegate {
-    void TaskCompletionResult(String result, Context context);
+    void RegisterTaskComplete(String result, Context context);
+    void LoginTaskComplete(String result, Context context);
 }
