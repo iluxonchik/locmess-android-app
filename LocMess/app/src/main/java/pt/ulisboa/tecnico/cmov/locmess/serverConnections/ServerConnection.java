@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.cmov.locmess;
+package pt.ulisboa.tecnico.cmov.locmess.serverConnections;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -27,7 +27,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ServerConnection extends AsyncTask<String, Void, String>{
     Context context;
-    String serverInfo = "http://198.168.1.96:7900";
+    String serverInfo = "http://198.168.1.96:7900"; //Change this to local host 10.0.2.2
     String registerUri = "/new/user";
     String loginUri = "/login";
 
@@ -62,7 +62,7 @@ public class ServerConnection extends AsyncTask<String, Void, String>{
 
             OutputStream os = conn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getPostDataString(postDataParams));
+            writer.write(postDataParams.toString());
 
             writer.flush();
             writer.close();

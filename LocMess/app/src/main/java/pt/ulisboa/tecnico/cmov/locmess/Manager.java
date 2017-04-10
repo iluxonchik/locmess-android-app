@@ -1,24 +1,26 @@
 package pt.ulisboa.tecnico.cmov.locmess;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
-import java.io.InputStream;
 import java.util.List;
+
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RegisterTask;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.TaskDelegate;
 
 /**
  * Created by Valentyn on 23-03-2017.
  */
 
-public class Manager {
+public class Manager implements TaskDelegate{
 
     //server variables
-
+    //rogressDialog pd;
+    ProgressDialog progress;
     public Manager() {
-        //here start the connection to the server
     }
 
     public void login(Context context , String mail, String pass){
@@ -35,12 +37,8 @@ public class Manager {
             Toast.makeText(context, "Password do not match.", Toast.LENGTH_LONG).show();
             return;
         }
-        ServerConnection sc = new ServerConnection(context);
-        sc.execute();
-
-
-        Intent intent = new Intent(context, MainMenuActivity.class);
-        context.startActivity(intent);
+        RegisterTask registerTask = new RegisterTask(context, this);
+        registerTask.execute(user, pass);
     }
 
     public boolean addGpsLocation(Context context, String name, String latitude, String longitude, String radius){
@@ -110,4 +108,9 @@ public class Manager {
     }
 
 
+    @Override
+    public void TaskCompletionResult(String result, Context context) {
+        Intent intent = new Intent(context, MainMenuActivity.class);
+        context.startActivity(intent);
     }
+}
