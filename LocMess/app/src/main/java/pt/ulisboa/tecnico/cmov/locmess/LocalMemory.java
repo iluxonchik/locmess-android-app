@@ -7,6 +7,8 @@ package pt.ulisboa.tecnico.cmov.locmess;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ulisboa.tecnico.cmov.locmess.locations.Location;
+
 
 public class LocalMemory {
 

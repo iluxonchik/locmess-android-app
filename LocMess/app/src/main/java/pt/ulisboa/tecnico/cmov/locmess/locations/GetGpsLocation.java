@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.cmov.locmess;
+package pt.ulisboa.tecnico.cmov.locmess.locations;
 
 import android.Manifest;
 import android.content.Context;
@@ -31,12 +31,13 @@ public class GetGpsLocation implements LocationListener{
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
         }
-
-        Criteria criteria = new Criteria();
-        String bestProvider = locationManager.getBestProvider(criteria, false);
-        Location location = locationManager.getLastKnownLocation(bestProvider);
-        onLocationChanged(location);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        try {
+            Criteria criteria = new Criteria();
+            String bestProvider = locationManager.getBestProvider(criteria, false);
+            Location location = locationManager.getLastKnownLocation(bestProvider);
+            onLocationChanged(location);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        } catch (Exception e) {}
     }
 
     public double getLatitude() {
@@ -49,10 +50,12 @@ public class GetGpsLocation implements LocationListener{
 
     @Override
     public void onLocationChanged(Location location) {
-        if(location!=null){
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-        }
+        try {
+            if(location!=null){
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+            }
+        } catch (Exception e) {}
     }
 
     @Override

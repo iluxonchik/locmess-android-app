@@ -23,10 +23,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ViewKeyActivity" />
         <activity
-            android:name=".MainLocationsActivity"
+            android:name=".locations.MainLocationsActivity"
             android:label="@string/title_activity_main_locations"/>
-        <activity android:name=".ViewLocationActivity" />
-        <activity android:name=".AddLocationActivity" />
+        <activity android:name=".locations.ViewLocationActivity" />
+        <activity android:name=".locations.AddLocationActivity" />
         <activity
             android:name=".MainMessagesActivity"
             android:label="@string/title_activity_main_locations"

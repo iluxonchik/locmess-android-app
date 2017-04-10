@@ -10,7 +10,7 @@
     android:background="@color/background"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    tools:context="pt.ulisboa.tecnico.cmov.locmess.ViewLocationActivity">
+    tools:context="pt.ulisboa.tecnico.cmov.locmess.locations.ViewLocationActivity">
 
     <TextView
         android:layout_width="wrap_content"

@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.cmov.locmess;
+package pt.ulisboa.tecnico.cmov.locmess.locations;
 
 /**
  * Created by Valentyn on 20-03-2017.

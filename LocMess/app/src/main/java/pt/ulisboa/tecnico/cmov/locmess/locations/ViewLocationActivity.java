@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.cmov.locmess;
+package pt.ulisboa.tecnico.cmov.locmess.locations;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import pt.ulisboa.tecnico.cmov.locmess.AddMessageActivity;
+import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
+import pt.ulisboa.tecnico.cmov.locmess.R;
+import pt.ulisboa.tecnico.cmov.locmess.locations.GpsLocation;
+import pt.ulisboa.tecnico.cmov.locmess.locations.Location;
+import pt.ulisboa.tecnico.cmov.locmess.locations.WifiLocation;
 
 public class ViewLocationActivity extends AppCompatActivity {
 
@@ -55,7 +62,7 @@ public class ViewLocationActivity extends AppCompatActivity {
             lLon.setText(""+gpsL.getLongitude());
             lRad.setText(""+gpsL.getRadious());
         }
-        else if (l instanceof  WifiLocation){
+        else if (l instanceof WifiLocation){
             lLat.setVisibility(View.INVISIBLE);
             lLon.setVisibility(View.INVISIBLE);
             lRad.setVisibility(View.INVISIBLE);

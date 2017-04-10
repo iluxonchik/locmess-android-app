@@ -8,6 +8,9 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import pt.ulisboa.tecnico.cmov.locmess.locations.GpsLocation;
+import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
+import pt.ulisboa.tecnico.cmov.locmess.locations.WifiLocation;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.LoginTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RegisterTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.TaskDelegate;
@@ -18,8 +21,6 @@ import pt.ulisboa.tecnico.cmov.locmess.serverConnections.TaskDelegate;
 
 public class Manager implements TaskDelegate{
 
-    //server variables
-    //rogressDialog pd;
     ProgressDialog progress;
     public Manager() {
     }
@@ -45,6 +46,9 @@ public class Manager implements TaskDelegate{
         }
         RegisterTask registerTask = new RegisterTask(context, this);
         registerTask.execute(user, pass);
+
+        //TODO: how will i finish the activity?
+
     }
 
     public boolean addGpsLocation(Context context, String name, String latitude, String longitude, String radius){
