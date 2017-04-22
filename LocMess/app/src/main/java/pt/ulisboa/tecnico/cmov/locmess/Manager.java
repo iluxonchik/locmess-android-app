@@ -62,6 +62,7 @@ public class Manager implements TaskDelegate{
             Toast.makeText(context, "Please insert a radius", Toast.LENGTH_LONG).show();
             return false;
         }
+        //TODO: Verify if the response was successfull and than add to the local memory
         LocalMemory.getInstance().addLocation(new GpsLocation(name,Double.parseDouble(latitude),Double.parseDouble(longitude),Double.parseDouble(radius)));
 
         AddGPSLocationTask addGPSLocationTask = new AddGPSLocationTask(context);
