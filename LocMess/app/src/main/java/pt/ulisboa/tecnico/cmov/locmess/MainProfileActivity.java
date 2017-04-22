@@ -22,7 +22,8 @@ public class MainProfileActivity extends AppCompatActivity {
 
         context=this;
 
-        keys = LocalMemory.getInstance().getKeys();
+        LocalMemory.getInstance().getManager().populateUserKeys(context);
+        keys = LocalMemory.getInstance().getUserKeys();
 
         populateListView();
 

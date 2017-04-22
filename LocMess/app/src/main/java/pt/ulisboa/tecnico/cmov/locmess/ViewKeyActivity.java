@@ -44,10 +44,7 @@ public class ViewKeyActivity extends AppCompatActivity {
 
         Manager m = LocalMemory.getInstance().getManager();
 
-        if(oldKey.equals(""))
-            m.addKey(context,keyE.getText()+":"+valueE.getText());
-        else
-           m.editKey(context,oldKey, keyE.getText()+":"+valueE.getText());
+        m.updateKey(context,keyE.getText().toString(),valueE.getText().toString());
 
     }
 }
