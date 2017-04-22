@@ -17,6 +17,7 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+
         context=this;
 
         final TextView txtView = (TextView) this.findViewById(R.id.tvRegister);
@@ -34,6 +35,7 @@ public class LogInActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
 
+        finish();
     }
 
     public void logIn(View v) {

@@ -63,23 +63,10 @@ public class RegisterTask extends AsyncTask<String, Void, String> implements Ser
             int responseCode = conn.getResponseCode();
 
             if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                BufferedReader in=new BufferedReader( new InputStreamReader(conn.getInputStream()));
-                StringBuffer sb = new StringBuffer("");
-                String line="";
-
-                while((line = in.readLine()) != null) {
-
-                    sb.append(line);
-                    break;
-                }
-
-                in.close();
-                return sb.toString();
-
+               return "";
             }
             else {
-                return new String("false : "+responseCode);
+                return new String("" + responseCode);
             }
 
         } catch (JSONException e) {
@@ -96,8 +83,6 @@ public class RegisterTask extends AsyncTask<String, Void, String> implements Ser
 
     @Override
     protected void onPostExecute(String s) {
-        Toast.makeText(context, "was" + s , Toast.LENGTH_LONG).show();
-        Log.e("resutl",s);
         delegate.RegisterTaskComplete(s, context);
     }
 

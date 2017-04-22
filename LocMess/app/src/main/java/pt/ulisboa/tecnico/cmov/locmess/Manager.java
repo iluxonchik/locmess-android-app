@@ -11,6 +11,7 @@ import java.util.List;
 import pt.ulisboa.tecnico.cmov.locmess.locations.GpsLocation;
 import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
 import pt.ulisboa.tecnico.cmov.locmess.locations.WifiLocation;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.AddGPSLocationTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.LoginTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RegisterTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.TaskDelegate;
@@ -32,7 +33,6 @@ public class Manager implements TaskDelegate{
         LoginTask loginTask = new LoginTask(context, this);
         loginTask.execute(user,pass);
 
-
     }
 
     public void register(Context context, String user, String pass, String confirm_pass){
@@ -44,10 +44,13 @@ public class Manager implements TaskDelegate{
             Toast.makeText(context, "Password do not match.", Toast.LENGTH_LONG).show();
             return;
         }
+
+        LocalMemory.getInstance().setLoggedUserMail(user);
+        LocalMemory.getInstance().setLoggedUserPass(pass);
+
         RegisterTask registerTask = new RegisterTask(context, this);
         registerTask.execute(user, pass);
 
-        //TODO: how will i finish the activity?
 
     }
 
@@ -60,8 +63,10 @@ public class Manager implements TaskDelegate{
             return false;
         }
         LocalMemory.getInstance().addLocation(new GpsLocation(name,Double.parseDouble(latitude),Double.parseDouble(longitude),Double.parseDouble(radius)));
+
+        AddGPSLocationTask addGPSLocationTask = new AddGPSLocationTask(context);
+        addGPSLocationTask.execute(name, latitude, longitude, radius);
         return true;
-        // Send to the server a new locaiton
     }
 
     public void addWifiLocation(Context context , String name, List<String> foundDevices){
@@ -120,15 +125,35 @@ public class Manager implements TaskDelegate{
 
     @Override
     public void RegisterTaskComplete(String result, Context context) {
-        //TODO: If the result is ok finish this activity and start the next one otherwise message the user
-        Intent intent = new Intent(context, MainMenuActivity.class);
-        context.startActivity(intent);
+        if(result.equals("401")){
+            LocalMemory.getInstance().setLoggedUserMail("");
+            LocalMemory.getInstance().setLoggedUserPass("");
+            Toast.makeText(context, "User already exists", Toast.LENGTH_LONG).show();
+        } else {
+            Activity a = (Activity) context;
+            a.finish();
+
+            LoginTask loginTask = new LoginTask(context, this);
+            loginTask.execute(LocalMemory.getInstance().getLoggedUserMail(), LocalMemory.getInstance().getLoggedUserPass());
+        }
     }
 
     @Override
     public void LoginTaskComplete(String result, Context context) {
-        //TODO: If the result is ok finish this activity and start the next one otherwise message the user
-        Intent intent = new Intent(context, MainMenuActivity.class);
-        context.startActivity(intent);
+        if(result.equals("401")){
+            LocalMemory.getInstance().setLoggedUserMail("");
+            LocalMemory.getInstance().setLoggedUserPass("");
+            Toast.makeText(context, "Wrong Login information", Toast.LENGTH_LONG).show();
+        } else {
+            LocalMemory.getInstance().setSessionKey(result);
+
+            Intent intent = new Intent(context, MainMenuActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("EXIT", true);
+            context.startActivity(intent);
+
+            Activity a = (Activity) context;
+            a.finish();
+        }
     }
 }

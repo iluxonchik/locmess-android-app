@@ -11,6 +11,7 @@ public interface ServerInfo {
     final String SERVERINFO = "http://10.0.2.2:8081"; //Change this to local host
     final String REGISTERUSERURI = "/new/user";
     final String LOGINURI = "/login";
+    final String ADDLOCATIONURI = "/new/location";
 
     public HttpURLConnection serverConnection();
 }

@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
@@ -32,29 +33,40 @@ public class AddGPSLocationTask extends AsyncTask<String, Void, String> implemen
     Context context;
 
     public AddGPSLocationTask(Context context) {
+
         this.context = context;
-    }
 
-    /*
-    {
-        "username":"thegame", "token":"gAAAAABY4bKwzNXJrqgZlh7F3W_MvZMB62HJc2ujLU9D-mfmp8Z6kI6zSnvTlOo-sKM3NERFo5jdCWjUMwKBU_3oZ2Ysq1AthQ==",
-            "name":"Dre's House",
-            "is_gps": "True",
-            "location_json": "{\"latitude\":123, \"longitude\":456, \"radius\":1992}"
+        try {
+            url = new URL(SERVERINFO + ADDLOCATIONURI);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
-    */
-
 
     @Override
     protected String doInBackground(String... params) {
+        /*
+         * PARAM[0] - Name
+         * PARAM[1] - Latitude
+         * PARAM[2] - Longitude
+         * PARAM[3] - Radius
+         */
         JSONObject postDataParams = new JSONObject();
+        JSONObject locationJson = new JSONObject();
 
         try {
+            //Populating Location Json
+            locationJson.put("latitute", 123);
+            locationJson.put("longitude", 123);
+            locationJson.put("radius", 123);
+
+            //Populating PostData Json
             postDataParams.put("username",LocalMemory.getInstance().getLoggedUserMail());
             postDataParams.put("token",LocalMemory.getInstance().getSessionKey());
             postDataParams.put("name",params[0]);
             postDataParams.put("is_gps", "True");
-            //TODO: AFTER ILLIYA AWNSER DO THIS PART
+            postDataParams.put("location_json", locationJson);
+
 
             HttpURLConnection conn = serverConnection();
 
@@ -100,7 +112,7 @@ public class AddGPSLocationTask extends AsyncTask<String, Void, String> implemen
     @Override
     protected void onPostExecute(String s) {
         Toast.makeText(context, "was" + s , Toast.LENGTH_LONG).show();
-        Log.e("resutl",s);
+        Log.e("result",s);
     }
 
     @Override

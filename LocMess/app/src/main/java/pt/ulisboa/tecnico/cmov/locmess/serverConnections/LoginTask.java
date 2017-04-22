@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -62,24 +63,23 @@ public class LoginTask extends AsyncTask<String, Void, String> implements Server
             conn.connect();
             int responseCode = conn.getResponseCode();
 
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
 
-                BufferedReader in=new BufferedReader( new InputStreamReader(conn.getInputStream()));
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader( new InputStreamReader(conn.getInputStream()));
                 StringBuffer sb = new StringBuffer("");
                 String line="";
-
+                JSONObject jsonObj = null;
                 while((line = in.readLine()) != null) {
-
-                    sb.append(line);
-                    break;
+                    if(line.startsWith("{")) jsonObj = new JSONObject(line);
                 }
 
                 in.close();
-                return sb.toString();
 
+                return jsonObj.getString("token");
+                //return sb.toString();
             }
             else {
-                return new String("false : "+responseCode);
+                return new String("" + responseCode);
             }
 
         } catch (JSONException e) {
@@ -95,8 +95,6 @@ public class LoginTask extends AsyncTask<String, Void, String> implements Server
 
     @Override
     protected void onPostExecute(String s) {
-        Toast.makeText(context, "was" + s , Toast.LENGTH_LONG).show();
-        Log.e("resutl",s);
         delegate.LoginTaskComplete(s, context);
     }
 
