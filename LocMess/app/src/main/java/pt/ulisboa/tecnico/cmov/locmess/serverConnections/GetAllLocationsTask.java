@@ -2,7 +2,11 @@ package pt.ulisboa.tecnico.cmov.locmess.serverConnections;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -11,28 +15,32 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
+import pt.ulisboa.tecnico.cmov.locmess.locations.GpsLocation;
 
 /**
- * Created by Roberto Ponte on 4/10/2017.
+ * Created by Roberto on 22/04/2017.
  */
 
-public class GetLocationTask extends AsyncTask<String, Void, String> implements ServerInfo {
+public class GetAllLocationsTask extends AsyncTask<String, Void, String> implements ServerInfo {
 
     Context context;
     URL url;
 
-    public GetLocationTask(Context context) {
+    public GetAllLocationsTask(Context context) {
         this.context = context;
+
         try {
-            url = new URL(SERVERINFO + GETLOCATIONURI);
+            url = new URL(SERVERINFO + GETALLLOCURI);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -40,16 +48,11 @@ public class GetLocationTask extends AsyncTask<String, Void, String> implements 
 
     @Override
     protected String doInBackground(String... params) {
-        /*
-         *Param[0] - Name of the location
-         */
-
         JSONObject postDataParams = new JSONObject();
-        try{
-            //Populating PostData Json
+
+        try {
             postDataParams.put("username", LocalMemory.getInstance().getLoggedUserMail());
             postDataParams.put("token",LocalMemory.getInstance().getSessionKey());
-            postDataParams.put("name",params[0]);
 
             HttpURLConnection conn = serverConnection();
 
@@ -64,26 +67,28 @@ public class GetLocationTask extends AsyncTask<String, Void, String> implements 
             int responseCode = conn.getResponseCode();
 
             if (responseCode == HttpsURLConnection.HTTP_OK) {
-
                 BufferedReader in=new BufferedReader( new InputStreamReader(conn.getInputStream()));
                 StringBuffer sb = new StringBuffer("");
                 String line="";
-
                 while((line = in.readLine()) != null) {
-
+                    Log.d("Response:", line);
                     sb.append(line);
                     break;
                 }
 
                 in.close();
                 return sb.toString();
-
             }
             else {
-                return new String("false : "+responseCode);
+                return new String(""+responseCode);
             }
-        } catch (Exception e){}
-
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         return null;
@@ -91,9 +96,30 @@ public class GetLocationTask extends AsyncTask<String, Void, String> implements 
 
     @Override
     protected void onPostExecute(String s) {
-        //TODO: Update interface 
-        super.onPostExecute(s);
+        try {
+            JSONArray jsonArray = new JSONArray(s);
+            for (int i = 0, size = jsonArray.length(); i < size; i++) {
+                JSONObject objectInArray = jsonArray.getJSONObject(i);
 
+                //TODO: LOCATION ARE BEING AUTO REMOVED HOW?
+                //TODO:
+                JSONObject locationObject = new JSONObject(objectInArray.getString("location"));
+
+                LocalMemory.getInstance().addLocation(
+                        new GpsLocation(
+                                objectInArray.getString("name"),
+                                Double.parseDouble(locationObject.getString("latitude")),
+                                Double.parseDouble(locationObject.getString("longitude")),
+                                Double.parseDouble(locationObject.getString("radius")
+                                )
+                        )
+                );
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return;
     }
 
     @Override

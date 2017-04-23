@@ -13,6 +13,8 @@ public interface ServerInfo {
     final String GETUSERKEYS = "/get/profile/keys";
     final String KEYSUPDATE = "/profile/key/update";
     final String ADDLOCATIONURI = "/new/location";
+    final String GETLOCATIONURI = "/get/location";
+    final String GETALLLOCURI = "/get/location/all";
 
     public HttpURLConnection serverConnection();
 }

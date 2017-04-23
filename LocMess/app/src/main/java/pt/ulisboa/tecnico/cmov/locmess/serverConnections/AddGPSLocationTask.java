@@ -56,9 +56,9 @@ public class AddGPSLocationTask extends AsyncTask<String, Void, String> implemen
 
         try {
             //Populating Location Json
-            locationJson.put("latitute", 123);
-            locationJson.put("longitude", 123);
-            locationJson.put("radius", 123);
+            locationJson.put("latitude", params[1]);
+            locationJson.put("longitude", params[2]);
+            locationJson.put("radius", params[3]);
 
             //Populating PostData Json
             postDataParams.put("username",LocalMemory.getInstance().getLoggedUserMail());
@@ -81,7 +81,8 @@ public class AddGPSLocationTask extends AsyncTask<String, Void, String> implemen
             int responseCode = conn.getResponseCode();
 
             if (responseCode == HttpsURLConnection.HTTP_OK) {
-
+                return "";
+                /*
                 BufferedReader in=new BufferedReader( new InputStreamReader(conn.getInputStream()));
                 StringBuffer sb = new StringBuffer("");
                 String line="";
@@ -94,9 +95,10 @@ public class AddGPSLocationTask extends AsyncTask<String, Void, String> implemen
 
                 in.close();
                 return sb.toString();
-
+                */
             }
             else {
+                //TODO: check this response
                 return new String("false : "+responseCode);
             }
         } catch (JSONException e) {
@@ -111,8 +113,8 @@ public class AddGPSLocationTask extends AsyncTask<String, Void, String> implemen
 
     @Override
     protected void onPostExecute(String s) {
-        Toast.makeText(context, "was" + s , Toast.LENGTH_LONG).show();
-        Log.e("result",s);
+        //Toast.makeText(context, "was" + s , Toast.LENGTH_LONG).show();
+        //Log.e("result",s);
     }
 
     @Override

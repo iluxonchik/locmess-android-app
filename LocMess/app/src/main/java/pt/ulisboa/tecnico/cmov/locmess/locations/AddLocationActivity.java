@@ -113,7 +113,7 @@ public class AddLocationActivity extends AppCompatActivity{
         Manager m = LocalMemory.getInstance().getManager();
 
         if (spinner.getSelectedItem().toString().equals("GPS")) {
-            if(!m.addGpsLocation(context, name, latitude, longitude, radious)) {
+            if(m.addGpsLocation(context, name, latitude, longitude, radious)) {
                 Intent intent = new Intent(context, MainLocationsActivity.class);
                 finish();
                 context.startActivity(intent);

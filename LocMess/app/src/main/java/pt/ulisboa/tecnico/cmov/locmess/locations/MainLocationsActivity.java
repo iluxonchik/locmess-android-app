@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -12,8 +13,11 @@ import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.R;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.AddGPSLocationTask;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.GetAllLocationsTask;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.UpdateViewDelegate;
 
-public class MainLocationsActivity extends AppCompatActivity {
+public class MainLocationsActivity extends AppCompatActivity implements UpdateViewDelegate{
 
     private List<String> locations = new ArrayList<>();
     public Context context;
@@ -44,4 +48,8 @@ public class MainLocationsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void UpdateViewTaskComplete() {
+        populateListView();
+    }
 }
