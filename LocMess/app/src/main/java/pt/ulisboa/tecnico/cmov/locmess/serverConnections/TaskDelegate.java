@@ -11,6 +11,8 @@ import java.util.List;
 public interface TaskDelegate {
     void RegisterTaskComplete(String result, Context context);
     void LoginTaskComplete(String result, Context context);
+    void LogoutTaskComplete(String result, Context context);
     void GetUserKeysTaskComplete(List<String> result, Context context);
     void UpdateKeyTaskComplete(String result, Context context);
+    void RemoveKeyTaskComplete(String result, Context context);
 }

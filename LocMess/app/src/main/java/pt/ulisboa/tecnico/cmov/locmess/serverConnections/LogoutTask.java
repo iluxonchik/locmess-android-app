@@ -19,20 +19,20 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Created by Valentyn on 22-04-2017.
+ * Created by Valentyn on 23-04-2017.
  */
 
-public class UpdateKeyTask extends AsyncTask<String, Void, String> implements ServerInfo {
-    URL url;
+public class LogoutTask extends AsyncTask<String, Void, String> implements ServerInfo{
     Context context;
+    URL url;
 
     private TaskDelegate delegate;
 
-    public UpdateKeyTask(Context context, TaskDelegate delegate) {
+    public LogoutTask(Context context, TaskDelegate delegate) {
         this.context = context;
         this.delegate = delegate;
         try {
-            url = new URL(SERVERINFO + KEYSUPDATE);
+            url = new URL(SERVERINFO + LOGOUTURI);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -44,8 +44,6 @@ public class UpdateKeyTask extends AsyncTask<String, Void, String> implements Se
         try {
             postDataParams.put("username", s[0]);
             postDataParams.put("token", s[1]);
-            postDataParams.put("key", s[2]);
-            postDataParams.put("value", s[3]);
 
             HttpURLConnection conn = serverConnection();
 
@@ -58,6 +56,7 @@ public class UpdateKeyTask extends AsyncTask<String, Void, String> implements Se
             os.close();
             conn.connect();
             int responseCode = conn.getResponseCode();
+
 
             if (responseCode == HttpsURLConnection.HTTP_OK) {
                 return "";
@@ -74,13 +73,12 @@ public class UpdateKeyTask extends AsyncTask<String, Void, String> implements Se
             e.printStackTrace();
         }
 
-
         return null;
     }
 
     @Override
     protected void onPostExecute(String s) {
-        delegate.UpdateKeyTaskComplete(s, context);
+        delegate.LogoutTaskComplete(s, context);
     }
 
     @Override
@@ -102,3 +100,4 @@ public class UpdateKeyTask extends AsyncTask<String, Void, String> implements Se
         return conn;
     }
 }
+

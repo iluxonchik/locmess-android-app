@@ -28,4 +28,8 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainLocationsActivity.class);
         startActivity(intent);
     }
+
+    public void logout(View v) {
+        LocalMemory.getInstance().getManager().logout(this);
+    }
 }

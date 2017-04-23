@@ -19,20 +19,20 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Created by Valentyn on 22-04-2017.
+ * Created by Valentyn on 23-04-2017.
  */
 
-public class UpdateKeyTask extends AsyncTask<String, Void, String> implements ServerInfo {
+public class RemoveKeyTask extends AsyncTask<String, Void, String> implements ServerInfo {
     URL url;
     Context context;
 
     private TaskDelegate delegate;
 
-    public UpdateKeyTask(Context context, TaskDelegate delegate) {
+    public RemoveKeyTask(Context context, TaskDelegate delegate) {
         this.context = context;
         this.delegate = delegate;
         try {
-            url = new URL(SERVERINFO + KEYSUPDATE);
+            url = new URL(SERVERINFO + KEYREMOVE);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -80,7 +80,7 @@ public class UpdateKeyTask extends AsyncTask<String, Void, String> implements Se
 
     @Override
     protected void onPostExecute(String s) {
-        delegate.UpdateKeyTaskComplete(s, context);
+        delegate.RemoveKeyTaskComplete(s, context);
     }
 
     @Override
@@ -102,3 +102,4 @@ public class UpdateKeyTask extends AsyncTask<String, Void, String> implements Se
         return conn;
     }
 }
+
