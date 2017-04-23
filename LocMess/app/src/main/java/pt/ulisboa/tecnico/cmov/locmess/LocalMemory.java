@@ -14,7 +14,6 @@ public class LocalMemory {
 
     private static LocalMemory instance;
     private Manager manager = new Manager();
-    private List<String> userKeys = new ArrayList<>();
     private List<String> keys = new ArrayList<>();
     private List<Location> locations = new ArrayList<>();
     private List<Message> messages = new ArrayList<>();
@@ -59,10 +58,6 @@ public class LocalMemory {
         return keys;
     }
 
-    public List<String> getUserKeys() {
-        return userKeys;
-    }
-
 
     public void addKey(String k){
         for(int i=0;i<keys.size();i++){
@@ -73,13 +68,10 @@ public class LocalMemory {
     }
 
     public void loadKeys(List<String> l){
-        keys=l;
+        keys = new ArrayList<>();
+        for (String k : l)
+            keys.add(k);
     }
-
-    public void loadUserKeys(List<String> l){
-        userKeys=l;
-    }
-
 
     public void removeKey(String key){
         for(int i=0;i<keys.size();i++){

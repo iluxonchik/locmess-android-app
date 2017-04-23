@@ -22,12 +22,18 @@ public class MainProfileActivity extends AppCompatActivity {
 
         context=this;
 
-        LocalMemory.getInstance().getManager().populateUserKeys(context);
-        keys = LocalMemory.getInstance().getUserKeys();
+        keys = LocalMemory.getInstance().getKeys();
 
         populateListView();
 
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        this.finish();
+    }
+
 
     private void populateListView() {
         MyProfileAdapter adapter = new MyProfileAdapter(keys,this);

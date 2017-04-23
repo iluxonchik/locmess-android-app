@@ -45,8 +45,8 @@ public class UpdateKeyTask extends AsyncTask<String, Void, String> implements Se
         try {
             postDataParams.put("username", s[0]);
             postDataParams.put("token", s[1]);
-            postDataParams.put("key", s[1]);
-            postDataParams.put("value", s[1]);
+            postDataParams.put("key", s[2]);
+            postDataParams.put("value", s[3]);
 
             Log.e("params",postDataParams.toString());
 

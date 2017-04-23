@@ -19,6 +19,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -77,8 +78,10 @@ public class GetUserKeysTask extends AsyncTask<String, Void, List<String>> imple
 
                 in.close();
 
-                while(jsonObj.keys().hasNext()) {
-                    l.add((String) jsonObj.keys().next());
+                Iterator<String> keys = jsonObj.keys();
+                while(keys.hasNext() ) {
+                    String key = keys.next();
+                    l.add(key+":"+jsonObj.get(key));
                 }
                 return l;
                 //return sb.toString();

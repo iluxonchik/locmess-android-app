@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -46,5 +47,21 @@ public class ViewKeyActivity extends AppCompatActivity {
 
         m.updateKey(context,keyE.getText().toString(),valueE.getText().toString());
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            Intent intent = new Intent(context, MainProfileActivity.class);
+            context.startActivity(intent);
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    protected void onRestart() {
+        super.onRestart();
+        this.finish();
     }
 }

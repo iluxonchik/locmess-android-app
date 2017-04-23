@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.locmess.locations.GpsLocation;
@@ -87,8 +86,7 @@ public class Manager implements TaskDelegate{
         context.startActivity(intent);
     }
 
-    public void populateUserKeys(Context context){
-        LocalMemory.getInstance().loadUserKeys(new ArrayList<String>());
+    public void populateKeys(Context context){
         GetUserKeysTask userKeysTask = new GetUserKeysTask(context, this);
         userKeysTask.execute(LocalMemory.getInstance().getLoggedUserMail(),LocalMemory.getInstance().getSessionKey());
     }
@@ -166,7 +164,10 @@ public class Manager implements TaskDelegate{
         if(result.size()>0 && result.get(0).equals("401")){
             Toast.makeText(context, "Cannot load user keys", Toast.LENGTH_LONG).show();
         } else {
-            LocalMemory.getInstance().loadUserKeys(result);
+            LocalMemory.getInstance().loadKeys(result);
+            Intent intent = new Intent(context, MainProfileActivity.class);
+            context.startActivity(intent);
+
         }
     }
 
@@ -175,12 +176,9 @@ public class Manager implements TaskDelegate{
         if(result.equals("401")){
             Toast.makeText(context, "Cannot add the key pair.", Toast.LENGTH_LONG).show();
         } else {
-
-            Intent intent = new Intent(context, MainProfileActivity.class);
-            context.startActivity(intent);
-
             Activity a = (Activity) context;
             a.finish();
+            LocalMemory.getInstance().getManager().populateKeys(context);
         }
     }
 

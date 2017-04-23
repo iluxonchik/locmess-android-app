@@ -16,8 +16,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void profile(View v) {
-        Intent intent = new Intent(this, MainProfileActivity.class);
-        startActivity(intent);
+        LocalMemory.getInstance().getManager().populateKeys(this);
     }
 
     public void messages(View v) {
