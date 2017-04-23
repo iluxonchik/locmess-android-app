@@ -36,14 +36,25 @@
         android:onClick="locations"/>
 
     <Button
+    android:layout_width="350dp"
+    android:layout_height="60dp"
+    android:layout_centerHorizontal="true"
+    style="@style/Widget.AppCompat.Button.Colored"
+    android:text="Profile"
+    android:layout_marginTop="25dp"
+    android:id="@+id/buttonProfileMenu"
+    android:layout_below="@+id/buttonLocationsMenu"
+    android:onClick="profile"/>
+
+    <Button
         android:layout_width="350dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:text="Profile"
+        android:text="Logout"
         android:layout_marginTop="25dp"
-        android:id="@+id/buttonProfileMenu"
-        android:layout_below="@+id/buttonLocationsMenu"
-        android:onClick="profile"/>
+        android:id="@+id/buttonLogout"
+        android:layout_below="@+id/buttonProfileMenu"
+        android:onClick="logout"/>
 
 </RelativeLayout>

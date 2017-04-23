@@ -79,7 +79,8 @@ public class MyProfileAdapter extends BaseAdapter implements ListAdapter {
             public void onClick(View v) {
 
                 Manager m = LocalMemory.getInstance().getManager();
-                m.removeKey(context,list.get(position));
+                String[] splited = list.get(position).split(":");
+                m.removeKey(context,splited[0],splited[1]);
 
             }
         });

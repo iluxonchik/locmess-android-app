@@ -14,7 +14,9 @@ import pt.ulisboa.tecnico.cmov.locmess.locations.WifiLocation;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.AddGPSLocationTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.GetUserKeysTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.LoginTask;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.LogoutTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RegisterTask;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RemoveKeyTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.TaskDelegate;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.UpdateKeyTask;
 
@@ -36,6 +38,12 @@ public class Manager implements TaskDelegate{
         loginTask.execute(user,pass);
 
     }
+
+    public void logout(Context context){
+        LogoutTask logoutTask = new LogoutTask(context, this);
+        logoutTask.execute(LocalMemory.getInstance().getLoggedUserMail(),LocalMemory.getInstance().getSessionKey());
+    }
+
 
     public void register(Context context, String user, String pass, String confirm_pass){
         if(pass.length()<6) {
@@ -115,13 +123,10 @@ public class Manager implements TaskDelegate{
 
     }
 
-    public void removeKey(Context context , String key){
+    public void removeKey(Context context , String key,String value){
 
-        LocalMemory.getInstance().removeKey(key);
-        Intent myIntent = new Intent(context, MainProfileActivity.class);
-        context.startActivity(myIntent);
-        Activity a = (Activity) context;
-        a.finish();
+        RemoveKeyTask removeKeyTask = new RemoveKeyTask(context, this);
+        removeKeyTask.execute(LocalMemory.getInstance().getLoggedUserMail(),LocalMemory.getInstance().getSessionKey(),key,value);
     }
 
 
@@ -160,6 +165,23 @@ public class Manager implements TaskDelegate{
     }
 
     @Override
+    public void LogoutTaskComplete(String result, Context context) {
+        if(result.equals("401"))
+            Toast.makeText(context, "Some problem occurred in logout.", Toast.LENGTH_LONG).show();
+
+        LocalMemory.getInstance().setLoggedUserMail("");
+        LocalMemory.getInstance().setLoggedUserPass("");
+
+        Intent intent = new Intent(context, LogInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true);
+        context.startActivity(intent);
+
+        Activity a = (Activity) context;
+        a.finish();
+    }
+
+    @Override
     public void GetUserKeysTaskComplete(List<String> result, Context context) {
         if(result.size()>0 && result.get(0).equals("401")){
             Toast.makeText(context, "Cannot load user keys", Toast.LENGTH_LONG).show();
@@ -175,6 +197,17 @@ public class Manager implements TaskDelegate{
     public void UpdateKeyTaskComplete(String result, Context context) {
         if(result.equals("401")){
             Toast.makeText(context, "Cannot add the key pair.", Toast.LENGTH_LONG).show();
+        } else {
+            Activity a = (Activity) context;
+            a.finish();
+            LocalMemory.getInstance().getManager().populateKeys(context);
+        }
+    }
+
+    @Override
+    public void RemoveKeyTaskComplete(String result, Context context) {
+        if(result.equals("401")){
+            Toast.makeText(context, "Cannot remove the key pair.", Toast.LENGTH_LONG).show();
         } else {
             Activity a = (Activity) context;
             a.finish();
