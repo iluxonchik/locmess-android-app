@@ -88,7 +88,7 @@
         android:text="Post a Message"
         android:layout_marginTop="30dp"
         android:id="@+id/buttonPostMessage"
-        android:layout_below="@+id/textView18"
+        android:layout_below="@+id/textViewLRadious"
         android:onClick="postMessage"/>
 
     <TextView

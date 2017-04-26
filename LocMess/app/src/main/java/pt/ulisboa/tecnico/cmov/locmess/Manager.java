@@ -106,6 +106,7 @@ public class Manager implements TaskDelegate{
 
 
     public void removeLocation(Context context , String name){
+        
         LocalMemory.getInstance().removeLocation(name);
         Intent myIntent = new Intent(context, MainLocationsActivity.class);
         context.startActivity(myIntent);

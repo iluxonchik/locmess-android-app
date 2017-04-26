@@ -78,7 +78,6 @@ public class MyLocationsAdapter extends BaseAdapter implements ListAdapter {
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
                 Manager m = LocalMemory.getInstance().getManager();
                 m.removeLocation(context,list.get(position));
 
