@@ -96,7 +96,7 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         }
 
         Manager m = LocalMemory.getInstance().getManager();
-        m.sendMessage(context,0,title,LocalMemory.getInstance().getLoggedUserMail(),location,text,centralized,black_list,keys,date);
+        m.sendMessage(context,0,title,LocalMemory.getInstance().getLoggedUserMail(),location,text,centralized,black_list,keys,date,date);
 
     }
 

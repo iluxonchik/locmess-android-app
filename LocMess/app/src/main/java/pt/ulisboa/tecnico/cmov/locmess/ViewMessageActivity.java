@@ -52,8 +52,8 @@
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1,m.getKeys());
             lKeys.setAdapter(arrayAdapter);
 
-            if(m.getDate()!=null){
-                tDate.setText(m.getDate().getDay()+"/"+m.getDate().getMonth()+"/"+m.getDate().getYear());
+            if(m.getStartDate()!=null){
+                tDate.setText(m.getStartDate().getDay()+"/"+m.getStartDate().getMonth()+"/"+m.getStartDate().getYear());
             }
             else
                 tDate.setText("-/-/-");
