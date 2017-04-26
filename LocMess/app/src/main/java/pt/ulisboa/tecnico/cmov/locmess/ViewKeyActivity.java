@@ -45,7 +45,12 @@ public class ViewKeyActivity extends AppCompatActivity {
 
         Manager m = LocalMemory.getInstance().getManager();
 
-        m.updateKey(context,keyE.getText().toString(),valueE.getText().toString());
+        if(oldKey.split(":")[0].equals(valueE.getText()))
+            m.updateKey(context,keyE.getText().toString(),valueE.getText().toString());
+        else{
+            m.removeKey(context,oldKey.split(":")[0],oldKey.split(":")[1]);
+            m.updateKey(context,keyE.getText().toString(),valueE.getText().toString());
+        }
 
     }
 
