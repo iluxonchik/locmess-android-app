@@ -86,8 +86,8 @@ public class Manager implements TaskDelegate{
         context.startActivity(intent);
     }
 
-    public void sendMessage(Context context,int id,String title,String autor,String location,String text,boolean isCentralized,boolean isBlackList, List<String> keys, MyDate date){
-        Message msg = new Message(0,title,autor,location,text,isCentralized,isBlackList,keys,date);
+    public void sendMessage(Context context,int id,String title,String autor,String location,String text,boolean isCentralized,boolean isBlackList, List<String> keys, MyDate sDate,MyDate eDate){
+        Message msg = new Message(0,title,autor,location,text,isCentralized,isBlackList,keys,sDate,eDate);
 
         LocalMemory.getInstance().addMessage(msg);
         Intent intent = new Intent(context, MainMessagesActivity.class);
@@ -104,9 +104,8 @@ public class Manager implements TaskDelegate{
         updateKeyTask.execute(LocalMemory.getInstance().getLoggedUserMail(),LocalMemory.getInstance().getSessionKey(),key,value);
     }
 
-
     public void removeLocation(Context context , String name){
-        
+
         LocalMemory.getInstance().removeLocation(name);
         Intent myIntent = new Intent(context, MainLocationsActivity.class);
         context.startActivity(myIntent);

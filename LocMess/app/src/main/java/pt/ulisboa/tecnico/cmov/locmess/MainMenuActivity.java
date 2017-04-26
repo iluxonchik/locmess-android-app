@@ -8,6 +8,7 @@ import android.view.View;
 
 import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.GetAllLocationsTask;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.GetMessagesTask;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -22,6 +23,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
         GetAllLocationsTask getAllLocationsTask = new GetAllLocationsTask(context);
         getAllLocationsTask.execute();
+
+        GetMessagesTask getMessagesTask = new GetMessagesTask(context);
+        getMessagesTask.execute();
     }
 
     public void profile(View v) {

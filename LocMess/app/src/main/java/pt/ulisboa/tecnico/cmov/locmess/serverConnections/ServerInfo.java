@@ -17,6 +17,8 @@ public interface ServerInfo {
     final String ADDLOCATIONURI = "/new/location";
     final String GETLOCATIONURI = "/get/location";
     final String GETALLLOCURI = "/get/location/all";
+    final String GETMESSAGES = "/get/message/my";
+
 
     public HttpURLConnection serverConnection();
 }
