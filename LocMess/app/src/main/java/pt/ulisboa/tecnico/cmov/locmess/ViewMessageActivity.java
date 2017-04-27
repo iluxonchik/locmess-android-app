@@ -53,7 +53,7 @@
             lKeys.setAdapter(arrayAdapter);
 
             if(m.getStartDate()!=null){
-                tDate.setText(m.getStartDate().getDay()+"/"+m.getStartDate().getMonth()+"/"+m.getStartDate().getYear());
+                tDate.setText("xx");
             }
             else
                 tDate.setText("-/-/-");

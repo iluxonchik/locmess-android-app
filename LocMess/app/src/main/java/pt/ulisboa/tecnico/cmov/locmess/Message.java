@@ -15,11 +15,11 @@ public class Message {
     private boolean isCentralized;
     private boolean isBlackList;
     private List<String> keys;
-    private MyDate startDate;
-    private MyDate endDate;
+    private String startDate;
+    private String endDate;
 
 
-    public Message(int id, String tit, String aut, String loc, String txt, boolean cent, boolean black, List<String> ks,MyDate sDate,MyDate eDate){
+    public Message(int id, String tit, String aut, String loc, String txt, boolean cent, boolean black, List<String> ks,String sDate,String eDate){
         this.id=id;
         title=tit;
         autor=aut;
@@ -64,11 +64,11 @@ public class Message {
         return keys;
     }
 
-    public MyDate getStartDate(){
+    public String getStartDate(){
         return startDate;
     }
 
-    public MyDate getEndDate(){
+    public String getEndDate(){
         return endDate;
     }
 

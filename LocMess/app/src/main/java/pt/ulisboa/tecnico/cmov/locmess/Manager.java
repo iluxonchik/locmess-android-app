@@ -12,11 +12,14 @@ import pt.ulisboa.tecnico.cmov.locmess.locations.GpsLocation;
 import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
 import pt.ulisboa.tecnico.cmov.locmess.locations.WifiLocation;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.AddGPSLocationTask;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.GetAllLocationsTask;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.GetMessagesTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.GetUserKeysTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.LoginTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.LogoutTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RegisterTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RemoveKeyTask;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.SendMessageTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.TaskDelegate;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.UpdateKeyTask;
 
@@ -86,17 +89,24 @@ public class Manager implements TaskDelegate{
         context.startActivity(intent);
     }
 
-    public void sendMessage(Context context,int id,String title,String autor,String location,String text,boolean isCentralized,boolean isBlackList, List<String> keys, MyDate sDate,MyDate eDate){
-        Message msg = new Message(0,title,autor,location,text,isCentralized,isBlackList,keys,sDate,eDate);
-
-        LocalMemory.getInstance().addMessage(msg);
-        Intent intent = new Intent(context, MainMessagesActivity.class);
-        context.startActivity(intent);
+    public void sendMessage(Context context,String title,String location,String text,boolean isCentralized,boolean isBlackList, List<String> keys, String sDate,String eDate){
+        SendMessageTask sendMessageTask = new SendMessageTask(context, this);
+        sendMessageTask.execute(LocalMemory.getInstance().getLoggedUserMail(),LocalMemory.getInstance().getSessionKey(),title,location,text,isCentralized,isBlackList,keys,sDate,eDate);
     }
 
     public void populateKeys(Context context){
         GetUserKeysTask userKeysTask = new GetUserKeysTask(context, this);
         userKeysTask.execute(LocalMemory.getInstance().getLoggedUserMail(),LocalMemory.getInstance().getSessionKey());
+    }
+
+    public void populateMessages(Context context){
+        GetMessagesTask getMessagesTask = new GetMessagesTask(context);
+        getMessagesTask.execute();
+    }
+
+    public void populateLocations(Context context){
+        GetAllLocationsTask getAllLocationsTask = new GetAllLocationsTask(context);
+        getAllLocationsTask.execute();
     }
 
     public void updateKey(Context context , String key, String value){
@@ -212,6 +222,29 @@ public class Manager implements TaskDelegate{
             Activity a = (Activity) context;
             a.finish();
             LocalMemory.getInstance().getManager().populateKeys(context);
+        }
+    }
+
+    @Override
+    public void RemoveLocationTaskComplete(String result, Context context) {
+        if(result.equals("401")){
+            Toast.makeText(context, "Cannot remove the location.", Toast.LENGTH_LONG).show();
+        } else {
+            Activity a = (Activity) context;
+            a.finish();
+            LocalMemory.getInstance().getManager().populateLocations(context);
+        }
+    }
+
+
+    @Override
+    public void SendMessageTaskComplete(String result, Context context) {
+        if(result.equals("401")){
+            Toast.makeText(context, "Cannot send message.", Toast.LENGTH_LONG).show();
+        } else {
+            Activity a = (Activity) context;
+            a.finish();
+            LocalMemory.getInstance().getManager().populateMessages(context);
         }
     }
 

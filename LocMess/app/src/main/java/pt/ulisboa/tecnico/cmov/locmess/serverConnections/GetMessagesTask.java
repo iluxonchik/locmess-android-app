@@ -1,8 +1,10 @@
 package pt.ulisboa.tecnico.cmov.locmess.serverConnections;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,12 +22,13 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
-import pt.ulisboa.tecnico.cmov.locmess.MyDate;
+import pt.ulisboa.tecnico.cmov.locmess.MainMessagesActivity;
 import pt.ulisboa.tecnico.cmov.locmess.Message;
 
 
@@ -98,36 +101,46 @@ public class GetMessagesTask extends AsyncTask<String, Void, String> implements 
 
     @Override
     protected void onPostExecute(String s) {
-        try {
-            JSONArray jsonArray = new JSONArray(s);
-            for (int i = 0, size = jsonArray.length(); i < size; i++) {
-                JSONObject objectInArray = jsonArray.getJSONObject(i);
 
-                List<String> prop = new ArrayList<>();
-                MyDate startDate = new MyDate(0,0,0);
-                MyDate endDate = new MyDate(0,0,0);
+        if(s.equals("401")){
+            Toast.makeText(context, "Cannot load user messages", Toast.LENGTH_LONG).show();
+        } else {
+            LocalMemory.getInstance().loadMessages(new ArrayList<Message>());
+            try {
+                JSONArray jsonArray = new JSONArray(s);
+                for (int i = 0, size = jsonArray.length(); i < size; i++) {
+                    JSONObject objectInArray = jsonArray.getJSONObject(i);
 
-                objectInArray.getString("properties");
-                objectInArray.getString("valid_from?");
-                objectInArray.getString("valid_until?");
+                    List<String> prop = new ArrayList<>();
 
-                LocalMemory.getInstance().addMessage(
-                new Message(
-                        Integer.parseInt(objectInArray.getString("msg_id")),
-                        objectInArray.getString("title"),
-                        objectInArray.getString("username"),
-                        objectInArray.getString("location_name"),
-                        objectInArray.getString("text"),
-                        Boolean.valueOf(objectInArray.getString("is_centralized")),
-                        Boolean.valueOf(objectInArray.getString("is_black_list")),
-                        prop,
-                        startDate,
-                        endDate
-                    )
-                );
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+                    JSONObject propJS = objectInArray.getJSONObject("properties");
+                    Iterator<String> keys = propJS.keys();
+                    while(keys.hasNext() ) {
+                        String key = keys.next();
+                        prop.add(key+":"+propJS.get(key));
+                    }
+
+                    LocalMemory.getInstance().addMessage(
+                    new Message(
+                            Integer.parseInt(objectInArray.getString("msg_id")),
+                            objectInArray.getString("title"),
+                            objectInArray.getString("author"),
+                            objectInArray.getString("location"),
+                            objectInArray.getString("text"),
+                            Boolean.valueOf(objectInArray.getString("is_centralized")),
+                            Boolean.valueOf(objectInArray.getString("is_black_list")),
+                            prop,
+                            objectInArray.getString("valid_from"),
+                            objectInArray.getString("valid_until")
+                        )
+                    );
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+        }
+            Intent intent = new Intent(context, MainMessagesActivity.class);
+            context.startActivity(intent);
         }
 
         return;

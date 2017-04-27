@@ -66,7 +66,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_below="@+id/textView27"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="5dp"
@@ -78,22 +78,21 @@
             android:clickable="true" />
     </ScrollView>
 
-    <CheckBox android:id="@+id/checkboxUseTimeLimit"
+    <CheckBox android:id="@+id/checkboxUseStartTimeLimit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Use Time Limit"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/scrollPreferences"
-        android:onClick="useTimeLimit"/>
+        android:onClick="useStartTimeLimit"/>
 
-    <DatePicker
+    <TimePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_below="@+id/checkboxUseTimeLimit"
-        android:id="@+id/datePicker"
-        android:layout_centerHorizontal="true"
-        style="@style/date_picker_theme" />
+        android:layout_below="@+id/checkboxUseStartTimeLimit"
+        android:id="@+id/startTimePicker"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="350dp"
@@ -103,7 +102,7 @@
         android:text="SEND"
         android:layout_marginTop="15dp"
         android:id="@+id/buttonSendMessage"
-        android:layout_below="@+id/datePicker"
+        android:layout_below="@+id/startTimePicker"
         android:onClick="sendMessage"/>
 
 </RelativeLayout>

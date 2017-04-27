@@ -18,6 +18,8 @@ public interface ServerInfo {
     final String GETLOCATIONURI = "/get/location";
     final String GETALLLOCURI = "/get/location/all";
     final String GETMESSAGES = "/get/message/my";
+    final String SENDMESSAGE = "/new/message";
+    final String LOCATIONREMOVE = "/location/delete";
 
 
     public HttpURLConnection serverConnection();

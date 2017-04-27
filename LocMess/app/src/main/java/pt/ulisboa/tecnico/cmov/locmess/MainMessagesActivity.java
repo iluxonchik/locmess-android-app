@@ -34,6 +34,12 @@ public class MainMessagesActivity extends AppCompatActivity {
         populateListView(messages);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        this.finish();
+    }
+
     private void populateListView(List<String> l) {
         MyMessagesAdapter adapter = new MyMessagesAdapter(l,this);
         ListView list = (ListView) findViewById(R.id.listViewMessages);

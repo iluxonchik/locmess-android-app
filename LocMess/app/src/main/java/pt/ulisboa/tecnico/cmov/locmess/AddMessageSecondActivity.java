@@ -7,14 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static pt.ulisboa.tecnico.cmov.locmess.R.id.datePicker;
+import static pt.ulisboa.tecnico.cmov.locmess.R.id.startTimePicker;
 
 public class AddMessageSecondActivity extends AppCompatActivity {
 
@@ -35,8 +35,8 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         location = intent.getStringExtra("LOCATION");
         text = intent.getStringExtra("TEXT");
 
-        DatePicker dp = (DatePicker) findViewById(datePicker);
-        dp.setEnabled(false);
+        TimePicker tp = (TimePicker) findViewById(startTimePicker);
+        tp.setEnabled(false);
 
         RelativeLayout linear=(RelativeLayout) findViewById(R.id.layoutProfilePreferences);
 
@@ -50,13 +50,13 @@ public class AddMessageSecondActivity extends AppCompatActivity {
 
     }
 
-    public void useTimeLimit(View v) {
-        CheckBox ck = (CheckBox) findViewById(R.id.checkboxUseTimeLimit);
-        DatePicker dp = (DatePicker) findViewById(datePicker);
+    public void useStartTimeLimit(View v) {
+        CheckBox ck = (CheckBox) findViewById(R.id.checkboxUseStartTimeLimit);
+        TimePicker tp = (TimePicker) findViewById(startTimePicker);
         if(ck.isChecked())
-            dp.setEnabled(true);
+            tp.setEnabled(true);
         else
-            dp.setEnabled(false);
+            tp.setEnabled(false);
 
     }
 
@@ -65,7 +65,7 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         boolean black_list=true;
         Spinner delivery = (Spinner) findViewById(R.id.spinnerDeliveryMode);
         Spinner policy = (Spinner) findViewById(R.id.spinnerPolicyType);
-        DatePicker dp = (DatePicker) findViewById(datePicker);
+        TimePicker dp = (TimePicker) findViewById(startTimePicker);
 
         if(!delivery.getSelectedItem().equals("Centralized"))
             centralized=false;
@@ -74,15 +74,12 @@ public class AddMessageSecondActivity extends AppCompatActivity {
 
         List<String> keys = new ArrayList<>();
 
-        int day = dp.getDayOfMonth();
-        int month = dp.getMonth();
-        int year =  dp.getYear();
+        String sDate = "";
+        String eDate = "";
 
-        MyDate date = null;
-
-        CheckBox ck = (CheckBox) findViewById(R.id.checkboxUseTimeLimit);
+        CheckBox ck = (CheckBox) findViewById(R.id.checkboxUseStartTimeLimit);
         if(ck.isChecked())
-            date= new MyDate(day,month,year);
+            sDate= "xx";
 
         ViewGroup vg = (ViewGroup)v.getParent();
         for(int i=0;i<vg.getChildCount();i++) {
@@ -96,7 +93,7 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         }
 
         Manager m = LocalMemory.getInstance().getManager();
-        m.sendMessage(context,0,title,LocalMemory.getInstance().getLoggedUserMail(),location,text,centralized,black_list,keys,date,date);
+        m.sendMessage(context,title,location,text,centralized,black_list,keys,sDate,eDate);
 
     }
 
