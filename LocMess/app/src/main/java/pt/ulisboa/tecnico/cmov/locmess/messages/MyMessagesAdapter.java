@@ -1,8 +1,4 @@
-package pt.ulisboa.tecnico.cmov.locmess;
-
-/**
- * Created by Valentyn on 20-03-2017.
- */
+package pt.ulisboa.tecnico.cmov.locmess.messages;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,13 +12,21 @@ import android.widget.ListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyProfileAdapter extends BaseAdapter implements ListAdapter {
+import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
+import pt.ulisboa.tecnico.cmov.locmess.Manager;
+import pt.ulisboa.tecnico.cmov.locmess.R;
+
+/**
+ * Created by Valentyn on 22-03-2017.
+ */
+
+public class MyMessagesAdapter extends BaseAdapter implements ListAdapter {
     private List<String> list = new ArrayList<String>();
     private Context context;
 
 
 
-    public MyProfileAdapter(List<String> list, Context context) {
+    public MyMessagesAdapter(List<String> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -61,13 +65,11 @@ public class MyProfileAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
 
-                Intent myIntent = new Intent(context, ViewKeyActivity.class);
-                String[] element = elementBtn.getText().toString().split(":");
-                String key = element[0];
-                String value = element[1];
+                Intent myIntent = new Intent(context, ViewMessageActivity.class);
+                String message = elementBtn.getText().toString();
 
-                myIntent.putExtra("KEY", key);
-                myIntent.putExtra("VALUE", value);
+                String[] splited = message.split(":");
+                myIntent.putExtra("ID", splited[0]);
 
                 context.startActivity(myIntent);
 
@@ -78,9 +80,10 @@ public class MyProfileAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
 
+                String[] splited = list.get(position).toString().split(":");
+
                 Manager m = LocalMemory.getInstance().getManager();
-                String[] splited = list.get(position).split(":");
-                m.removeKey(context,splited[0],splited[1]);
+                m.removeMessage(context,Integer.parseInt(splited[0]));
 
             }
         });

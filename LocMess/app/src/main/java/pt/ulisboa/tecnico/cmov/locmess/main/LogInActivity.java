@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.cmov.locmess;
+package pt.ulisboa.tecnico.cmov.locmess.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
+import pt.ulisboa.tecnico.cmov.locmess.Manager;
+import pt.ulisboa.tecnico.cmov.locmess.R;
+import pt.ulisboa.tecnico.cmov.locmess.main.SignUpActivity;
 
 public class LogInActivity extends AppCompatActivity {
 

@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
  */
 
 public interface ServerInfo {
+<<<<<<< Updated upstream
     final String SERVERINFO = "http://10.0.2.2:8081"; //Change this to local host
     final String REGISTERUSERURI = "/new/user";
     final String LOGINURI = "/login";
@@ -21,6 +22,19 @@ public interface ServerInfo {
     final String SENDMESSAGE = "/new/message";
     final String LOCATIONREMOVE = "/location/delete";
 
+=======
+    String SERVERINFO = "http://10.0.2.2:8081"; //Change this to local host
+    String REGISTERUSERURI = "/new/user";
+    String LOGINURI = "/login";
+    String LOGOUTURI = "/logout";
+    String GETUSERKEYS = "/get/profile/keys";
+    String KEYSUPDATE = "/profile/key/update";
+    String KEYREMOVE = "/profile/key/delete";
+    String ADDLOCATIONURI = "/new/location";
+    String GETLOCATIONURI = "/get/location";
+    String GETALLLOCURI = "/get/location/all";
+    String ADDWIFILOCURI = "/get/location/all";
+>>>>>>> Stashed changes
 
-    public HttpURLConnection serverConnection();
+    HttpURLConnection serverConnection();
 }

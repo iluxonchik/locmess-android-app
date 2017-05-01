@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.cmov.locmess;
+package pt.ulisboa.tecnico.cmov.locmess.messages;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,16 @@ import android.widget.TimePicker;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< Updated upstream:LocMess/app/src/main/java/pt/ulisboa/tecnico/cmov/locmess/AddMessageSecondActivity.java
 import static pt.ulisboa.tecnico.cmov.locmess.R.id.startTimePicker;
+=======
+import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
+import pt.ulisboa.tecnico.cmov.locmess.Manager;
+import pt.ulisboa.tecnico.cmov.locmess.MyDate;
+import pt.ulisboa.tecnico.cmov.locmess.R;
+
+import static pt.ulisboa.tecnico.cmov.locmess.R.id.datePicker;
+>>>>>>> Stashed changes:LocMess/app/src/main/java/pt/ulisboa/tecnico/cmov/locmess/messages/AddMessageSecondActivity.java
 
 public class AddMessageSecondActivity extends AppCompatActivity {
 

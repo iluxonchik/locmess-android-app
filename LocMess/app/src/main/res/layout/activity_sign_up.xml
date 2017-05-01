@@ -13,7 +13,7 @@
     android:paddingLeft="60dp"
     android:paddingRight="60dp"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="pt.ulisboa.tecnico.cmov.locmess.SignUpActivity">
+    tools:context="pt.ulisboa.tecnico.cmov.locmess.main.SignUpActivity">
 
     <EditText
         android:id="@+id/editTextRegisterUser"

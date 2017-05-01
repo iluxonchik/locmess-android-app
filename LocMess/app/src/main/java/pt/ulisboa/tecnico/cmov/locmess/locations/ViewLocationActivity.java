@@ -9,12 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import pt.ulisboa.tecnico.cmov.locmess.AddMessageActivity;
+import pt.ulisboa.tecnico.cmov.locmess.messages.AddMessageActivity;
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.R;
-import pt.ulisboa.tecnico.cmov.locmess.locations.GpsLocation;
-import pt.ulisboa.tecnico.cmov.locmess.locations.Location;
-import pt.ulisboa.tecnico.cmov.locmess.locations.WifiLocation;
 
 public class ViewLocationActivity extends AppCompatActivity {
 

@@ -12,7 +12,7 @@
     android:background="@color/background"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    tools:context="pt.ulisboa.tecnico.cmov.locmess.LogInActivity">
+    tools:context="pt.ulisboa.tecnico.cmov.locmess.main.LogInActivity">
 
     <!--
     <TextView

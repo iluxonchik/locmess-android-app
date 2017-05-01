@@ -14,7 +14,7 @@
     android:background="@color/background"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    tools:context="pt.ulisboa.tecnico.cmov.locmess.MainProfileActivity">
+    tools:context="pt.ulisboa.tecnico.cmov.locmess.profile.MainProfileActivity">
 
 
     <android.support.design.widget.FloatingActionButton

@@ -8,32 +8,32 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LogInActivity">
+        <activity android:name=".main.LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".MainMenuActivity" />
+        <activity android:name=".main.SignUpActivity" />
+        <activity android:name=".main.MainMenuActivity" />
         <activity
-            android:name=".MainProfileActivity"
+            android:name=".profile.MainProfileActivity"
             android:label="@string/title_activity_main_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ViewKeyActivity" />
+        <activity android:name=".profile.ViewKeyActivity" />
         <activity
             android:name=".locations.MainLocationsActivity"
             android:label="@string/title_activity_main_locations"/>
         <activity android:name=".locations.ViewLocationActivity" />
         <activity android:name=".locations.AddLocationActivity" />
         <activity
-            android:name=".MainMessagesActivity"
+            android:name=".messages.MainMessagesActivity"
             android:label="@string/title_activity_main_locations"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddMessageActivity" />
-        <activity android:name=".ViewMessageActivity" />
-        <activity android:name=".AddMessageSecondActivity"></activity>
+        <activity android:name=".messages.AddMessageActivity" />
+        <activity android:name=".messages.ViewMessageActivity" />
+        <activity android:name=".messages.AddMessageSecondActivity"></activity>
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

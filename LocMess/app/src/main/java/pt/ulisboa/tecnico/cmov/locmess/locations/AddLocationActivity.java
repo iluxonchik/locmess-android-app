@@ -75,6 +75,7 @@ public class AddLocationActivity extends AppCompatActivity{
                     tv19.setVisibility(View.VISIBLE);
                     listV.setVisibility(View.VISIBLE);
 
+                    //TODO: Populate list of found Devices
                     foundDevices.add("Museu Prado");
                     foundDevices.add("Tasca do Zé");
                     foundDevices.add("IST");

@@ -2,16 +2,12 @@ package pt.ulisboa.tecnico.cmov.locmess.serverConnections;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
@@ -25,31 +21,29 @@ import javax.net.ssl.HttpsURLConnection;
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 
 /**
- * Created by Roberto Ponte on 4/10/2017.
+ * Created by Roberto on 01/05/2017.
  */
 
-public class AddGPSLocationTask extends AsyncTask<String, Void, String> implements ServerInfo {
-    URL url;
+public class AddWifiLocationTask extends AsyncTask<String, Void, String> implements ServerInfo {
     Context context;
+    URL url;
 
-    public AddGPSLocationTask(Context context) {
-
+    public AddWifiLocationTask(Context context) {
         this.context = context;
 
         try {
-            url = new URL(SERVERINFO + ADDLOCATIONURI);
+            url = new URL(SERVERINFO + ADDWIFILOCURI);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
     protected String doInBackground(String... params) {
         /*
          * PARAM[0] - Name
-         * PARAM[1] - Latitude
-         * PARAM[2] - Longitude
-         * PARAM[3] - Radius
+         * PARAM[1] - List of wifi ID
          */
         JSONObject postDataParams = new JSONObject();
         JSONObject locationJson = new JSONObject();
@@ -61,10 +55,10 @@ public class AddGPSLocationTask extends AsyncTask<String, Void, String> implemen
             locationJson.put("radius", params[3]);
 
             //Populating PostData Json
-            postDataParams.put("username",LocalMemory.getInstance().getLoggedUserMail());
+            postDataParams.put("username", LocalMemory.getInstance().getLoggedUserMail());
             postDataParams.put("token",LocalMemory.getInstance().getSessionKey());
             postDataParams.put("name",params[0]);
-            postDataParams.put("is_gps", "True");
+            postDataParams.put("is_gps", "False");
             postDataParams.put("location_json", locationJson);
 
 
@@ -95,12 +89,6 @@ public class AddGPSLocationTask extends AsyncTask<String, Void, String> implemen
             e.printStackTrace();
         }
         return null;
-    }
-
-    @Override
-    protected void onPostExecute(String s) {
-        //Toast.makeText(context, "was" + s , Toast.LENGTH_LONG).show();
-        //Log.e("result",s);
     }
 
     @Override

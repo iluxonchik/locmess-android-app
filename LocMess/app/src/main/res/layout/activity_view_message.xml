@@ -17,7 +17,7 @@
         android:background="@color/background"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true"
-        tools:context="pt.ulisboa.tecnico.cmov.locmess.ViewMessageActivity">
+        tools:context="pt.ulisboa.tecnico.cmov.locmess.messages.ViewMessageActivity">
 
         <TextView
         android:layout_width="wrap_content"

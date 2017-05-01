@@ -1,4 +1,4 @@
-    package pt.ulisboa.tecnico.cmov.locmess;
+    package pt.ulisboa.tecnico.cmov.locmess.messages;
 
     import android.content.Context;
     import android.content.Intent;
@@ -7,6 +7,10 @@
     import android.widget.ArrayAdapter;
     import android.widget.ListView;
     import android.widget.TextView;
+
+    import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
+    import pt.ulisboa.tecnico.cmov.locmess.R;
+    import pt.ulisboa.tecnico.cmov.locmess.messages.Message;
 
     public class ViewMessageActivity extends AppCompatActivity {
 
