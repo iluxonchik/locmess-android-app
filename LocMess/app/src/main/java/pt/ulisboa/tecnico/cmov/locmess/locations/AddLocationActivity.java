@@ -37,7 +37,7 @@ public class AddLocationActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
         context = this;
-        
+
         Spinner spinner = (Spinner) findViewById(R.id.spinnerType);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -83,7 +83,7 @@ public class AddLocationActivity extends AppCompatActivity{
                     //foundDevices.add("Tasca do Zé");
                     //foundDevices.add("IST");
 
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, foundDevices);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, foundDevices);
                     listV.setAdapter(arrayAdapter);
 
                 }

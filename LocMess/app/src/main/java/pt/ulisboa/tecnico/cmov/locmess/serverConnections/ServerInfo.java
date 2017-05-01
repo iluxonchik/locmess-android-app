@@ -7,8 +7,8 @@ import java.net.HttpURLConnection;
  */
 
 public interface ServerInfo {
-    //String SERVERINFO = "http://10.0.2.2:8081"; //Change this to local host
-    String SERVERINFO = "http://192.168.1.69:8081"; //Change this to local host
+    String SERVERINFO = "http://10.0.2.2:8081"; //Change this to local host
+    //String SERVERINFO = "http://192.168.1.69:8081"; //Change this to local host
     String REGISTERUSERURI = "/new/user";
     String LOGINURI = "/login";
     String LOGOUTURI = "/logout";
