@@ -17,20 +17,25 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.Manager;
 import pt.ulisboa.tecnico.cmov.locmess.R;
-import pt.ulisboa.tecnico.cmov.locmess.WifiFunctions;
 
 public class AddLocationActivity extends AppCompatActivity{
 
     private Context context;
     private List<String> foundDevices = new ArrayList<String>();
     private GetGpsLocation getGpsLocation;
+
+    //Wifi variables
+    WifiManager wifi;
+    List<ScanResult> results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,19 @@ public class AddLocationActivity extends AppCompatActivity{
                     listV.setVisibility(View.INVISIBLE);
 
                 } else {
+                    wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+                    if (wifi.isWifiEnabled() == false) {
+                        Toast.makeText(getApplicationContext(), "Wifi is disabled... Making it enabled.",
+                                Toast.LENGTH_LONG).show();
+                        wifi.setWifiEnabled(true);
+                    }
+
+                    List<ScanResult>results = wifi.getScanResults();
+
+                    for (ScanResult r : results ) {
+                        foundDevices.add(r.SSID);
+                    }
+
                     latitudeE.setVisibility(View.INVISIBLE);
                     longitudeE.setVisibility(View.INVISIBLE);
                     radiousE.setVisibility(View.INVISIBLE);
@@ -77,20 +95,11 @@ public class AddLocationActivity extends AppCompatActivity{
                     tv19.setVisibility(View.VISIBLE);
                     listV.setVisibility(View.VISIBLE);
 
-                    //TODO: Populate list of found Devices
-                    //foundDevices = WifiFunctions.getDevices();
-                    //foundDevices.add("Museu Prado");
-                    //foundDevices.add("Tasca do Zé");
-                    //foundDevices.add("IST");
-
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, foundDevices);
                     listV.setAdapter(arrayAdapter);
 
                 }
-
-
             }
-
             public void onNothingSelected(AdapterView<?> adapterView) {
                 return;
             }
