@@ -1,7 +1,11 @@
 package pt.ulisboa.tecnico.cmov.locmess.locations;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -20,6 +24,7 @@ import java.util.List;
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.Manager;
 import pt.ulisboa.tecnico.cmov.locmess.R;
+import pt.ulisboa.tecnico.cmov.locmess.WifiFunctions;
 
 public class AddLocationActivity extends AppCompatActivity{
 
@@ -27,15 +32,12 @@ public class AddLocationActivity extends AppCompatActivity{
     private List<String> foundDevices = new ArrayList<String>();
     private GetGpsLocation getGpsLocation;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
         context = this;
-
-
-
+        
         Spinner spinner = (Spinner) findViewById(R.id.spinnerType);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -76,9 +78,10 @@ public class AddLocationActivity extends AppCompatActivity{
                     listV.setVisibility(View.VISIBLE);
 
                     //TODO: Populate list of found Devices
-                    foundDevices.add("Museu Prado");
-                    foundDevices.add("Tasca do Zé");
-                    foundDevices.add("IST");
+                    //foundDevices = WifiFunctions.getDevices();
+                    //foundDevices.add("Museu Prado");
+                    //foundDevices.add("Tasca do Zé");
+                    //foundDevices.add("IST");
 
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, foundDevices);
                     listV.setAdapter(arrayAdapter);

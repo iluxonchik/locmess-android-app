@@ -28,8 +28,8 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
-import pt.ulisboa.tecnico.cmov.locmess.MainMessagesActivity;
-import pt.ulisboa.tecnico.cmov.locmess.Message;
+import pt.ulisboa.tecnico.cmov.locmess.messages.MainMessagesActivity;
+import pt.ulisboa.tecnico.cmov.locmess.messages.Message;
 
 
 /**

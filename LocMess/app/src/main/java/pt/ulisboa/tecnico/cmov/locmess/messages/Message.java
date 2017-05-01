@@ -2,8 +2,6 @@ package pt.ulisboa.tecnico.cmov.locmess.messages;
 
 import java.util.List;
 
-import pt.ulisboa.tecnico.cmov.locmess.MyDate;
-
 /**
  * Created by Valentyn on 22-03-2017.
  */
