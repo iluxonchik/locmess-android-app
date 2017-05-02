@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="ID:"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:id="@+id/textView28"/>
 
         <TextView
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:text=""
         android:layout_below="@+id/textView28"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:textColor="#000000"
         android:id="@+id/textViewMId"/>
 
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="Title:"
             android:layout_below="@+id/textViewMId"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/textView29"/>
 
         <TextView
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:layout_below="@+id/textView29"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:textColor="#000000"
             android:id="@+id/textViewMTitle"/>
 
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:text="Autor:"
             android:layout_below="@+id/textViewMTitle"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/textView30"/>
 
         <TextView
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:layout_below="@+id/textView30"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:textColor="#000000"
             android:id="@+id/textViewMAutor"/>
 
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:text="Location:"
             android:layout_below="@+id/textViewMAutor"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/textView31"/>
 
         <TextView
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:layout_below="@+id/textView31"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:textColor="#000000"
             android:id="@+id/textViewMLocation"/>
 
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="Text:"
             android:layout_below="@+id/textViewMLocation"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/textView32"/>
 
         <TextView
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:layout_below="@+id/textView32"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:textColor="#000000"
             android:id="@+id/textViewMText"/>
 
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:text="Delivery Mode:"
             android:layout_below="@+id/textViewMText"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/textView33"/>
 
         <TextView
@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:layout_below="@+id/textView33"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:textColor="#000000"
             android:id="@+id/textViewMDelivery"/>
 
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:text="Policy Type:"
             android:layout_below="@+id/textViewMDelivery"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/textView34"/>
 
         <TextView
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:layout_below="@+id/textView34"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:textColor="#000000"
             android:id="@+id/textViewMPolicy"/>
 
@@ -143,7 +143,7 @@
             android:layout_height="wrap_content"
             android:text="Keys:"
             android:layout_below="@+id/textViewMPolicy"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/textView35"/>
 
         <ListView
@@ -159,9 +159,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Expiring Date:"
+            android:text="Start Date:"
             android:layout_below="@+id/listViewListPreferencesView"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/textView36"/>
 
         <TextView
@@ -169,9 +169,26 @@
             android:layout_height="wrap_content"
             android:text=""
             android:layout_below="@+id/textView36"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:textColor="#000000"
-            android:id="@+id/textViewMDate"/>
+            android:id="@+id/textViewMSDate"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Date:"
+            android:layout_below="@+id/textViewMSDate"
+            android:layout_marginTop="20dp"
+            android:id="@+id/textView37"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_below="@+id/textView37"
+            android:layout_marginTop="10dp"
+            android:textColor="#000000"
+            android:id="@+id/textViewMEDate"/>
 
 </RelativeLayout>
 

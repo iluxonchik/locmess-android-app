@@ -1,16 +1,15 @@
     package pt.ulisboa.tecnico.cmov.locmess.messages;
 
     import android.content.Context;
-    import android.content.Intent;
-    import android.os.Bundle;
-    import android.support.v7.app.AppCompatActivity;
-    import android.widget.ArrayAdapter;
-    import android.widget.ListView;
-    import android.widget.TextView;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
-    import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
-    import pt.ulisboa.tecnico.cmov.locmess.R;
-    import pt.ulisboa.tecnico.cmov.locmess.messages.Message;
+import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
+import pt.ulisboa.tecnico.cmov.locmess.R;
 
     public class ViewMessageActivity extends AppCompatActivity {
 
@@ -35,7 +34,8 @@
         TextView tDelivery = (TextView) findViewById(R.id.textViewMDelivery);
         TextView tPolicy = (TextView) findViewById(R.id.textViewMPolicy);
         ListView lKeys = (ListView) findViewById(R.id.listViewListPreferencesView);
-        TextView tDate = (TextView) findViewById(R.id.textViewMDate);
+        TextView tSDate = (TextView) findViewById(R.id.textViewMSDate);
+        TextView tEDate = (TextView) findViewById(R.id.textViewMEDate);
 
         if(m!=null){
             tId.setText(""+m.getId());
@@ -57,10 +57,21 @@
             lKeys.setAdapter(arrayAdapter);
 
             if(m.getStartDate()!=null){
-                tDate.setText("xx");
+                if(m.getStartDate().contains("."))
+                    tSDate.setText(m.getStartDate().substring(0,m.getStartDate().indexOf('.')));
+                else
+                    tSDate.setText(m.getStartDate());            }
+            else
+                tSDate.setText("YYYY-MM-DDThh:mm");
+
+            if(m.getEndDate()!=null){
+                if(m.getEndDate().contains("."))
+                    tEDate.setText(m.getEndDate().substring(0,m.getEndDate().indexOf('.')));
+                else
+                    tEDate.setText(m.getEndDate());
             }
             else
-                tDate.setText("-/-/-");
+                tEDate.setText("YYYY-MM-DDThh:mm");
 
         }
 

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_add_message_second"
     android:layout_width="match_parent"
@@ -23,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="Delivery Mode"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         android:id="@+id/textView25"/>
 
     <Spinner
@@ -35,7 +32,7 @@
         android:addStatesFromChildren="false"
         android:textSize="20sp"
         android:entries="@array/array_delivery_mode"
-        android:background="#A9E2F3" />
+        style="@style/MyEditTextStyle"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,7 +51,7 @@
         android:addStatesFromChildren="false"
         android:textSize="20sp"
         android:entries="@array/array_policy_type"
-        android:background="#A9E2F3" />
+        style="@style/MyEditTextStyle"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -81,18 +78,34 @@
     <CheckBox android:id="@+id/checkboxUseStartTimeLimit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Use Time Limit"
+        android:text="Use Start Time Limit"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/scrollPreferences"
         android:onClick="useStartTimeLimit"/>
 
-    <TimePicker
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:text="YYYY-MM-DDThh:mm"
+        android:layout_marginTop="2dp"
         android:layout_below="@+id/checkboxUseStartTimeLimit"
-        android:id="@+id/startTimePicker"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/textViewSDate"/>
+
+    <CheckBox android:id="@+id/checkboxUseEndTimeLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use End Time Limit"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/textViewSDate"
+        android:onClick="useEndTimeLimit"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="YYYY-MM-DDThh:mm"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/checkboxUseEndTimeLimit"
+        android:id="@+id/textViewEDate"/>
 
     <Button
         android:layout_width="350dp"
@@ -102,11 +115,10 @@
         android:text="SEND"
         android:layout_marginTop="15dp"
         android:id="@+id/buttonSendMessage"
-        android:layout_below="@+id/startTimePicker"
+        android:layout_below="@+id/textViewEDate"
         android:onClick="sendMessage"/>
 
 </RelativeLayout>
 
-    </ScrollView>
 
 

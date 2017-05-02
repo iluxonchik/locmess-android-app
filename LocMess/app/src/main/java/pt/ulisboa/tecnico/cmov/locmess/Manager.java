@@ -14,7 +14,6 @@ import pt.ulisboa.tecnico.cmov.locmess.locations.WifiLocation;
 import pt.ulisboa.tecnico.cmov.locmess.main.LogInActivity;
 import pt.ulisboa.tecnico.cmov.locmess.main.MainMenuActivity;
 import pt.ulisboa.tecnico.cmov.locmess.messages.MainMessagesActivity;
-import pt.ulisboa.tecnico.cmov.locmess.messages.Message;
 import pt.ulisboa.tecnico.cmov.locmess.profile.MainProfileActivity;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.AddGPSLocationTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.GetAllLocationsTask;
@@ -198,13 +197,14 @@ public class Manager implements TaskDelegate{
 
     @Override
     public void GetUserKeysTaskComplete(List<String> result, Context context) {
-        if(result.size()>0 && result.get(0).equals("401")){
+        if(result!=null && (result.size()>0 && result.get(0).equals("401"))){
             Toast.makeText(context, "Cannot load user keys", Toast.LENGTH_LONG).show();
         } else {
-            LocalMemory.getInstance().loadKeys(result);
-            Intent intent = new Intent(context, MainProfileActivity.class);
-            context.startActivity(intent);
-
+            if(result!=null){
+                LocalMemory.getInstance().loadKeys(result);
+                Intent intent = new Intent(context, MainProfileActivity.class);
+                context.startActivity(intent);
+            }
         }
     }
 

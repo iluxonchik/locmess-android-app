@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.cmov.locmess.messages;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,16 +10,17 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TimePicker;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static pt.ulisboa.tecnico.cmov.locmess.R.id.startTimePicker;
-
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.Manager;
 import pt.ulisboa.tecnico.cmov.locmess.R;
+
+import static pt.ulisboa.tecnico.cmov.locmess.R.id.textViewEDate;
+import static pt.ulisboa.tecnico.cmov.locmess.R.id.textViewSDate;
 
 //import static pt.ulisboa.tecnico.cmov.locmess.R.id.datePicker;
 
@@ -41,8 +43,11 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         location = intent.getStringExtra("LOCATION");
         text = intent.getStringExtra("TEXT");
 
-        TimePicker tp = (TimePicker) findViewById(startTimePicker);
-        tp.setEnabled(false);
+        TextView tvs = (TextView) findViewById(textViewSDate);
+        tvs.setEnabled(false);
+
+        TextView tve = (TextView) findViewById(textViewEDate);
+        tve.setEnabled(false);
 
         RelativeLayout linear=(RelativeLayout) findViewById(R.id.layoutProfilePreferences);
 
@@ -57,13 +62,33 @@ public class AddMessageSecondActivity extends AppCompatActivity {
     }
 
     public void useStartTimeLimit(View v) {
-        CheckBox ck = (CheckBox) findViewById(R.id.checkboxUseStartTimeLimit);
-        TimePicker tp = (TimePicker) findViewById(startTimePicker);
-        if(ck.isChecked())
-            tp.setEnabled(true);
-        else
-            tp.setEnabled(false);
+        CheckBox cks = (CheckBox) findViewById(R.id.checkboxUseStartTimeLimit);
 
+        DialogFragment newFragment = new TimePickerFragment();
+
+        if(cks.isChecked()) {
+            newFragment.show(getFragmentManager(), "timePicker");
+        }
+        else{
+            TextView tvs = (TextView) findViewById(textViewSDate);
+            tvs.setEnabled(false);
+            tvs.setText("YYYY-MM-DDThh:mm");
+        }
+
+    }
+
+    public void useEndTimeLimit(View v) {
+        CheckBox cke = (CheckBox) findViewById(R.id.checkboxUseEndTimeLimit);
+
+        DialogFragment newFragment = new TimePickerFragment();
+        if(cke.isChecked()) {
+            newFragment.show(getFragmentManager(), "timePicker");
+        }
+        else{
+            TextView tve = (TextView) findViewById(textViewEDate);
+            tve.setEnabled(false);
+            tve.setText("YYYY-MM-DDThh:mm");
+        }
     }
 
     public void sendMessage(View v) {
@@ -71,7 +96,6 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         boolean black_list=true;
         Spinner delivery = (Spinner) findViewById(R.id.spinnerDeliveryMode);
         Spinner policy = (Spinner) findViewById(R.id.spinnerPolicyType);
-        TimePicker dp = (TimePicker) findViewById(startTimePicker);
 
         if(!delivery.getSelectedItem().equals("Centralized"))
             centralized=false;
@@ -83,9 +107,13 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         String sDate = "";
         String eDate = "";
 
-        CheckBox ck = (CheckBox) findViewById(R.id.checkboxUseStartTimeLimit);
-        if(ck.isChecked())
-            sDate= "xx";
+        TextView tvs = (TextView) findViewById(R.id.textViewSDate);
+        TextView tve = (TextView) findViewById(R.id.textViewEDate);
+
+        if(tvs.isEnabled())
+            sDate= tvs.getText().toString();
+        if(tve.isEnabled())
+            eDate= tve.getText().toString();
 
         ViewGroup vg = (ViewGroup)v.getParent();
         for(int i=0;i<vg.getChildCount();i++) {

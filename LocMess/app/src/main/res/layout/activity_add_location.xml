@@ -16,8 +16,7 @@
     <EditText
         android:id="@+id/editTextLocationName"
         style="@style/MyEditTextStyle"
-        android:layout_below="@+id/textView10"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:hint="Name"
         android:drawableLeft="@drawable/ic_location"
         android:inputType="text"

@@ -52,10 +52,14 @@ public class SendMessageTask extends AsyncTask<Object, Void, String> implements 
             postDataParams.put("is_black_list", s[6]);
             List<String> l = (List<String>)s[7];
             JSONObject propi = new JSONObject();
-            for(String x : l){
-                propi.put(x.split(":")[0],x.split(":")[1]);
+
+            if(l!=null && l.size()>0){
+                for(String x : l){
+                    propi.put(x.split(":")[0],x.split(":")[1]);
+                }
             }
             postDataParams.put("properties", propi);
+
             if(!s[8].equals(""))
                 postDataParams.put("valid_from", s[8]);
             if(!s[9].equals(""))
