@@ -16,6 +16,7 @@ import pt.ulisboa.tecnico.cmov.locmess.main.MainMenuActivity;
 import pt.ulisboa.tecnico.cmov.locmess.messages.MainMessagesActivity;
 import pt.ulisboa.tecnico.cmov.locmess.profile.MainProfileActivity;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.AddGPSLocationTask;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.AddWifiLocationTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.GetAllLocationsTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.GetMessagesTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.GetUserKeysTask;
@@ -89,6 +90,10 @@ public class Manager implements TaskDelegate{
 
     public void addWifiLocation(Context context , String name, List<String> foundDevices){
         LocalMemory.getInstance().addLocation(new WifiLocation(name,foundDevices));
+
+        AddWifiLocationTask addWifiLocationTask = new AddWifiLocationTask(context);
+        addWifiLocationTask.execute(name, foundDevices);
+
         Intent intent = new Intent(context, MainLocationsActivity.class);
         context.startActivity(intent);
     }

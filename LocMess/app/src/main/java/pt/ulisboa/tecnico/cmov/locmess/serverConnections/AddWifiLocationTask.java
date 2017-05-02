@@ -15,6 +15,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -24,7 +27,7 @@ import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
  * Created by Roberto on 01/05/2017.
  */
 
-public class AddWifiLocationTask extends AsyncTask<String, Void, String> implements ServerInfo {
+public class AddWifiLocationTask extends AsyncTask<Object, Void, String> implements ServerInfo {
     Context context;
     URL url;
 
@@ -40,7 +43,7 @@ public class AddWifiLocationTask extends AsyncTask<String, Void, String> impleme
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    protected String doInBackground(Object... params) {
         /*
          * PARAM[0] - Name
          * PARAM[1] - List of wifi ID
@@ -50,15 +53,17 @@ public class AddWifiLocationTask extends AsyncTask<String, Void, String> impleme
 
         try {
             //Populating Location Json
-            locationJson.put("latitude", params[1]);
-            locationJson.put("longitude", params[2]);
-            locationJson.put("radius", params[3]);
+            List <String> list = new ArrayList <String>();
+            for (String r : (List<String>)params[1]) {
+                list.add(r);
+            }
+            locationJson.put("ssids", list);
 
             //Populating PostData Json
             postDataParams.put("username", LocalMemory.getInstance().getLoggedUserMail());
             postDataParams.put("token",LocalMemory.getInstance().getSessionKey());
-            postDataParams.put("name",params[0]);
-            postDataParams.put("is_gps", "False");
+            postDataParams.put("name",(String)params[0]);
+            postDataParams.put("is_gps", "false");
             postDataParams.put("location_json", locationJson);
 
 
@@ -109,4 +114,5 @@ public class AddWifiLocationTask extends AsyncTask<String, Void, String> impleme
 
         return conn;
     }
+
 }

@@ -100,20 +100,22 @@ public class GetAllLocationsTask extends AsyncTask<String, Void, String> impleme
             JSONArray jsonArray = new JSONArray(s);
             for (int i = 0, size = jsonArray.length(); i < size; i++) {
                 JSONObject objectInArray = jsonArray.getJSONObject(i);
+                Log.e("SOMETHING", objectInArray.getString("is_gps"));
+                if(objectInArray.getString("is_gps").equals("false")){
+                    Log.e("SOMETHING", objectInArray.getString("is_gps"));
+                } else {
+                    JSONObject locationObject = new JSONObject(objectInArray.getString("location"));
 
-                //TODO: LOCATION ARE BEING AUTO REMOVED HOW?
-                //TODO:
-                JSONObject locationObject = new JSONObject(objectInArray.getString("location"));
-
-                LocalMemory.getInstance().addLocation(
-                        new GpsLocation(
-                                objectInArray.getString("name"),
-                                Double.parseDouble(locationObject.getString("latitude")),
-                                Double.parseDouble(locationObject.getString("longitude")),
-                                Double.parseDouble(locationObject.getString("radius")
-                                )
-                        )
-                );
+                    LocalMemory.getInstance().addLocation(
+                            new GpsLocation(
+                                    objectInArray.getString("name"),
+                                    Double.parseDouble(locationObject.getString("latitude")),
+                                    Double.parseDouble(locationObject.getString("longitude")),
+                                    Double.parseDouble(locationObject.getString("radius")
+                                    )
+                            )
+                    );
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
