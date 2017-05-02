@@ -8,8 +8,8 @@ import android.view.View;
 
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.R;
-import pt.ulisboa.tecnico.cmov.locmess.messages.MainMessagesActivity;
 import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
+import pt.ulisboa.tecnico.cmov.locmess.profile.MainProfileActivity;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -23,11 +23,13 @@ public class MainMenuActivity extends AppCompatActivity {
         context=this;
 
         LocalMemory.getInstance().getManager().populateLocations(this);
+        LocalMemory.getInstance().getManager().populateKeys(this);
 
     }
 
     public void profile(View v) {
-        LocalMemory.getInstance().getManager().populateKeys(this);
+        Intent intent = new Intent(context, MainProfileActivity.class);
+        context.startActivity(intent);
     }
 
     public void messages(View v) {

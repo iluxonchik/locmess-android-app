@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.widget.Toast;
 
 import java.util.List;
@@ -155,6 +156,7 @@ public class Manager implements TaskDelegate{
             Toast.makeText(context, "User already exists", Toast.LENGTH_LONG).show();
         } else {
             Activity a = (Activity) context;
+            a.setResult(RESULT_OK, null);
             a.finish();
 
             LoginTask loginTask = new LoginTask(context, this);
@@ -205,8 +207,6 @@ public class Manager implements TaskDelegate{
         } else {
             if(result!=null){
                 LocalMemory.getInstance().loadKeys(result);
-                Intent intent = new Intent(context, MainProfileActivity.class);
-                context.startActivity(intent);
             }
         }
     }
@@ -217,8 +217,12 @@ public class Manager implements TaskDelegate{
             Toast.makeText(context, "Cannot add the key pair.", Toast.LENGTH_LONG).show();
         } else {
             Activity a = (Activity) context;
-            a.finish();
+            a.setResult(RESULT_OK, null);
             LocalMemory.getInstance().getManager().populateKeys(context);
+            SystemClock.sleep(500);
+            Intent intent = new Intent(context, MainProfileActivity.class);
+            context.startActivity(intent);
+            a.finish();
         }
     }
 
@@ -227,9 +231,15 @@ public class Manager implements TaskDelegate{
         if(result.equals("401")){
             Toast.makeText(context, "Cannot remove the key pair.", Toast.LENGTH_LONG).show();
         } else {
-            Activity a = (Activity) context;
-            a.finish();
             LocalMemory.getInstance().getManager().populateKeys(context);
+            Intent intent = new Intent(context, MainProfileActivity.class);
+            if(LocalMemory.getInstance().getStartAct()) {
+                SystemClock.sleep(500);
+                context.startActivity(intent);
+            }
+            Activity a = (Activity) context;
+            a.setResult(RESULT_OK, null);
+            a.finish();
         }
     }
 

@@ -11,7 +11,6 @@ import android.widget.EditText;
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.Manager;
 import pt.ulisboa.tecnico.cmov.locmess.R;
-import pt.ulisboa.tecnico.cmov.locmess.profile.MainProfileActivity;
 
 public class ViewKeyActivity extends AppCompatActivity {
 
@@ -50,11 +49,14 @@ public class ViewKeyActivity extends AppCompatActivity {
 
         Manager m = LocalMemory.getInstance().getManager();
 
-        if(oldKey.equals("") )
-            m.updateKey(context,keyE.getText().toString(),valueE.getText().toString());
-        else if(oldKey.split(":")[0].equals(valueE.getText()))
-            m.updateKey(context,keyE.getText().toString(),valueE.getText().toString());
+        if(oldKey.equals("") ) {
+            m.updateKey(context, keyE.getText().toString(), valueE.getText().toString());
+        }
+        else if(oldKey.split(":")[0].equals(keyE.getText().toString())) {
+            m.updateKey(context, keyE.getText().toString(), valueE.getText().toString());
+        }
         else{
+            LocalMemory.getInstance().setStartAct(false);
             m.removeKey(context,oldKey.split(":")[0],oldKey.split(":")[1]);
             m.updateKey(context,keyE.getText().toString(),valueE.getText().toString());
         }

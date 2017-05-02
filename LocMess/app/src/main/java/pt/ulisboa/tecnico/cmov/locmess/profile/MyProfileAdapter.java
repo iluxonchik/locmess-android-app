@@ -4,6 +4,7 @@ package pt.ulisboa.tecnico.cmov.locmess.profile;
  * Created by Valentyn on 20-03-2017.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -73,7 +74,7 @@ public class MyProfileAdapter extends BaseAdapter implements ListAdapter {
                 myIntent.putExtra("KEY", key);
                 myIntent.putExtra("VALUE", value);
 
-                context.startActivity(myIntent);
+                ((Activity)context).startActivityForResult(myIntent,22);
 
             }
         });
@@ -84,6 +85,7 @@ public class MyProfileAdapter extends BaseAdapter implements ListAdapter {
 
                 Manager m = LocalMemory.getInstance().getManager();
                 String[] splited = list.get(position).split(":");
+                LocalMemory.getInstance().setStartAct(true);
                 m.removeKey(context,splited[0],splited[1]);
 
             }

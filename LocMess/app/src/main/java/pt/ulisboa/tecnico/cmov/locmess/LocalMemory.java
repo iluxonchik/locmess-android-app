@@ -24,8 +24,18 @@ public class LocalMemory {
     private String loggedUserPassword="";
     private String sessionKey="";
 
+    private boolean startAct = false;
+
     public LocalMemory(){
 
+    }
+
+    public void setStartAct(boolean b){
+        startAct=b;
+    }
+
+    public boolean getStartAct(){
+        return startAct;
     }
 
     public void setLoggedUserMail(String m){

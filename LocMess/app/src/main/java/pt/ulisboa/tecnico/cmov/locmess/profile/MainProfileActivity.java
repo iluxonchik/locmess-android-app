@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.cmov.locmess.profile;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,11 +33,15 @@ public class MainProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        this.finish();
-    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        if (requestCode == 22) {
+            if (resultCode == RESULT_OK) {
+                this.finish();
+
+            }
+        }
+    }
 
     private void populateListView() {
         MyProfileAdapter adapter = new MyProfileAdapter(keys,this);
@@ -44,9 +49,10 @@ public class MainProfileActivity extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
+
     public void addKey(View v) {
         Intent intent = new Intent(this, ViewKeyActivity.class);
-        startActivity(intent);
+        ((Activity)context).startActivityForResult(intent,22);
     }
 
 }

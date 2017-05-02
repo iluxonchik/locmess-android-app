@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.cmov.locmess.main;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.Manager;
 import pt.ulisboa.tecnico.cmov.locmess.R;
-import pt.ulisboa.tecnico.cmov.locmess.main.SignUpActivity;
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -38,9 +38,8 @@ public class LogInActivity extends AppCompatActivity {
 
     public void register(View v) {
         Intent intent = new Intent(this, SignUpActivity.class);
-        startActivity(intent);
+        ((Activity)context).startActivityForResult(intent,23);
 
-        finish();
     }
 
     public void logIn(View v) {
@@ -49,5 +48,16 @@ public class LogInActivity extends AppCompatActivity {
 
         Manager m = LocalMemory.getInstance().getManager();
         m.login(context,userE.getText().toString(),passE.getText().toString());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 23) {
+            if (resultCode == RESULT_OK) {
+                this.finish();
+
+            }
+        }
     }
 }
