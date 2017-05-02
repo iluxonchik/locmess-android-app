@@ -3,6 +3,7 @@ package pt.ulisboa.tecnico.cmov.locmess.serverConnections;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,7 +36,7 @@ public class AddWifiLocationTask extends AsyncTask<Object, Void, String> impleme
         this.context = context;
 
         try {
-            url = new URL(SERVERINFO + ADDWIFILOCURI);
+            url = new URL(SERVERINFO + ADDLOCATIONURI);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -53,17 +54,18 @@ public class AddWifiLocationTask extends AsyncTask<Object, Void, String> impleme
 
         try {
             //Populating Location Json
+            JSONArray arrayObj=new JSONArray();
             List <String> list = new ArrayList <String>();
             for (String r : (List<String>)params[1]) {
-                list.add(r);
+                arrayObj.put(r);
             }
-            locationJson.put("ssids", list);
+            locationJson.put("ssids", arrayObj);
 
             //Populating PostData Json
             postDataParams.put("username", LocalMemory.getInstance().getLoggedUserMail());
             postDataParams.put("token",LocalMemory.getInstance().getSessionKey());
             postDataParams.put("name",(String)params[0]);
-            postDataParams.put("is_gps", "false");
+            postDataParams.put("is_gps", false);
             postDataParams.put("location_json", locationJson);
 
 

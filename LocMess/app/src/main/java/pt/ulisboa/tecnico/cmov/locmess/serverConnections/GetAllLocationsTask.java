@@ -100,9 +100,9 @@ public class GetAllLocationsTask extends AsyncTask<String, Void, String> impleme
             JSONArray jsonArray = new JSONArray(s);
             for (int i = 0, size = jsonArray.length(); i < size; i++) {
                 JSONObject objectInArray = jsonArray.getJSONObject(i);
-                Log.e("SOMETHING", objectInArray.getString("is_gps"));
-                if(objectInArray.getString("is_gps").equals("false")){
-                    Log.e("SOMETHING", objectInArray.getString("is_gps"));
+                Log.e("RECEIVED", ""+size);
+                if(objectInArray.getString("is_gps").equals(false)){
+                    Log.e("SOMETHING", "GPS FALSE");
                 } else {
                     JSONObject locationObject = new JSONObject(objectInArray.getString("location"));
 

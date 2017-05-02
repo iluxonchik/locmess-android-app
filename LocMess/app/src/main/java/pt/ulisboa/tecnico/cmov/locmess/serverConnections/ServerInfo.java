@@ -21,7 +21,6 @@ public interface ServerInfo {
     String GETMESSAGES = "/get/message/my";
     String SENDMESSAGE = "/new/message";
     String LOCATIONREMOVE = "/location/delete";
-    String ADDWIFILOCURI = "/get/location/all";
     String MESSAGEREMOVE = "/delete/message";
 
     HttpURLConnection serverConnection();
