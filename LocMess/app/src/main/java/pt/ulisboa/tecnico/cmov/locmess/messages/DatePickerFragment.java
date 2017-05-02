@@ -61,17 +61,24 @@ public class DatePickerFragment extends DialogFragment
 
         String m=""+min;
         String h=""+hours;
+        String d=""+day;
+        String mo=""+(month+1);
+
         if(min<10)
             m="0"+min;
         if(hours<10)
             h="0"+hours;
+        if(day<10)
+            d="0"+day;
+        if(month<10)
+            mo="0"+(month+1);
 
         if (cks.isChecked() && !tvs.isEnabled()) {
-            tvs.setText(year+"-"+month+"-"+day+"T"+h+":"+m);
+            tvs.setText(year+"-"+mo+"-"+d+"T"+h+":"+m+":00");
             tvs.setEnabled(true);
         }
         else {
-            tve.setText(year+"-"+month+"-"+day+"T"+h+":"+m);
+            tve.setText(year+"-"+mo+"-"+d+"T"+h+":"+m+":00");
             tve.setEnabled(true);
         }
     }

@@ -17,5 +17,6 @@ public interface TaskDelegate {
     void RemoveKeyTaskComplete(String result, Context context);
     void SendMessageTaskComplete(String result, Context context);
     void RemoveLocationTaskComplete(String result, Context context);
+    void RemoveMessageTaskComplete(String result, Context context);
 
 }

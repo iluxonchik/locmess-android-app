@@ -15,56 +15,36 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Created by Valentyn on 27-04-2017.
+ * Created by Valentyn on 02-05-2017.
  */
 
-public class SendMessageTask extends AsyncTask<Object, Void, String> implements ServerInfo {
+public class RemoveMessageTask extends AsyncTask<String, Void, String> implements ServerInfo {
     URL url;
     Context context;
 
     private TaskDelegate delegate;
 
-    public SendMessageTask(Context context, TaskDelegate delegate) {
+    public RemoveMessageTask(Context context, TaskDelegate delegate) {
         this.context = context;
         this.delegate = delegate;
         try {
-            url = new URL(SERVERINFO + SENDMESSAGE);
+            url = new URL(SERVERINFO + MESSAGEREMOVE);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    protected String doInBackground(Object... s) {
+    protected String doInBackground(String... s) {
         JSONObject postDataParams = new JSONObject();
         try {
             postDataParams.put("username", s[0]);
             postDataParams.put("token", s[1]);
-            postDataParams.put("title", s[2]);
-            postDataParams.put("location_name", s[3]);
-            postDataParams.put("text", s[4]);
-            postDataParams.put("is_centralized", s[5]);
-            postDataParams.put("is_black_list", s[6]);
-            List<String> l = (List<String>)s[7];
-            JSONObject propi = new JSONObject();
-
-            if(l!=null && l.size()>0){
-                for(String x : l){
-                    propi.put(x.split(":")[0],x.split(":")[1]);
-                }
-            }
-            postDataParams.put("properties", propi);
-
-            if(!s[8].equals("")) {
-                postDataParams.put("valid_from", s[8]);
-            }
-            if(!s[9].equals(""))
-                postDataParams.put("valid_until", s[9]);
+            postDataParams.put("msg_id", s[2]);
 
             HttpURLConnection conn = serverConnection();
 
@@ -99,7 +79,7 @@ public class SendMessageTask extends AsyncTask<Object, Void, String> implements 
 
     @Override
     protected void onPostExecute(String s) {
-        delegate.SendMessageTaskComplete(s, context);
+        delegate.RemoveMessageTaskComplete(s, context);
     }
 
     @Override
@@ -121,4 +101,5 @@ public class SendMessageTask extends AsyncTask<Object, Void, String> implements 
         return conn;
     }
 }
+
 

@@ -65,8 +65,12 @@ import pt.ulisboa.tecnico.cmov.locmess.R;
                 tSDate.setText("YYYY-MM-DDThh:mm");
 
             if(m.getEndDate()!=null){
-                if(m.getEndDate().contains("."))
-                    tEDate.setText(m.getEndDate().substring(0,m.getEndDate().indexOf('.')));
+                if(m.getEndDate().contains(".")) {
+                    if(m.getEndDate().substring(0, m.getEndDate().indexOf('.')).equals("9999-12-31T23:59:59"))
+                        tEDate.setText("");
+                    else
+                        tEDate.setText(m.getEndDate().substring(0, m.getEndDate().indexOf('.')));
+                }
                 else
                     tEDate.setText(m.getEndDate());
             }

@@ -40,7 +40,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".messages.AddMessageActivity" />
         <activity android:name=".messages.ViewMessageActivity" />
-        <activity android:name=".messages.AddMessageSecondActivity"></activity>
+        <activity android:name=".messages.AddMessageSecondActivity"
+            android:parentActivityName=".messages.AddMessageActivity">
+        </activity>
     </application>
 
 </manifest>

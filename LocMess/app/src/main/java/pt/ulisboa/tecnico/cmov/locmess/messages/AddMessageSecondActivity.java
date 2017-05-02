@@ -72,7 +72,7 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         else{
             TextView tvs = (TextView) findViewById(textViewSDate);
             tvs.setEnabled(false);
-            tvs.setText("YYYY-MM-DDThh:mm");
+            tvs.setText("YYYY-MM-DDThh:mm:ss");
         }
 
     }
@@ -87,7 +87,7 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         else{
             TextView tve = (TextView) findViewById(textViewEDate);
             tve.setEnabled(false);
-            tve.setText("YYYY-MM-DDThh:mm");
+            tve.setText("YYYY-MM-DDThh:mm:ss");
         }
     }
 
@@ -120,7 +120,7 @@ public class AddMessageSecondActivity extends AppCompatActivity {
             View vchi = vg.getChildAt(i);
 
             if (vchi instanceof CheckBox) {
-                if(((CheckBox) vchi).isChecked() && !((CheckBox) vchi).getText().toString().equals("Use Time Limit") )
+                if(((CheckBox) vchi).isChecked() && ((CheckBox) vchi).getId()!=R.id.checkboxUseStartTimeLimit && ((CheckBox) vchi).getId()!=R.id.checkboxUseEndTimeLimit)
                     keys.add(((CheckBox) vchi).getText().toString());
 
             }

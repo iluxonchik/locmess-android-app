@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.cmov.locmess.messages;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,12 +38,6 @@ public class MainMessagesActivity extends AppCompatActivity {
         populateListView(messages);
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        this.finish();
-    }
-
     private void populateListView(List<String> l) {
         MyMessagesAdapter adapter = new MyMessagesAdapter(l,this);
         ListView list = (ListView) findViewById(R.id.listViewMessages);
@@ -60,7 +55,18 @@ public class MainMessagesActivity extends AppCompatActivity {
 
     public void addMessage(View v) {
         Intent intent = new Intent(this, AddMessageActivity.class);
-        startActivity(intent);
+        ((Activity)context).startActivityForResult(intent,21);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 21) {
+            if (resultCode == RESULT_OK) {
+                this.finish();
+
+            }
+        }
     }
 
 }

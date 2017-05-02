@@ -13,7 +13,6 @@ import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
 import pt.ulisboa.tecnico.cmov.locmess.locations.WifiLocation;
 import pt.ulisboa.tecnico.cmov.locmess.main.LogInActivity;
 import pt.ulisboa.tecnico.cmov.locmess.main.MainMenuActivity;
-import pt.ulisboa.tecnico.cmov.locmess.messages.MainMessagesActivity;
 import pt.ulisboa.tecnico.cmov.locmess.profile.MainProfileActivity;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.AddGPSLocationTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.AddWifiLocationTask;
@@ -24,9 +23,12 @@ import pt.ulisboa.tecnico.cmov.locmess.serverConnections.LoginTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.LogoutTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RegisterTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RemoveKeyTask;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RemoveMessageTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.SendMessageTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.TaskDelegate;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.UpdateKeyTask;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Valentyn on 23-03-2017.
@@ -134,12 +136,8 @@ public class Manager implements TaskDelegate{
 
     public void removeMessage(Context context , int id){
 
-        LocalMemory.getInstance().removeMessage(id);
-        Intent myIntent = new Intent(context, MainMessagesActivity.class);
-        context.startActivity(myIntent);
-        Activity a = (Activity) context;
-        a.finish();
-
+        RemoveMessageTask removeMessageTask = new RemoveMessageTask(context, this);
+        removeMessageTask.execute(LocalMemory.getInstance().getLoggedUserMail(),LocalMemory.getInstance().getSessionKey(),""+id);
     }
 
     public void removeKey(Context context , String key,String value){
@@ -236,6 +234,17 @@ public class Manager implements TaskDelegate{
     }
 
     @Override
+    public void RemoveMessageTaskComplete(String result, Context context) {
+        if(result.equals("401")){
+            Toast.makeText(context, "Cannot remove the message.", Toast.LENGTH_LONG).show();
+        } else {
+            Activity a = (Activity) context;
+            a.finish();
+            LocalMemory.getInstance().getManager().populateMessages(context);
+        }
+    }
+
+    @Override
     public void RemoveLocationTaskComplete(String result, Context context) {
         if(result.equals("401")){
             Toast.makeText(context, "Cannot remove the location.", Toast.LENGTH_LONG).show();
@@ -253,7 +262,8 @@ public class Manager implements TaskDelegate{
             Toast.makeText(context, "Cannot send message.", Toast.LENGTH_LONG).show();
         } else {
             Activity a = (Activity) context;
-            a.finish();
+                a.setResult(RESULT_OK, null);
+                a.finish();
             LocalMemory.getInstance().getManager().populateMessages(context);
         }
     }

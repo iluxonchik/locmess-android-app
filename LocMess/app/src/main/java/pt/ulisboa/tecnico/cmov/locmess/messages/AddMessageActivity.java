@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.cmov.locmess.messages;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +32,19 @@ public class AddMessageActivity extends AppCompatActivity {
         myIntent.putExtra("LOCATION", location.getText().toString());
         myIntent.putExtra("TEXT", text.getText().toString());
 
-        context.startActivity(myIntent);
+        ((Activity)context).startActivityForResult(myIntent,20);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 20) {
+            if (resultCode == RESULT_OK) {
+                setResult(RESULT_OK, null);
+                this.finish();
+
+            }
+        }
     }
 
 

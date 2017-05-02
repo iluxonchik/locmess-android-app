@@ -86,7 +86,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="YYYY-MM-DDThh:mm"
+        android:text="YYYY-MM-DDThh:mm:ss"
         android:layout_marginTop="2dp"
         android:layout_below="@+id/checkboxUseStartTimeLimit"
         android:id="@+id/textViewSDate"/>
@@ -102,7 +102,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="YYYY-MM-DDThh:mm"
+        android:text="YYYY-MM-DDThh:mm:ss"
         android:layout_marginTop="2dp"
         android:layout_below="@+id/checkboxUseEndTimeLimit"
         android:id="@+id/textViewEDate"/>
