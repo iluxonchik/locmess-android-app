@@ -55,12 +55,12 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         for(int i=0;i<keys.size();i++){
             CheckBox checkBox = new CheckBox(context);
             checkBox.setText(keys.get(i));
-            checkBox.setId(i);
+            checkBox.setId(i+2);
             RelativeLayout.LayoutParams layoutParam = new RelativeLayout.LayoutParams(
                     ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
             //FIX ME
             if(i>0)
-                layoutParam.addRule(RelativeLayout.BELOW, i - 1);
+                layoutParam.addRule(RelativeLayout.BELOW, i+2 - 1);
             else
                 layoutParam.addRule(RelativeLayout.ALIGN_PARENT_START);
 
