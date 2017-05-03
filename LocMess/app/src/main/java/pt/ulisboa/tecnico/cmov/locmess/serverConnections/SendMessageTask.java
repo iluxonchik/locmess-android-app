@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.cmov.locmess.serverConnections;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -50,12 +52,13 @@ public class SendMessageTask extends AsyncTask<Object, Void, String> implements 
             postDataParams.put("text", s[4]);
             postDataParams.put("is_centralized", s[5]);
             postDataParams.put("is_black_list", s[6]);
-            List<String> l = (List<String>)s[7];
+            List l = ((ArrayList) s[7]);
             JSONObject propi = new JSONObject();
+            Log.e("didi",""+l.size());
 
             if(l!=null && l.size()>0){
-                for(String x : l){
-                    propi.put(x.split(":")[0],x.split(":")[1]);
+                for(Object x : l){
+                    propi.put(x.toString().split(":")[0],x.toString().split(":")[1]);
                 }
             }
             postDataParams.put("properties", propi);
@@ -65,7 +68,6 @@ public class SendMessageTask extends AsyncTask<Object, Void, String> implements 
             }
             if(!s[9].equals(""))
                 postDataParams.put("valid_until", s[9]);
-
             HttpURLConnection conn = serverConnection();
 
             OutputStream os = conn.getOutputStream();

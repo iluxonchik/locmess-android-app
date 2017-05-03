@@ -4,9 +4,9 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -55,7 +55,16 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         for(int i=0;i<keys.size();i++){
             CheckBox checkBox = new CheckBox(context);
             checkBox.setText(keys.get(i));
-            //Alinhar as chekboxes para não estarem sobrepostas
+            checkBox.setId(i);
+            RelativeLayout.LayoutParams layoutParam = new RelativeLayout.LayoutParams(
+                    ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+            //FIX ME
+            if(i>0)
+                layoutParam.addRule(RelativeLayout.BELOW, i - 1);
+            else
+                layoutParam.addRule(RelativeLayout.ALIGN_PARENT_START);
+
+            checkBox.setLayoutParams(layoutParam);
             linear.addView(checkBox);
         }
 
@@ -115,16 +124,12 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         if(tve.isEnabled())
             eDate= tve.getText().toString();
 
-        ViewGroup vg = (ViewGroup)v.getParent();
-        for(int i=0;i<vg.getChildCount();i++) {
-            View vchi = vg.getChildAt(i);
-
-            if (vchi instanceof CheckBox) {
-                if(((CheckBox) vchi).isChecked() && ((CheckBox) vchi).getId()!=R.id.checkboxUseStartTimeLimit && ((CheckBox) vchi).getId()!=R.id.checkboxUseEndTimeLimit)
-                    keys.add(((CheckBox) vchi).getText().toString());
-
-            }
+        RelativeLayout rl = (RelativeLayout) findViewById(R.id.layoutProfilePreferences);
+        for(int i=0;i< rl.getChildCount();i++){
+            if(((CheckBox)rl.getChildAt(i)).isChecked())
+                keys.add(((CheckBox)rl.getChildAt(i)).getText().toString());
         }
+
 
         Manager m = LocalMemory.getInstance().getManager();
         m.sendMessage(context,title,location,text,centralized,black_list,keys,sDate,eDate);
