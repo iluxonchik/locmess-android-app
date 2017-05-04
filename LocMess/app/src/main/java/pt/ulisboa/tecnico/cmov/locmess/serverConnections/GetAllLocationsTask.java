@@ -20,12 +20,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.locations.GpsLocation;
+import pt.ulisboa.tecnico.cmov.locmess.locations.WifiLocation;
 
 /**
  * Created by Roberto on 22/04/2017.
@@ -100,9 +103,13 @@ public class GetAllLocationsTask extends AsyncTask<String, Void, String> impleme
             JSONArray jsonArray = new JSONArray(s);
             for (int i = 0, size = jsonArray.length(); i < size; i++) {
                 JSONObject objectInArray = jsonArray.getJSONObject(i);
-                Log.e("RECEIVED", ""+size);
-                if(objectInArray.getString("is_gps").equals(false)){
-                    Log.e("SOMETHING", "GPS FALSE");
+                if(!objectInArray.getBoolean("is_gps")){
+                    JSONArray arr = objectInArray.getJSONObject("location").getJSONArray("ssids");
+                    List<String> ssidsList = new ArrayList<String>();
+                    for(int j = 0; j <arr.length(); j++){
+                        ssidsList.add(arr.getJSONObject(i).getString("name"));
+                    }
+                    LocalMemory.getInstance().addLocation(new WifiLocation(objectInArray.getString("name"), ssidsList));
                 } else {
                     JSONObject locationObject = new JSONObject(objectInArray.getString("location"));
 
