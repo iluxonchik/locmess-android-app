@@ -12,73 +12,71 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     tools:context="pt.ulisboa.tecnico.cmov.locmess.messages.AddMessageActivity">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="40dp"
+            android:id="@+id/textView22"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="40dp"
-        android:id="@+id/textView22"/>
+        <EditText
+            android:inputType="text"
+            android:text=""
+            android:layout_marginTop="5dp"
+            android:id="@+id/editTextMessageTitle"
+            android:layout_below="@+id/textView22"
+            style="@style/MyEditTextStyle" />
 
-    <EditText
-        android:inputType="text"
-        android:text=""
-        android:layout_marginTop="5dp"
-        android:id="@+id/editTextMessageTitle"
-        android:layout_below="@+id/textView22"
-        style="@style/MyEditTextStyle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:layout_below="@+id/editTextMessageTitle"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView23"/>
 
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Location"
-    android:layout_below="@+id/editTextMessageTitle"
-    android:layout_marginTop="10dp"
-    android:id="@+id/textView23"/>
+        <EditText
+            android:inputType="text"
+            android:text=""
+            android:layout_marginTop="5dp"
+            android:id="@+id/editTextMessageLocation"
+            android:layout_below="@+id/textView23"
+            style="@style/MyEditTextStyle" />
 
-    <EditText
-        android:inputType="text"
-        android:text=""
-        android:layout_marginTop="5dp"
-        android:id="@+id/editTextMessageLocation"
-        android:layout_below="@+id/textView23"
-        style="@style/MyEditTextStyle" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Text"
+            android:layout_below="@+id/editTextMessageLocation"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView24"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Text"
-        android:layout_below="@+id/editTextMessageLocation"
-        android:layout_marginTop="10dp"
-        android:id="@+id/textView24"/>
+        <EditText
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:minLines="6"
+            android:gravity="top|left"
+            android:maxLines="10"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:scrollbars="vertical"
+            android:text=""
+            android:layout_marginTop="5dp"
+            android:id="@+id/editTextMessageText"
+            android:layout_below="@+id/textView24"
+            style="@style/MyEditTextStyle"/>
 
-    <EditText
-        android:inputType="textMultiLine"
-        android:lines="8"
-        android:minLines="6"
-        android:gravity="top|left"
-        android:maxLines="10"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:scrollbars="vertical"
-        android:text=""
-        android:layout_marginTop="5dp"
-        android:id="@+id/editTextMessageText"
-        android:layout_below="@+id/textView24"
-        style="@style/MyEditTextStyle"/>
-
-    <Button
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:text="NEXT"
-        android:layout_marginTop="15dp"
-        android:id="@+id/buttonNextMessageStep"
-        android:layout_below="@+id/editTextMessageText"
-        android:onClick="nextMessageAct"/>
-
+        <Button
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="NEXT"
+            android:layout_marginTop="15dp"
+            android:id="@+id/buttonNextMessageStep"
+            android:layout_below="@+id/editTextMessageText"
+            android:onClick="nextMessageAct"/>
 </RelativeLayout>
 
 
