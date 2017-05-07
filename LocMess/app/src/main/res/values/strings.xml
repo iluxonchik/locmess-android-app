@@ -33,7 +33,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="radius">Radius</string>
+    <string name="radius">Radius:</string>
 
 </resources>
 

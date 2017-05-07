@@ -54,6 +54,9 @@
 
         <service
             android:name="pt.inesc.termite.wifidirect.service.SimWifiP2pService" />
+
+        <service android:name=".messages.service.MessagePollingService"
+                 android:exported="false" />
     </application>
 
 </manifest>
