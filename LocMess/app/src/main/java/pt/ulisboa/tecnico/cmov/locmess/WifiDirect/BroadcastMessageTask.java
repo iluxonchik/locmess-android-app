@@ -58,7 +58,6 @@ public class BroadcastMessageTask
                 } else {
                     Log.d("X", "NOT BOUND");
                 }
-/*
                 //2nd get decentralized messages
                 List<Message> messages = LocalMemory.getInstance().getDecentralizedMessages();
                 //3rd get my loc
@@ -88,8 +87,8 @@ public class BroadcastMessageTask
                 //###SECCOND STEP
                 //7th verify is someone received the message and remove from the list
 
-                */
             }
+            /*
             Log.d("X", "Neighbors part");
             if(neighborsIp != null) {
                 for (String ip : neighborsIp) {
@@ -105,6 +104,7 @@ public class BroadcastMessageTask
                     }
                 }
             }
+            */
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
@@ -137,7 +137,7 @@ public class BroadcastMessageTask
 
     @Override
     public void onGroupInfoAvailable(SimWifiP2pDeviceList devices, SimWifiP2pInfo groupInfo) {
-        Log.d("X:", "OnGroupInfoAvailable");
+        //Log.d("X:", "OnGroupInfoAvailable");
         neighborsIp = new ArrayList<>();
         if(groupInfo.getDevicesInNetwork() != null) {
             for (String deviceName : groupInfo.getDevicesInNetwork()) {
