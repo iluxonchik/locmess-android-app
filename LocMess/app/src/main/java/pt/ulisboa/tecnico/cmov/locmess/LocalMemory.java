@@ -24,6 +24,7 @@ public class LocalMemory {
 
     private SimWifiP2pManager mManager = null;
     private SimWifiP2pManager.Channel mChannel = null;
+    private boolean mBound = false;
 
     private String loggedUserMail="";
     private String loggedUserPassword="";
@@ -49,6 +50,14 @@ public class LocalMemory {
 
     public Channel getmChannel() {
         return mChannel;
+    }
+
+    public boolean ismBound() {
+        return mBound;
+    }
+
+    public void setmBound(boolean mBound) {
+        this.mBound = mBound;
     }
 
     public void setStartAct(boolean b){

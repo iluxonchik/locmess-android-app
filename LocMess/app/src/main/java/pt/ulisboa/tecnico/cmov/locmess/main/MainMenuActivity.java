@@ -20,6 +20,7 @@ import pt.inesc.termite.wifidirect.SimWifiP2pDeviceList;
 import pt.inesc.termite.wifidirect.SimWifiP2pManager;
 import pt.inesc.termite.wifidirect.service.SimWifiP2pService;
 import pt.inesc.termite.wifidirect.SimWifiP2pManager.PeerListListener;
+import pt.inesc.termite.wifidirect.sockets.SimWifiP2pSocketManager;
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.R;
 import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.SimWifiP2pBroadcastReceiver;
@@ -47,6 +48,8 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
 
         LocalMemory.getInstance().getManager().populateLocations(this);
         LocalMemory.getInstance().getManager().populateKeys(this);
+
+        SimWifiP2pSocketManager.Init(getApplicationContext());
 
         // register broadcast receiver
         IntentFilter filter = new IntentFilter();
@@ -89,6 +92,7 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
         Intent intent = new Intent(this, SimWifiP2pService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         mBound = true;
+        LocalMemory.getInstance().setmBound(mBound);
 
     }
 

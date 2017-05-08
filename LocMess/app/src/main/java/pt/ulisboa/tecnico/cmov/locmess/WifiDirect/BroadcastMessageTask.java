@@ -51,7 +51,13 @@ public class BroadcastMessageTask
             mChannel = LocalMemory.getInstance().getmChannel();
             if(mChannel != null && mManager != null){
                 Log.d("X: ", "not null");
-                mManager.requestGroupInfo(mChannel, null);
+
+                if(LocalMemory.getInstance().ismBound()) {
+                    //mManager.discoverPeers(mChannel,null);
+                    mManager.requestGroupInfo(mChannel, this);
+                } else {
+                    Log.d("X", "NOT BOUND");
+                }
 /*
                 //2nd get decentralized messages
                 List<Message> messages = LocalMemory.getInstance().getDecentralizedMessages();
@@ -132,9 +138,13 @@ public class BroadcastMessageTask
     @Override
     public void onGroupInfoAvailable(SimWifiP2pDeviceList devices, SimWifiP2pInfo groupInfo) {
         Log.d("X:", "OnGroupInfoAvailable");
-        for (String deviceName : groupInfo.getDevicesInNetwork()) {
-            SimWifiP2pDevice device = devices.getByName(deviceName);
-            neighborsIp.add(device.getVirtIp());
+        neighborsIp = new ArrayList<>();
+        if(groupInfo.getDevicesInNetwork() != null) {
+            for (String deviceName : groupInfo.getDevicesInNetwork()) {
+                SimWifiP2pDevice device = devices.getByName(deviceName);
+                if(device!= null)
+                    neighborsIp.add(device.getVirtIp());
+            }
         }
     }
 }
