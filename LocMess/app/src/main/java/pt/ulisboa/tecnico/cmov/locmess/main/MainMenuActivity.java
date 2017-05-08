@@ -27,6 +27,7 @@ import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
 import pt.ulisboa.tecnico.cmov.locmess.profile.MainProfileActivity;
 
 import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.IncommingCommTask;
+import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.BroadcastMessageTask;
 
 public class MainMenuActivity extends AppCompatActivity implements PeerListListener {
 
@@ -57,8 +58,12 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
         registerReceiver(mReceiver, filter);
         enableWifiDirect();
 
-        // spawn the chat server background task
+        // spawn the server task
         new IncommingCommTask(context).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
+
+        // spawn the broadcast task
+        new BroadcastMessageTask(context).executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -97,6 +102,9 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
             mManager = new SimWifiP2pManager(new Messenger(service));
             mChannel = mManager.initialize(getApplication(), getMainLooper(), null);
             mBound = true;
+
+            LocalMemory.getInstance().setmChannel(mChannel);
+            LocalMemory.getInstance().setmManager(mManager);
         }
 
         @Override

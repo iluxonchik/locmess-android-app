@@ -24,6 +24,7 @@ public class IncommingCommTask extends AsyncTask<Void, String, Void> {
 
     private SimWifiP2pSocketServer mSrvSocket = null;
     Context context;
+    int mNotificationId = 0;
 
     public IncommingCommTask(Context context) {
         this.context = context;
@@ -76,7 +77,7 @@ public class IncommingCommTask extends AsyncTask<Void, String, Void> {
                         .setContentText("You receive a message from a close by neighbor.");
 
         // Sets an ID for the notification
-        int mNotificationId = 001;
+        mNotificationId ++;
         // Gets an instance of the NotificationManager service
         NotificationManager mNotifyMgr =
                 (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
