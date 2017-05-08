@@ -18,6 +18,7 @@ public class LocalMemory {
     private List<String> keys = new ArrayList<>();
     private List<Location> locations = new ArrayList<>();
     private List<Message> messages = new ArrayList<>();
+    private List<Message> decentralizedMessages = new ArrayList<>();
 
 
     private String loggedUserMail="";
@@ -117,6 +118,10 @@ public class LocalMemory {
                 return;
         }
         messages.add(m);
+    }
+
+    public void addDecentralizedMessage(Message m) {
+        decentralizedMessages.add(m);
     }
 
     public void loadMessages(List<Message> l){

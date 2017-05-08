@@ -15,9 +15,6 @@ public class WifiFunctions  {
      */
     public static List<String> getDevices() {
         List<String> foundDevices = new ArrayList<String>();
-
-
-
         return foundDevices;
     }
 
