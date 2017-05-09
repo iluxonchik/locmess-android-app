@@ -29,6 +29,10 @@ public class MainMessagesActivity extends AppCompatActivity {
         context=this;
 
         List<Message> msgs = LocalMemory.getInstance().getMessages();
+        List<Message> msgsD = LocalMemory.getInstance().getDecentralizedMessages();
+        msgs.addAll(msgsD);
+
+
         for(int i=0;i<msgs.size();i++){
             messages.add(msgs.get(i).getId()+":"+msgs.get(i).getTitle());
             if(msgs.get(i).getAutor().equals(LocalMemory.getInstance().getLoggedUserMail()))

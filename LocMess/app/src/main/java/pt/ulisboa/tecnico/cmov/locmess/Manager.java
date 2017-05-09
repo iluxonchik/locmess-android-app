@@ -25,6 +25,7 @@ import pt.ulisboa.tecnico.cmov.locmess.serverConnections.LoginTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.LogoutTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RegisterTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RemoveKeyTask;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RemoveLocationTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.RemoveMessageTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.SendMessageTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.TaskDelegate;
@@ -111,10 +112,18 @@ public class Manager implements TaskDelegate{
 
    public void decentralizedMessage(Context context, String title,String location,String text,boolean isCentralized,
                                     boolean isBlackList, List<String> keys, String sDate,String eDate) {
+        int id = LocalMemory.getInstance().getIdCounter();
 
-       Message m = new Message(-1, title, LocalMemory.getInstance().getLoggedUserMail(), location, text,
+       Message m = new Message(id, title, LocalMemory.getInstance().getLoggedUserMail(), location, text,
                isCentralized, isBlackList, keys, sDate, eDate);
        LocalMemory.getInstance().addDecentralizedMessage(m);
+
+       LocalMemory.getInstance().decrementId();
+
+       Activity a = (Activity) context;
+       a.setResult(RESULT_OK, null);
+       a.finish();
+       LocalMemory.getInstance().getManager().populateMessages(context);
    }
 
     public void populateKeys(Context context){
@@ -139,17 +148,30 @@ public class Manager implements TaskDelegate{
 
     public void removeLocation(Context context , String name){
 
-        LocalMemory.getInstance().removeLocation(name);
-        Intent myIntent = new Intent(context, MainLocationsActivity.class);
-        context.startActivity(myIntent);
-        Activity a = (Activity) context;
-        a.finish();
+        RemoveLocationTask removeLocationTask = new RemoveLocationTask(context, this);
+        removeLocationTask.execute(LocalMemory.getInstance().getLoggedUserMail(),LocalMemory.getInstance().getSessionKey(),name);
     }
 
     public void removeMessage(Context context , int id){
+        boolean isDescentralized=false;
+        for (Message m : LocalMemory.getInstance().getDecentralizedMessages()){
+            if (m.getId() == id){
+                isDescentralized = true;
+                break;
+            }
+        }
 
-        RemoveMessageTask removeMessageTask = new RemoveMessageTask(context, this);
-        removeMessageTask.execute(LocalMemory.getInstance().getLoggedUserMail(),LocalMemory.getInstance().getSessionKey(),""+id);
+        if (isDescentralized){
+            LocalMemory.getInstance().removeDescentralizedMessage(id);
+
+            Activity a = (Activity) context;
+            a.finish();
+            LocalMemory.getInstance().getManager().populateMessages(context);
+        }
+        else {
+            RemoveMessageTask removeMessageTask = new RemoveMessageTask(context, this);
+            removeMessageTask.execute(LocalMemory.getInstance().getLoggedUserMail(), LocalMemory.getInstance().getSessionKey(), "" + id);
+        }
     }
 
     public void removeKey(Context context , String key,String value){
@@ -270,6 +292,8 @@ public class Manager implements TaskDelegate{
         if(result.equals("401")){
             Toast.makeText(context, "Cannot remove the location.", Toast.LENGTH_LONG).show();
         } else {
+            LocalMemory.getInstance().getManager().populateLocations(context);
+
             Activity a = (Activity) context;
             a.finish();
             LocalMemory.getInstance().getManager().populateLocations(context);

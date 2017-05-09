@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.inesc.termite.wifidirect.SimWifiP2pManager;
+import pt.inesc.termite.wifidirect.SimWifiP2pManager.Channel;
 import pt.ulisboa.tecnico.cmov.locmess.locations.Location;
 import pt.ulisboa.tecnico.cmov.locmess.messages.Message;
-import pt.inesc.termite.wifidirect.SimWifiP2pManager.Channel;
 
 
 public class LocalMemory {
@@ -32,8 +32,18 @@ public class LocalMemory {
 
     private boolean startAct = false;
 
+    private int idCounter = -1;
+
     public LocalMemory(){
 
+    }
+
+    public int getIdCounter(){
+        return idCounter;
+    }
+
+    public void decrementId(){
+        idCounter-=1;
     }
 
     public void setmManager(SimWifiP2pManager mManager) {
@@ -166,6 +176,13 @@ public class LocalMemory {
         for(int i=0;i<messages.size();i++){
             if(messages.get(i).getId()==id)
                 messages.remove(i);
+        }
+    }
+
+    public void removeDescentralizedMessage(int id){
+        for(int i=0;i<decentralizedMessages.size();i++){
+            if (decentralizedMessages.get(i).getId()==id)
+            decentralizedMessages.remove(i);
         }
     }
 

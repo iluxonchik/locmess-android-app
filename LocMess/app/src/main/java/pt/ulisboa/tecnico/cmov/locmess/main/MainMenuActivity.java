@@ -10,8 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import java.util.Calendar;
-import android.net.wifi.p2p.WifiP2pManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -20,22 +18,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import java.util.Calendar;
+
 import pt.inesc.termite.wifidirect.SimWifiP2pBroadcast;
 import pt.inesc.termite.wifidirect.SimWifiP2pDevice;
 import pt.inesc.termite.wifidirect.SimWifiP2pDeviceList;
 import pt.inesc.termite.wifidirect.SimWifiP2pManager;
-import pt.inesc.termite.wifidirect.service.SimWifiP2pService;
 import pt.inesc.termite.wifidirect.SimWifiP2pManager.PeerListListener;
+import pt.inesc.termite.wifidirect.service.SimWifiP2pService;
 import pt.inesc.termite.wifidirect.sockets.SimWifiP2pSocketManager;
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.R;
+import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.BroadcastMessageTask;
+import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.IncommingCommTask;
 import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.SimWifiP2pBroadcastReceiver;
 import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
 import pt.ulisboa.tecnico.cmov.locmess.messages.service.MessagePollingService;
 import pt.ulisboa.tecnico.cmov.locmess.profile.MainProfileActivity;
-
-import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.IncommingCommTask;
-import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.BroadcastMessageTask;
 
 public class MainMenuActivity extends AppCompatActivity implements PeerListListener {
 
@@ -54,8 +53,8 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
         setContentView(R.layout.activity_main_menu);
         Log.d(LOG_TAG, "HEEEELLO");
 
-        setUpSharedPreferences();
-        startMessagePollingServiceAlarm();
+        //setUpSharedPreferences();
+        //startMessagePollingServiceAlarm();
 
 
         context=this;
