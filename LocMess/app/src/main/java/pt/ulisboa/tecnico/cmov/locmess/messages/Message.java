@@ -1,5 +1,8 @@
 package pt.ulisboa.tecnico.cmov.locmess.messages;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -70,6 +73,25 @@ public class Message {
 
     public String getEndDate(){
         return endDate;
+    }
+    
+    public JSONObject getJsonObject(){
+        JSONObject jo = new JSONObject();
+        try {
+            jo.put("id", id);
+            jo.put("title", title);
+            jo.put("author", autor);
+            jo.put("location", location);
+            jo.put("text", text);
+            jo.put("isCentralized", isCentralized);
+            jo.put("isBlackList", isBlackList);
+            jo.put("keys", keys.toString());
+            jo.put("sDate", startDate);
+            jo.put("eDate", endDate);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jo;
     }
 
 

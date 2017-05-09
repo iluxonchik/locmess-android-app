@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -74,16 +77,21 @@ public class BroadcastMessageTask
                     for (String ip : neighborsIp) {
                         for(Message m : messagesToBroadcast) {
                             try {
+                                JSONObject toSend = new JSONObject();
+                                toSend.put("MESSAGE", m.getJsonObject().toString());
+
                                 SimWifiP2pSocket mCliSocket = new SimWifiP2pSocket(ip,10001 );
-                                mCliSocket.getOutputStream().write((m.getTitle() + "\n").getBytes());
+                                mCliSocket.getOutputStream().write((toSend.toString() + "\n").getBytes());
                                 BufferedReader sockIn = new BufferedReader(new InputStreamReader(mCliSocket.getInputStream()));
                                 sockIn.readLine();
                                 mCliSocket.close();
                             } catch (IOException e) {
                                 e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
 
-                            //TODO: New list to have to messages to send    
+                            //TODO: New list to have to messages to send
                             LocalMemory.getInstance().removeDescentralizedMessage(m.getId());
                         }
                     }
