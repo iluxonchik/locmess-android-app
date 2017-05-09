@@ -37,6 +37,7 @@ public class BroadcastMessageTask
 
     private SimWifiP2pManager mManager = null;
     private SimWifiP2pManager.Channel mChannel = null;
+    private String TAG = "WD";
 
     public BroadcastMessageTask(Context context) {
         this.context = context;
@@ -55,11 +56,11 @@ public class BroadcastMessageTask
                 if(LocalMemory.getInstance().ismBound()) {
                     //mManager.discoverPeers(mChannel,null);
                     mManager.requestGroupInfo(mChannel, this);
-                } else {
+                } else
                     Log.d("X", "NOT BOUND");
-                }
                 //2nd get decentralized messages
                 List<Message> messages = LocalMemory.getInstance().getDecentralizedMessages();
+
                 //3rd get my loc
                 //3.1 GEO loc
                 getGpsLocation = new GetGpsLocation(context);
@@ -67,6 +68,7 @@ public class BroadcastMessageTask
                 //3.2 WIFI loc
                 //4th checks messages that are supposed to be sent in this loc
                 List<Message> messagesToBroadcast = messageToBroadcast(messages, myLoc);
+                Log.d(TAG, "" +  messagesToBroadcast.size());
                 //5th broadcast message to available
                 if(neighborsIp != null) {
                     for (String ip : neighborsIp) {
@@ -80,14 +82,17 @@ public class BroadcastMessageTask
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+
+                            //TODO: New list to have to messages to send    
+                            LocalMemory.getInstance().removeDescentralizedMessage(m.getId());
                         }
                     }
                 }
-                //6th Remove message from the list
                 //###SECCOND STEP
                 //7th verify is someone received the message and remove from the list
 
             }
+
             /*
             Log.d("X", "Neighbors part");
             if(neighborsIp != null) {
@@ -103,8 +108,8 @@ public class BroadcastMessageTask
                         e.printStackTrace();
                     }
                 }
-            }
-            */
+            }*/
+
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
@@ -115,17 +120,38 @@ public class BroadcastMessageTask
     }
 
     private List<Message> messageToBroadcast(List<Message> messages, GpsLocation loc) {
+
+        Log.d(TAG + " LAT: ", "" + loc.getLatitude());
+        Log.d(TAG + " LON: ", "" + loc.getLongitude());
+        Log.d(TAG + " Radius: ", "" + loc.getRadious());
+
         List<Message> messagesToReturn = new ArrayList<>();
         for (Message m : messages) {
             String auxloc  = m.getLocation();
             GpsLocation messageLoc = (GpsLocation) LocalMemory.getInstance().getLocation(auxloc);
 
+            Log.d(TAG + " LAT M: ", "" + messageLoc.getLatitude());
+            Log.d(TAG + " LON M: ", "" + messageLoc.getLongitude());
+            Log.d(TAG + " Radius M: ", "" + messageLoc.getRadious());
+            /*
             double aux1 = pow((loc.getLatitude() - messageLoc.getLatitude()), 2);
             double aux2 = pow((loc.getLongitude() - messageLoc.getLongitude()), 2);
 
             if(aux1 + aux2 < pow(messageLoc.getRadious(), 2)){
                 messagesToReturn.add(m);
-            }
+            }*/
+
+            double earthRadius = 6371000; //meters
+            double dLat = Math.toRadians(loc.getLatitude()- messageLoc.getLatitude());
+            double dLng = Math.toRadians(loc.getLongitude()- messageLoc.getLongitude());
+            double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(Math.toRadians(loc.getLatitude())) * Math.cos(Math.toRadians(messageLoc.getLatitude())) *
+                            Math.sin(dLng/2) * Math.sin(dLng/2);
+            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            float dist = (float) (earthRadius * c);
+
+            if(dist <= messageLoc.getRadious())
+                messagesToReturn.add(m);
         }
         return  messagesToReturn;
     }
