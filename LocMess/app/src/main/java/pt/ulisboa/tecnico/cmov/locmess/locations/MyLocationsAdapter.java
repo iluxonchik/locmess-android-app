@@ -79,7 +79,7 @@ public class MyLocationsAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 Manager m = LocalMemory.getInstance().getManager();
-                m.removeLocation(context,list.get(position));
+                m.removeLocation(context,list.get(position).toString());
 
             }
         });

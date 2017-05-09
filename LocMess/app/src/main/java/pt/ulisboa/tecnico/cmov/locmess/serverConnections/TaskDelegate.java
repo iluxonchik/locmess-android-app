@@ -14,9 +14,9 @@ public interface TaskDelegate {
     void LogoutTaskComplete(String result, Context context);
     void GetUserKeysTaskComplete(List<String> result, Context context);
     void UpdateKeyTaskComplete(String result, Context context);
-    void RemoveKeyTaskComplete(String result, Context context);
+    void RemoveKeyTaskComplete(String result, String key, Context context);
     void SendMessageTaskComplete(String result, Context context);
-    void RemoveLocationTaskComplete(String result, Context context);
-    void RemoveMessageTaskComplete(String result, Context context);
+    void RemoveLocationTaskComplete(String result, String name, Context context);
+    void RemoveMessageTaskComplete(String result, int id, Context context);
 
 }

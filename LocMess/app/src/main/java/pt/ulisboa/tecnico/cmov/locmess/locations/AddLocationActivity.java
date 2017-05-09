@@ -1,9 +1,7 @@
 package pt.ulisboa.tecnico.cmov.locmess.locations;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -20,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
@@ -142,7 +139,7 @@ public class AddLocationActivity extends AppCompatActivity{
         CheckBox checkBox = (CheckBox) findViewById(R.id.checkboxUseCurrentLocation);
         if(!checkBox.isChecked()) return;
 
-        double rad = 0;
+        double rad = 1;
 
         getGpsLocation = new GetGpsLocation(context);
 

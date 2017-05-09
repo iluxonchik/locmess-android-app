@@ -28,6 +28,8 @@ public class RemoveMessageTask extends AsyncTask<String, Void, String> implement
 
     private TaskDelegate delegate;
 
+    private int id=0;
+
     public RemoveMessageTask(Context context, TaskDelegate delegate) {
         this.context = context;
         this.delegate = delegate;
@@ -45,6 +47,8 @@ public class RemoveMessageTask extends AsyncTask<String, Void, String> implement
             postDataParams.put("username", s[0]);
             postDataParams.put("token", s[1]);
             postDataParams.put("msg_id", s[2]);
+
+            id = Integer.parseInt(s[2]);
 
             HttpURLConnection conn = serverConnection();
 
@@ -79,7 +83,7 @@ public class RemoveMessageTask extends AsyncTask<String, Void, String> implement
 
     @Override
     protected void onPostExecute(String s) {
-        delegate.RemoveMessageTaskComplete(s, context);
+        delegate.RemoveMessageTaskComplete(s,id, context);
     }
 
     @Override
