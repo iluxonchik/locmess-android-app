@@ -27,6 +27,7 @@ public class RemoveLocationTask extends AsyncTask<String, Void, String> implemen
     Context context;
 
     private TaskDelegate delegate;
+    private String locationName="";
 
     public RemoveLocationTask(Context context, TaskDelegate delegate) {
         this.context = context;
@@ -45,6 +46,8 @@ public class RemoveLocationTask extends AsyncTask<String, Void, String> implemen
             postDataParams.put("username", s[0]);
             postDataParams.put("token", s[1]);
             postDataParams.put("location_name", s[2]);
+
+            locationName = s[2];
 
             HttpURLConnection conn = serverConnection();
 
@@ -79,7 +82,7 @@ public class RemoveLocationTask extends AsyncTask<String, Void, String> implemen
 
     @Override
     protected void onPostExecute(String s) {
-        delegate.RemoveLocationTaskComplete(s, context);
+        delegate.RemoveLocationTaskComplete(s, locationName, context);
     }
 
     @Override

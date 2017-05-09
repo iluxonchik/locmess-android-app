@@ -48,6 +48,14 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
     private SimWifiP2pBroadcastReceiver mReceiver;
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        LocalMemory.getInstance().getManager().populateLocations(this);
+        LocalMemory.getInstance().getManager().populateKeys(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);

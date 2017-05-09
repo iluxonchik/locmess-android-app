@@ -14,6 +14,7 @@ import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
 import pt.ulisboa.tecnico.cmov.locmess.locations.WifiLocation;
 import pt.ulisboa.tecnico.cmov.locmess.main.LogInActivity;
 import pt.ulisboa.tecnico.cmov.locmess.main.MainMenuActivity;
+import pt.ulisboa.tecnico.cmov.locmess.messages.MainMessagesActivity;
 import pt.ulisboa.tecnico.cmov.locmess.messages.Message;
 import pt.ulisboa.tecnico.cmov.locmess.profile.MainProfileActivity;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.AddGPSLocationTask;
@@ -120,10 +121,12 @@ public class Manager implements TaskDelegate{
 
        LocalMemory.getInstance().decrementId();
 
+       Intent intent = new Intent(context, MainMessagesActivity.class);
+       context.startActivity(intent);
+
        Activity a = (Activity) context;
        a.setResult(RESULT_OK, null);
        a.finish();
-       LocalMemory.getInstance().getManager().populateMessages(context);
    }
 
     public void populateKeys(Context context){
@@ -164,14 +167,19 @@ public class Manager implements TaskDelegate{
         if (isDescentralized){
             LocalMemory.getInstance().removeDescentralizedMessage(id);
 
-            Activity a = (Activity) context;
-            a.finish();
-            LocalMemory.getInstance().getManager().populateMessages(context);
+            //LocalMemory.getInstance().getManager().populateMessages(context);
         }
         else {
             RemoveMessageTask removeMessageTask = new RemoveMessageTask(context, this);
             removeMessageTask.execute(LocalMemory.getInstance().getLoggedUserMail(), LocalMemory.getInstance().getSessionKey(), "" + id);
         }
+
+        Intent intent = new Intent(context, MainMessagesActivity.class);
+        context.startActivity(intent);
+
+        Activity a = (Activity) context;
+        a.finish();
+
     }
 
     public void removeKey(Context context , String key,String value){
@@ -260,11 +268,11 @@ public class Manager implements TaskDelegate{
     }
 
     @Override
-    public void RemoveKeyTaskComplete(String result, Context context) {
+    public void RemoveKeyTaskComplete(String result, String key, Context context) {
         if(result.equals("401")){
             Toast.makeText(context, "Cannot remove the key pair.", Toast.LENGTH_LONG).show();
         } else {
-            LocalMemory.getInstance().getManager().populateKeys(context);
+            LocalMemory.getInstance().removeKey(key);
             Intent intent = new Intent(context, MainProfileActivity.class);
             if(LocalMemory.getInstance().getStartAct()) {
                 SystemClock.sleep(500);
@@ -277,26 +285,27 @@ public class Manager implements TaskDelegate{
     }
 
     @Override
-    public void RemoveMessageTaskComplete(String result, Context context) {
+    public void RemoveMessageTaskComplete(String result, int id, Context context) {
         if(result.equals("401")){
             Toast.makeText(context, "Cannot remove the message.", Toast.LENGTH_LONG).show();
         } else {
-            Activity a = (Activity) context;
-            a.finish();
-            LocalMemory.getInstance().getManager().populateMessages(context);
+            LocalMemory.getInstance().removeMessage(id);
+
+            //LocalMemory.getInstance().getManager().populateMessages(context);
         }
     }
 
     @Override
-    public void RemoveLocationTaskComplete(String result, Context context) {
+    public void RemoveLocationTaskComplete(String result, String name, Context context) {
         if(result.equals("401")){
             Toast.makeText(context, "Cannot remove the location.", Toast.LENGTH_LONG).show();
         } else {
-            LocalMemory.getInstance().getManager().populateLocations(context);
+            LocalMemory.getInstance().removeLocation(name);
+            Intent intent = new Intent(context, MainLocationsActivity.class);
+            context.startActivity(intent);
 
             Activity a = (Activity) context;
             a.finish();
-            LocalMemory.getInstance().getManager().populateLocations(context);
         }
     }
 

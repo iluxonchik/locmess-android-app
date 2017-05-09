@@ -28,6 +28,8 @@ public class RemoveKeyTask extends AsyncTask<String, Void, String> implements Se
 
     private TaskDelegate delegate;
 
+    private String key="";
+
     public RemoveKeyTask(Context context, TaskDelegate delegate) {
         this.context = context;
         this.delegate = delegate;
@@ -46,6 +48,8 @@ public class RemoveKeyTask extends AsyncTask<String, Void, String> implements Se
             postDataParams.put("token", s[1]);
             postDataParams.put("key", s[2]);
             postDataParams.put("value", s[3]);
+
+            key = s[2] + ":" + s[3];
 
             HttpURLConnection conn = serverConnection();
 
@@ -80,7 +84,7 @@ public class RemoveKeyTask extends AsyncTask<String, Void, String> implements Se
 
     @Override
     protected void onPostExecute(String s) {
-        delegate.RemoveKeyTaskComplete(s, context);
+        delegate.RemoveKeyTaskComplete(s, key, context);
     }
 
     @Override
