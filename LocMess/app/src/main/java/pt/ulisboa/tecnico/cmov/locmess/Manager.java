@@ -14,6 +14,7 @@ import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
 import pt.ulisboa.tecnico.cmov.locmess.locations.WifiLocation;
 import pt.ulisboa.tecnico.cmov.locmess.main.LogInActivity;
 import pt.ulisboa.tecnico.cmov.locmess.main.MainMenuActivity;
+import pt.ulisboa.tecnico.cmov.locmess.messages.Message;
 import pt.ulisboa.tecnico.cmov.locmess.profile.MainProfileActivity;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.AddGPSLocationTask;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.AddWifiLocationTask;
@@ -101,10 +102,20 @@ public class Manager implements TaskDelegate{
         context.startActivity(intent);
     }
 
-    public void sendMessage(Context context,String title,String location,String text,boolean isCentralized,boolean isBlackList, List<String> keys, String sDate,String eDate){
+    public void sendMessage(Context context,String title,String location,String text,boolean isCentralized,
+                            boolean isBlackList, List<String> keys, String sDate,String eDate){
         SendMessageTask sendMessageTask = new SendMessageTask(context, this);
-        sendMessageTask.execute(LocalMemory.getInstance().getLoggedUserMail(),LocalMemory.getInstance().getSessionKey(),title,location,text,isCentralized,isBlackList,keys,sDate,eDate);
+        sendMessageTask.execute(LocalMemory.getInstance().getLoggedUserMail(),LocalMemory.getInstance().getSessionKey(),
+                title,location,text,isCentralized,isBlackList,keys,sDate,eDate);
     }
+
+   public void decentralizedMessage(Context context, String title,String location,String text,boolean isCentralized,
+                                    boolean isBlackList, List<String> keys, String sDate,String eDate) {
+
+       Message m = new Message(-1, title, LocalMemory.getInstance().getLoggedUserMail(), location, text,
+               isCentralized, isBlackList, keys, sDate, eDate);
+       LocalMemory.getInstance().addDecentralizedMessage(m);
+   }
 
     public void populateKeys(Context context){
         GetUserKeysTask userKeysTask = new GetUserKeysTask(context, this);

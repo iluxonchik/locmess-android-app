@@ -58,7 +58,7 @@ public class AddMessageSecondActivity extends AppCompatActivity {
             checkBox.setId(i+2);
             RelativeLayout.LayoutParams layoutParam = new RelativeLayout.LayoutParams(
                     ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
-            //FIX ME
+            //FIXME
             if(i>0)
                 layoutParam.addRule(RelativeLayout.BELOW, i+2 - 1);
             else
@@ -106,8 +106,10 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         Spinner delivery = (Spinner) findViewById(R.id.spinnerDeliveryMode);
         Spinner policy = (Spinner) findViewById(R.id.spinnerPolicyType);
 
-        if(!delivery.getSelectedItem().equals("Centralized"))
+        if(!delivery.getSelectedItem().equals("Centralized")) {
             centralized=false;
+        }
+
         if(!policy.getSelectedItem().equals(("Black list")))
             black_list=false;
 
@@ -132,8 +134,10 @@ public class AddMessageSecondActivity extends AppCompatActivity {
 
 
         Manager m = LocalMemory.getInstance().getManager();
-        m.sendMessage(context,title,location,text,centralized,black_list,keys,sDate,eDate);
-
+        if(centralized)
+            m.sendMessage(context,title,location,text,centralized,black_list,keys,sDate,eDate);
+        else
+            m.decentralizedMessage(context,title,location,text,centralized,black_list,keys,sDate,eDate);
     }
 
 }

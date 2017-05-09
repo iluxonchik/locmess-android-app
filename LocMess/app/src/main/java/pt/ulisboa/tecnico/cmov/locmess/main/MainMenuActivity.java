@@ -12,6 +12,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import java.util.Calendar;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Messenger;
@@ -25,12 +26,16 @@ import pt.inesc.termite.wifidirect.SimWifiP2pDeviceList;
 import pt.inesc.termite.wifidirect.SimWifiP2pManager;
 import pt.inesc.termite.wifidirect.service.SimWifiP2pService;
 import pt.inesc.termite.wifidirect.SimWifiP2pManager.PeerListListener;
+import pt.inesc.termite.wifidirect.sockets.SimWifiP2pSocketManager;
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.R;
-import pt.ulisboa.tecnico.cmov.locmess.SimWifiP2pBroadcastReceiver;
+import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.SimWifiP2pBroadcastReceiver;
 import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
 import pt.ulisboa.tecnico.cmov.locmess.messages.service.MessagePollingService;
 import pt.ulisboa.tecnico.cmov.locmess.profile.MainProfileActivity;
+
+import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.IncommingCommTask;
+import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.BroadcastMessageTask;
 
 public class MainMenuActivity extends AppCompatActivity implements PeerListListener {
 
@@ -58,6 +63,8 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
         LocalMemory.getInstance().getManager().populateLocations(this);
         LocalMemory.getInstance().getManager().populateKeys(this);
 
+        SimWifiP2pSocketManager.Init(getApplicationContext());
+
         // register broadcast receiver
         IntentFilter filter = new IntentFilter();
         filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_STATE_CHANGED_ACTION);
@@ -66,6 +73,15 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
         filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_GROUP_OWNERSHIP_CHANGED_ACTION);
         mReceiver = new SimWifiP2pBroadcastReceiver(this);
         registerReceiver(mReceiver, filter);
+        enableWifiDirect();
+
+        // spawn the server task
+        new IncommingCommTask(context).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
+
+        // spawn the broadcast task
+        new BroadcastMessageTask(context).executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private void startMessagePollingServiceAlarm() {
@@ -138,10 +154,11 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
         LocalMemory.getInstance().getManager().logout(this);
     }
 
-    public void startWifiDirect(View v) {
+    public void enableWifiDirect() {
         Intent intent = new Intent(this, SimWifiP2pService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         mBound = true;
+        LocalMemory.getInstance().setmBound(mBound);
 
     }
 
@@ -153,6 +170,9 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
             mManager = new SimWifiP2pManager(new Messenger(service));
             mChannel = mManager.initialize(getApplication(), getMainLooper(), null);
             mBound = true;
+
+            LocalMemory.getInstance().setmChannel(mChannel);
+            LocalMemory.getInstance().setmManager(mManager);
         }
 
         @Override

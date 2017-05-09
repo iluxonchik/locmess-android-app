@@ -7,8 +7,10 @@ package pt.ulisboa.tecnico.cmov.locmess;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.inesc.termite.wifidirect.SimWifiP2pManager;
 import pt.ulisboa.tecnico.cmov.locmess.locations.Location;
 import pt.ulisboa.tecnico.cmov.locmess.messages.Message;
+import pt.inesc.termite.wifidirect.SimWifiP2pManager.Channel;
 
 
 public class LocalMemory {
@@ -18,7 +20,11 @@ public class LocalMemory {
     private List<String> keys = new ArrayList<>();
     private List<Location> locations = new ArrayList<>();
     private List<Message> messages = new ArrayList<>();
+    private List<Message> decentralizedMessages = new ArrayList<>();
 
+    private SimWifiP2pManager mManager = null;
+    private SimWifiP2pManager.Channel mChannel = null;
+    private boolean mBound = false;
 
     private String loggedUserMail="";
     private String loggedUserPassword="";
@@ -28,6 +34,30 @@ public class LocalMemory {
 
     public LocalMemory(){
 
+    }
+
+    public void setmManager(SimWifiP2pManager mManager) {
+        this.mManager = mManager;
+    }
+
+    public void setmChannel(Channel mChannel) {
+        this.mChannel = mChannel;
+    }
+
+    public SimWifiP2pManager getmManager() {
+        return mManager;
+    }
+
+    public Channel getmChannel() {
+        return mChannel;
+    }
+
+    public boolean ismBound() {
+        return mBound;
+    }
+
+    public void setmBound(boolean mBound) {
+        this.mBound = mBound;
     }
 
     public void setStartAct(boolean b){
@@ -110,6 +140,10 @@ public class LocalMemory {
         return messages;
     }
 
+    public List<Message> getDecentralizedMessages() {
+        return decentralizedMessages;
+    }
+
 
     public void addMessage(Message m){
         for(int i=0;i<messages.size();i++){
@@ -117,6 +151,10 @@ public class LocalMemory {
                 return;
         }
         messages.add(m);
+    }
+
+    public void addDecentralizedMessage(Message m) {
+        decentralizedMessages.add(m);
     }
 
     public void loadMessages(List<Message> l){

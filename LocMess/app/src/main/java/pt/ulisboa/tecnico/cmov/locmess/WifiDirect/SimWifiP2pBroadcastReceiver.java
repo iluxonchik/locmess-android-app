@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.cmov.locmess;
+package pt.ulisboa.tecnico.cmov.locmess.WifiDirect;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
