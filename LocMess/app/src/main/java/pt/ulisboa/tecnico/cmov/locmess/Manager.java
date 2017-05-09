@@ -121,12 +121,12 @@ public class Manager implements TaskDelegate{
 
        LocalMemory.getInstance().decrementId();
 
-       Intent intent = new Intent(context, MainMessagesActivity.class);
-       context.startActivity(intent);
-
        Activity a = (Activity) context;
        a.setResult(RESULT_OK, null);
        a.finish();
+
+       Intent intent = new Intent(context, MainMessagesActivity.class);
+       context.startActivity(intent);
    }
 
     public void populateKeys(Context context){
@@ -156,15 +156,15 @@ public class Manager implements TaskDelegate{
     }
 
     public void removeMessage(Context context , int id){
-        boolean isDescentralized=false;
+        boolean isDecentralized=false;
         for (Message m : LocalMemory.getInstance().getDecentralizedMessages()){
             if (m.getId() == id){
-                isDescentralized = true;
+                isDecentralized = true;
                 break;
             }
         }
 
-        if (isDescentralized){
+        if (isDecentralized){
             LocalMemory.getInstance().removeDescentralizedMessage(id);
 
             //LocalMemory.getInstance().getManager().populateMessages(context);
@@ -178,7 +178,7 @@ public class Manager implements TaskDelegate{
         context.startActivity(intent);
 
         Activity a = (Activity) context;
-        a.finish();
+        //a.finish();
 
     }
 

@@ -43,7 +43,7 @@ public class LocalMemory {
     }
 
     public void decrementId(){
-        idCounter-=1;
+        idCounter = idCounter -1;
     }
 
     public void setmManager(SimWifiP2pManager mManager) {
@@ -181,8 +181,9 @@ public class LocalMemory {
 
     public void removeDescentralizedMessage(int id){
         for(int i=0;i<decentralizedMessages.size();i++){
-            if (decentralizedMessages.get(i).getId()==id)
+            if (decentralizedMessages.get(i).getId()==id){
             decentralizedMessages.remove(i);
+            }
         }
     }
 
