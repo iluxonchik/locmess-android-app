@@ -164,6 +164,10 @@ public class LocalMemory {
     }
 
     public void addDecentralizedMessage(Message m) {
+        for(int i=0;i<decentralizedMessages.size();i++){
+            if(decentralizedMessages.get(i).getId()==m.getId())
+                return;
+        }
         decentralizedMessages.add(m);
     }
 

@@ -178,7 +178,7 @@ public class Manager implements TaskDelegate{
         context.startActivity(intent);
 
         Activity a = (Activity) context;
-        //a.finish();
+        a.finish();
 
     }
 
