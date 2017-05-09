@@ -1,17 +1,22 @@
 package pt.ulisboa.tecnico.cmov.locmess.main;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import java.util.Calendar;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Messenger;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import pt.inesc.termite.wifidirect.SimWifiP2pBroadcast;
@@ -24,9 +29,12 @@ import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.R;
 import pt.ulisboa.tecnico.cmov.locmess.SimWifiP2pBroadcastReceiver;
 import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
+import pt.ulisboa.tecnico.cmov.locmess.messages.service.MessagePollingService;
 import pt.ulisboa.tecnico.cmov.locmess.profile.MainProfileActivity;
 
 public class MainMenuActivity extends AppCompatActivity implements PeerListListener {
+
+    private final String LOG_TAG = MainMenuActivity.class.getName();
 
     public Context context;
 
@@ -39,6 +47,11 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        Log.d(LOG_TAG, "HEEEELLO");
+
+        setUpSharedPreferences();
+        startMessagePollingServiceAlarm();
+
 
         context=this;
 
@@ -53,6 +66,58 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
         filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_GROUP_OWNERSHIP_CHANGED_ACTION);
         mReceiver = new SimWifiP2pBroadcastReceiver(this);
         registerReceiver(mReceiver, filter);
+    }
+
+    private void startMessagePollingServiceAlarm() {
+        Log.d(LOG_TAG, "startMessagePollingServiceAlarm():");
+        if (!isMessagePollingServiceAlarmSetUp()) {
+            Log.d(LOG_TAG, "Alarm is not set up, so let's do it");
+            Intent intent = new Intent(this, MessagePollingService.class);
+            PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, 0);
+
+            // NOTE: aware of inexact timing
+            // IMPORTANT: An alarm is a bad choice for this. Consider doing the delays in the
+            // service itself? I
+            AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.add(Calendar.SECOND, 3); // TODO: fix hardcoded values
+            long frequency = 3 * 1000;
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                                                                        frequency, pendingIntent);
+            markMessagePollingServiceAlarmAsSetUp();
+        }
+
+
+    }
+
+    private boolean isMessagePollingServiceAlarmSetUp() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(
+                getString(R.string.shared_pref_file_key), Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(getString(R.string.alarm_set_up_shared_pref), false);
+    }
+
+    private void setUpSharedPreferences() {
+        Log.d(LOG_TAG, "setUpSharedPreferences():");
+        SharedPreferences sharedPreferences = this.getSharedPreferences(
+                getString(R.string.shared_pref_file_key), Context.MODE_PRIVATE);
+        if (!sharedPreferences.getBoolean("sharedPrefAlreadySetUp", false)) {
+            Log.d(LOG_TAG, "SharedPreferences not set up yet. Setting up...");
+
+            // set up Shared Preferences, as it hasn't been done before
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(getString(R.string.alarm_set_up_shared_pref), false);
+            editor.commit();
+        }
+    }
+
+    private void markMessagePollingServiceAlarmAsSetUp() {
+        Log.d(LOG_TAG, "Marking alarm as set up...");
+        SharedPreferences sharedPreferences = this.getSharedPreferences(
+                getString(R.string.shared_pref_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(getString(R.string.alarm_set_up_shared_pref), true);
+        editor.commit();
     }
 
     public void profile(View v) {
@@ -79,8 +144,6 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
         mBound = true;
 
     }
-
-
 
     private ServiceConnection mConnection = new ServiceConnection() {
         // callbacks for service binding, passed to bindService()

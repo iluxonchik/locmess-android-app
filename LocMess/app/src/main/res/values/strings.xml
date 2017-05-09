@@ -34,6 +34,11 @@
         completions."
     </string>
     <string name="radius">Radius:</string>
+    <string name="title_activity_new_message_notification_receiver">
+        NewMessageNotificationReceiverActivity
+    </string>
+    <string name="shared_pref_file_key">pt.ulisboa.tecnico.cmov.locmess.SHARED_PREFERENCE_FILE</string>
+    <string name="alarm_set_up_shared_pref">msgPollAlarmSetUp</string>
 
 </resources>
 

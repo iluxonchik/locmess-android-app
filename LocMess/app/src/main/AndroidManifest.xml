@@ -50,13 +50,14 @@
         <activity android:name=".messages.ViewMessageActivity" />
         <activity
             android:name=".messages.AddMessageSecondActivity"
-            android:parentActivityName=".messages.AddMessageActivity"></activity>
+            android:parentActivityName=".messages.AddMessageActivity" />
 
+        <service android:name="pt.inesc.termite.wifidirect.service.SimWifiP2pService" />
         <service
-            android:name="pt.inesc.termite.wifidirect.service.SimWifiP2pService" />
+            android:name=".messages.service.MessagePollingService"
+            android:exported="false" />
 
-        <service android:name=".messages.service.MessagePollingService"
-                 android:exported="false" />
+        <activity android:name=".messages.notifications.NewMessageNotificationReceiverActivity"></activity>
     </application>
 
 </manifest>
