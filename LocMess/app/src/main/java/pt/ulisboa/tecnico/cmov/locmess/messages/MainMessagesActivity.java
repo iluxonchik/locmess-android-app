@@ -17,8 +17,8 @@ import pt.ulisboa.tecnico.cmov.locmess.R;
 
 public class MainMessagesActivity extends AppCompatActivity {
 
-    private List<String> messages = new ArrayList<>();
-    private List<String> my_messages = new ArrayList<>();
+    private List<String> messages;
+    private List<String> my_messages;
     public Context context;
 
     @Override
@@ -28,12 +28,14 @@ public class MainMessagesActivity extends AppCompatActivity {
 
         context=this;
 
+        messages = new ArrayList<>();
+        my_messages = new ArrayList<>();
+
         List<Message> msgs = LocalMemory.getInstance().getMessages();
         List<Message> msgsD = LocalMemory.getInstance().getDecentralizedMessages();
         List<Message> msgsDTS = LocalMemory.getInstance().getDecentralizedmessagesToSend();
         msgs.addAll(msgsD);
         msgs.addAll(msgsDTS);
-
 
         for(int i=0;i<msgs.size();i++){
             messages.add(msgs.get(i).getId()+":"+msgs.get(i).getTitle());
