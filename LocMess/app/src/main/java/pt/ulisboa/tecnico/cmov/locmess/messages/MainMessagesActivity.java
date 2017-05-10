@@ -30,7 +30,9 @@ public class MainMessagesActivity extends AppCompatActivity {
 
         List<Message> msgs = LocalMemory.getInstance().getMessages();
         List<Message> msgsD = LocalMemory.getInstance().getDecentralizedMessages();
+        List<Message> msgsDTS = LocalMemory.getInstance().getDecentralizedmessagesToSend();
         msgs.addAll(msgsD);
+        msgs.addAll(msgsDTS);
 
 
         for(int i=0;i<msgs.size();i++){

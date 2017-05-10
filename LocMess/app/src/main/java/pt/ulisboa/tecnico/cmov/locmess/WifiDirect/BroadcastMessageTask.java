@@ -62,7 +62,7 @@ public class BroadcastMessageTask
                 } else
                     Log.d("X", "NOT BOUND");
                 //2nd get decentralized messages
-                List<Message> messages = LocalMemory.getInstance().getDecentralizedMessages();
+                List<Message> messages = LocalMemory.getInstance().getDecentralizedmessagesToSend();
 
                 //3rd get my loc
                 //3.1 GEO loc
@@ -92,7 +92,8 @@ public class BroadcastMessageTask
                             }
 
                             //TODO: New list to have to messages to send
-                            LocalMemory.getInstance().removeDescentralizedMessage(m.getId());
+                            LocalMemory.getInstance().removeDescentralizedMessageToSend(m.getId());
+                            LocalMemory.getInstance().addDecentralizedMessage(m);
                         }
                     }
                 }

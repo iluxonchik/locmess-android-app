@@ -21,6 +21,7 @@ public class LocalMemory {
     private List<Location> locations = new ArrayList<>();
     private List<Message> messages = new ArrayList<>();
     private List<Message> decentralizedMessages = new ArrayList<>();
+    private List<Message> decentralizedMessagesToSend = new ArrayList<>();
 
     private SimWifiP2pManager mManager = null;
     private SimWifiP2pManager.Channel mChannel = null;
@@ -154,6 +155,10 @@ public class LocalMemory {
         return decentralizedMessages;
     }
 
+    public List<Message>  getDecentralizedmessagesToSend() {
+        return decentralizedMessagesToSend;
+    }
+
 
     public void addMessage(Message m){
         for(int i=0;i<messages.size();i++){
@@ -166,6 +171,8 @@ public class LocalMemory {
     public void addDecentralizedMessage(Message m) {
         decentralizedMessages.add(m);
     }
+
+    public void addDecentralizedMessageToSend(Message m) { decentralizedMessagesToSend.add(m);}
 
     public void loadMessages(List<Message> l){
         messages=l;
@@ -183,6 +190,12 @@ public class LocalMemory {
         for(int i=0;i<decentralizedMessages.size();i++){
             if (decentralizedMessages.get(i).getId()==id)
             decentralizedMessages.remove(i);
+        }
+    }
+    public void removeDescentralizedMessageToSend(int id){
+        for(int i=0;i<decentralizedMessagesToSend.size();i++){
+            if (decentralizedMessagesToSend.get(i).getId()==id)
+                decentralizedMessagesToSend.remove(i);
         }
     }
 
