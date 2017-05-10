@@ -172,6 +172,8 @@ public class Manager implements TaskDelegate{
         else {
             RemoveMessageTask removeMessageTask = new RemoveMessageTask(context, this);
             removeMessageTask.execute(LocalMemory.getInstance().getLoggedUserMail(), LocalMemory.getInstance().getSessionKey(), "" + id);
+
+            LocalMemory.getInstance().removeMessage(id);
         }
 
         Intent intent = new Intent(context, MainMessagesActivity.class);
@@ -289,9 +291,6 @@ public class Manager implements TaskDelegate{
         if(result.equals("401")){
             Toast.makeText(context, "Cannot remove the message.", Toast.LENGTH_LONG).show();
         } else {
-            LocalMemory.getInstance().removeMessage(id);
-
-            //LocalMemory.getInstance().getManager().populateMessages(context);
         }
     }
 
