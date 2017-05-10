@@ -111,13 +111,13 @@ public class Manager implements TaskDelegate{
                 title,location,text,isCentralized,isBlackList,keys,sDate,eDate);
     }
 
-   public void decentralizedMessage(Context context, String title,String location,String text,boolean isCentralized,
+   public void decentralizedMessageToSend(Context context, String title,String location,String text,boolean isCentralized,
                                     boolean isBlackList, List<String> keys, String sDate,String eDate) {
         int id = LocalMemory.getInstance().getIdCounter();
 
        Message m = new Message(id, title, LocalMemory.getInstance().getLoggedUserMail(), location, text,
                isCentralized, isBlackList, keys, sDate, eDate);
-       LocalMemory.getInstance().addDecentralizedMessage(m);
+       LocalMemory.getInstance().addDecentralizedMessageToSend(m);
 
        LocalMemory.getInstance().decrementId();
 

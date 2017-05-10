@@ -74,12 +74,11 @@ public class IncommingCommTask extends AsyncTask<Void, String, Void> {
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
         Log.d("RECEIVEDMESSAGE: ", values[0]);
-        //TODO: Here verify the message and if is a message create notification.
-
         try {
             JSONObject messageReceived = new JSONObject(values[0]);
             JSONObject messageJson = new JSONObject(messageReceived.getString("MESSAGE"));
-            int id = messageJson.getInt("id");
+            int id = LocalMemory.getInstance().getIdCounter();
+            LocalMemory.getInstance().decrementId();
             String title = messageJson.getString("title");
             String author = messageJson.getString("author");
             String location = messageJson.getString("location");

@@ -35,6 +35,8 @@ public class MainMessagesActivity extends AppCompatActivity {
         List<Message> msgs = LocalMemory.getInstance().getMessages();
         List<Message> msgsD = LocalMemory.getInstance().getDecentralizedMessages();
 
+        List<Message> msgsDTS = LocalMemory.getInstance().getDecentralizedmessagesToSend();
+
         for(int i=0;i<msgs.size();i++){
             messages.add(msgs.get(i).getId()+":"+msgs.get(i).getTitle());
             if(msgs.get(i).getAutor().equals(LocalMemory.getInstance().getLoggedUserMail()))
@@ -45,6 +47,12 @@ public class MainMessagesActivity extends AppCompatActivity {
             messages.add(msgsD.get(i).getId()+":"+msgsD.get(i).getTitle());
             if(msgsD.get(i).getAutor().equals(LocalMemory.getInstance().getLoggedUserMail()))
                 my_messages.add(msgsD.get(i).getId()+":"+msgsD.get(i).getTitle());
+        }
+
+        for(int i=0;i<msgsDTS.size();i++){
+            messages.add(msgsDTS.get(i).getId()+":"+msgsDTS.get(i).getTitle());
+            if(msgsDTS.get(i).getAutor().equals(LocalMemory.getInstance().getLoggedUserMail()))
+                my_messages.add(msgsDTS.get(i).getId()+":"+msgsDTS.get(i).getTitle());
         }
 
         populateListView(messages);

@@ -44,6 +44,7 @@ public class BroadcastMessageTask
 
     public BroadcastMessageTask(Context context) {
         this.context = context;
+        getGpsLocation = new GetGpsLocation(context);
     }
 
     @Override
@@ -62,11 +63,10 @@ public class BroadcastMessageTask
                 } else
                     Log.d("X", "NOT BOUND");
                 //2nd get decentralized messages
-                List<Message> messages = LocalMemory.getInstance().getDecentralizedMessages();
+                List<Message> messages = LocalMemory.getInstance().getDecentralizedmessagesToSend();
 
                 //3rd get my loc
                 //3.1 GEO loc
-                getGpsLocation = new GetGpsLocation(context);
                 GpsLocation myLoc = new GpsLocation("myLoc", getGpsLocation.getLatitude(), getGpsLocation.getLongitude(), 0);
                 //3.2 WIFI loc
                 //4th checks messages that are supposed to be sent in this loc
@@ -90,15 +90,11 @@ public class BroadcastMessageTask
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-                            //TODO: New list to have to messages to send
-                            LocalMemory.getInstance().removeDescentralizedMessage(m.getId());
+                            LocalMemory.getInstance().removeDescentralizedMessageToSend(m.getId());
+                            LocalMemory.getInstance().addDecentralizedMessage(m);
                         }
                     }
                 }
-                //###SECCOND STEP
-                //7th verify is someone received the message and remove from the list
-
             }
 
             /*
@@ -108,7 +104,7 @@ public class BroadcastMessageTask
                     Log.d("X", ip);
                     try {
                         SimWifiP2pSocket mCliSocket = new SimWifiP2pSocket(ip,10001 );
-                        mCliSocket.getOutputStream().write(("HEELLOO" + "\n").getBytes());
+                        mCliSocket.getOutputStream().write(("Hello" + "\n").getBytes());
                         BufferedReader sockIn = new BufferedReader(new InputStreamReader(mCliSocket.getInputStream()));
                         sockIn.readLine();
                         mCliSocket.close();
@@ -119,7 +115,7 @@ public class BroadcastMessageTask
             }*/
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -141,13 +137,6 @@ public class BroadcastMessageTask
             Log.d(TAG + " LAT M: ", "" + messageLoc.getLatitude());
             Log.d(TAG + " LON M: ", "" + messageLoc.getLongitude());
             Log.d(TAG + " Radius M: ", "" + messageLoc.getRadious());
-            /*
-            double aux1 = pow((loc.getLatitude() - messageLoc.getLatitude()), 2);
-            double aux2 = pow((loc.getLongitude() - messageLoc.getLongitude()), 2);
-
-            if(aux1 + aux2 < pow(messageLoc.getRadious(), 2)){
-                messagesToReturn.add(m);
-            }*/
 
             double earthRadius = 6371000; //meters
             double dLat = Math.toRadians(loc.getLatitude()- messageLoc.getLatitude());
@@ -171,7 +160,6 @@ public class BroadcastMessageTask
 
     @Override
     public void onGroupInfoAvailable(SimWifiP2pDeviceList devices, SimWifiP2pInfo groupInfo) {
-        //Log.d("X:", "OnGroupInfoAvailable");
         neighborsIp = new ArrayList<>();
         if(groupInfo.getDevicesInNetwork() != null) {
             for (String deviceName : groupInfo.getDevicesInNetwork()) {

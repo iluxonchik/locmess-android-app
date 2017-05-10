@@ -137,7 +137,7 @@ public class AddMessageSecondActivity extends AppCompatActivity {
         if(centralized)
             m.sendMessage(context,title,location,text,centralized,black_list,keys,sDate,eDate);
         else
-            m.decentralizedMessage(context,title,location,text,centralized,black_list,keys,sDate,eDate);
+            m.decentralizedMessageToSend(context,title,location,text,centralized,black_list,keys,sDate,eDate);
     }
 
 }
