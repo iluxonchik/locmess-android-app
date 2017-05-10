@@ -36,7 +36,7 @@
             android:layout_marginTop="10dp"
             android:id="@+id/textView23"/>
 
-        <EditText
+        <AutoCompleteTextView
             android:inputType="text"
             android:text=""
             android:layout_marginTop="5dp"

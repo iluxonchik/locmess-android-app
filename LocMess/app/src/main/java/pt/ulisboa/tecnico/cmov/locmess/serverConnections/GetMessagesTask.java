@@ -139,8 +139,13 @@ public class GetMessagesTask extends AsyncTask<String, Void, String> implements 
             } catch (JSONException e) {
                 e.printStackTrace();
         }
-            Intent intent = new Intent(context, MainMessagesActivity.class);
-            context.startActivity(intent);
+
+            if (LocalMemory.getInstance().getRefreshMessagesScreen()) {
+                Intent intent = new Intent(context, MainMessagesActivity.class);
+                context.startActivity(intent);
+            }
+            else
+                LocalMemory.getInstance().setRefreshMessagesScreen(true);
         }
 
         return;
