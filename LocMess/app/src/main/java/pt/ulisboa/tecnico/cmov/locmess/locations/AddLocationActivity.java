@@ -40,6 +40,8 @@ public class AddLocationActivity extends AppCompatActivity{
         setContentView(R.layout.activity_add_location);
         context = this;
 
+        getGpsLocation = new GetGpsLocation(context);
+
         Spinner spinner = (Spinner) findViewById(R.id.spinnerType);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -141,7 +143,12 @@ public class AddLocationActivity extends AppCompatActivity{
 
         double rad = 1;
 
-        getGpsLocation = new GetGpsLocation(context);
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         EditText latitudeE = (EditText) findViewById(R.id.editTextLatitude);
         EditText longitudeE = (EditText) findViewById(R.id.editTextLongitude);
