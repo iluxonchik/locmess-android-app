@@ -143,13 +143,6 @@ public class AddLocationActivity extends AppCompatActivity{
 
         double rad = 1;
 
-
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         EditText latitudeE = (EditText) findViewById(R.id.editTextLatitude);
         EditText longitudeE = (EditText) findViewById(R.id.editTextLongitude);
         EditText radiousE = (EditText) findViewById(R.id.editTextRadious);

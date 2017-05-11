@@ -11,6 +11,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
 
 import pt.inesc.termite.wifidirect.SimWifiP2pDevice;
@@ -41,6 +44,8 @@ public class BroadcastMessageTask
     private SimWifiP2pManager mManager = null;
     private SimWifiP2pManager.Channel mChannel = null;
     private String TAG = "WD";
+    private HashMap<String, List<Integer>> msgSent = new HashMap<>();
+
 
     public BroadcastMessageTask(Context context) {
         this.context = context;
@@ -64,8 +69,9 @@ public class BroadcastMessageTask
                     Log.d("X", "NOT BOUND");
                 //2nd get decentralized messages
                 List<Message> messages = LocalMemory.getInstance().getDecentralizedmessagesToSend();
+                Log.d(TAG, "Messages To Send: " + messages.size());
 
-                //3rd get my loc
+                //3rd get my loc11
                 //3.1 GEO loc
                 GpsLocation myLoc = new GpsLocation("myLoc", getGpsLocation.getLatitude(), getGpsLocation.getLongitude(), 0);
                 //3.2 WIFI loc
@@ -73,9 +79,16 @@ public class BroadcastMessageTask
                 List<Message> messagesToBroadcast = messageToBroadcast(messages, myLoc);
                 Log.d(TAG, "" +  messagesToBroadcast.size());
                 //5th broadcast message to available
+                Log.d(TAG, "NEI: " + (neighborsIp != null));
                 if(neighborsIp != null) {
                     for (String ip : neighborsIp) {
+                        Log.d(TAG, "Messages: " + messagesToBroadcast.size());
                         for(Message m : messagesToBroadcast) {
+                            if(!msgSent.containsKey(ip))
+                                msgSent.put(ip, new ArrayList<Integer>());
+                            else
+                                if(msgSent.get(ip).contains(m.getId()))
+                                    break;
                             try {
                                 JSONObject toSend = new JSONObject();
                                 toSend.put("MESSAGE", m.getJsonObject().toString());
@@ -85,13 +98,16 @@ public class BroadcastMessageTask
                                 BufferedReader sockIn = new BufferedReader(new InputStreamReader(mCliSocket.getInputStream()));
                                 sockIn.readLine();
                                 mCliSocket.close();
+                                msgSent.get(ip).add(m.getId());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            LocalMemory.getInstance().removeDescentralizedMessageToSend(m.getId());
-                            LocalMemory.getInstance().addDecentralizedMessage(m);
+
+
+                            //LocalMemory.getInstance().removeDescentralizedMessageToSend(m.getId());
+                            //LocalMemory.getInstance().addDecentralizedMessage(m);
                         }
                     }
                 }
