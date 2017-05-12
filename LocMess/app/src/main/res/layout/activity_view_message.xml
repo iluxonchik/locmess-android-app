@@ -78,20 +78,22 @@
             android:layout_marginTop="20dp"
             android:id="@+id/textView31"/>
 
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
             android:layout_below="@+id/textView31"
             android:layout_marginTop="10dp"
-            android:textColor="#000000"
-            android:id="@+id/textViewMLocation"/>
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/buttonMLocation"
+            android:onClick="seeLocation"/>
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Text:"
-            android:layout_below="@+id/textViewMLocation"
+            android:layout_below="@+id/buttonMLocation"
             android:layout_marginTop="20dp"
             android:id="@+id/textView32"/>
 

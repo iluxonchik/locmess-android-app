@@ -26,6 +26,7 @@ public class LocalMemory {
     private SimWifiP2pManager mManager = null;
     private SimWifiP2pManager.Channel mChannel = null;
     private boolean mBound = false;
+    private boolean refreshMessagesScreen=true;
 
     private String loggedUserMail="";
     private String loggedUserPassword="";
@@ -37,6 +38,14 @@ public class LocalMemory {
 
     public LocalMemory(){
 
+    }
+
+    public boolean getRefreshMessagesScreen(){
+        return refreshMessagesScreen;
+    }
+
+    public void setRefreshMessagesScreen(boolean r){
+        refreshMessagesScreen=r;
     }
 
     public int getIdCounter(){
@@ -143,6 +152,22 @@ public class LocalMemory {
         for(int i=0;i<messages.size();i++){
             if(messages.get(i).getId()==id)
                 return messages.get(i);
+        }
+        return null;
+    }
+
+    public Message getDecentralizedMessage(int id) {
+        for(int i=0;i<decentralizedMessages.size();i++){
+            if(decentralizedMessages.get(i).getId()==id)
+                return decentralizedMessages.get(i);
+        }
+        return null;
+    }
+
+    public Message getDecentralizedMessageToSend(int id) {
+        for(int i=0;i<decentralizedMessagesToSend.size();i++){
+            if(decentralizedMessagesToSend.get(i).getId()==id)
+                return decentralizedMessagesToSend.get(i);
         }
         return null;
     }

@@ -20,6 +20,7 @@ public class MainMessagesActivity extends AppCompatActivity {
     private List<String> messages;
     private List<String> my_messages;
     public Context context;
+    private MyMessagesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +34,8 @@ public class MainMessagesActivity extends AppCompatActivity {
 
         List<Message> msgs = LocalMemory.getInstance().getMessages();
         List<Message> msgsD = LocalMemory.getInstance().getDecentralizedMessages();
+
         List<Message> msgsDTS = LocalMemory.getInstance().getDecentralizedmessagesToSend();
-        msgs.addAll(msgsD);
-        msgs.addAll(msgsDTS);
 
         for(int i=0;i<msgs.size();i++){
             messages.add(msgs.get(i).getId()+":"+msgs.get(i).getTitle());
@@ -43,11 +43,23 @@ public class MainMessagesActivity extends AppCompatActivity {
                 my_messages.add(msgs.get(i).getId()+":"+msgs.get(i).getTitle());
         }
 
+        for(int i=0;i<msgsD.size();i++){
+            messages.add(msgsD.get(i).getId()+":"+msgsD.get(i).getTitle());
+            if(msgsD.get(i).getAutor().equals(LocalMemory.getInstance().getLoggedUserMail()))
+                my_messages.add(msgsD.get(i).getId()+":"+msgsD.get(i).getTitle());
+        }
+
+        for(int i=0;i<msgsDTS.size();i++){
+            messages.add(msgsDTS.get(i).getId()+":"+msgsDTS.get(i).getTitle());
+            if(msgsDTS.get(i).getAutor().equals(LocalMemory.getInstance().getLoggedUserMail()))
+                my_messages.add(msgsDTS.get(i).getId()+":"+msgsDTS.get(i).getTitle());
+        }
+
         populateListView(messages);
     }
 
     private void populateListView(List<String> l) {
-        MyMessagesAdapter adapter = new MyMessagesAdapter(l,this);
+        adapter = new MyMessagesAdapter(l,this);
         ListView list = (ListView) findViewById(R.id.listViewMessages);
         list.setAdapter(adapter);
     }

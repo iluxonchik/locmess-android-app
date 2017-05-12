@@ -79,6 +79,8 @@ public class ViewLocationActivity extends AppCompatActivity {
     }
 
     public void postMessage(View v) {
+        LocalMemory.getInstance().setRefreshMessagesScreen(false);
+        LocalMemory.getInstance().getManager().populateMessages(this);
         Intent intent = new Intent(this, AddMessageActivity.class);
         intent.putExtra("LOCATION", location);
         startActivity(intent);

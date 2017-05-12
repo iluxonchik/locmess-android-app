@@ -11,6 +11,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
 
 import pt.inesc.termite.wifidirect.SimWifiP2pDevice;
@@ -41,9 +44,12 @@ public class BroadcastMessageTask
     private SimWifiP2pManager mManager = null;
     private SimWifiP2pManager.Channel mChannel = null;
     private String TAG = "WD";
+    private HashMap<String, List<Integer>> msgSent = new HashMap<>();
+
 
     public BroadcastMessageTask(Context context) {
         this.context = context;
+        getGpsLocation = new GetGpsLocation(context);
     }
 
     @Override
@@ -63,19 +69,26 @@ public class BroadcastMessageTask
                     Log.d("X", "NOT BOUND");
                 //2nd get decentralized messages
                 List<Message> messages = LocalMemory.getInstance().getDecentralizedmessagesToSend();
+                Log.d(TAG, "Messages To Send: " + messages.size());
 
-                //3rd get my loc
+                //3rd get my loc11
                 //3.1 GEO loc
-                getGpsLocation = new GetGpsLocation(context);
                 GpsLocation myLoc = new GpsLocation("myLoc", getGpsLocation.getLatitude(), getGpsLocation.getLongitude(), 0);
                 //3.2 WIFI loc
                 //4th checks messages that are supposed to be sent in this loc
                 List<Message> messagesToBroadcast = messageToBroadcast(messages, myLoc);
                 Log.d(TAG, "" +  messagesToBroadcast.size());
                 //5th broadcast message to available
+                Log.d(TAG, "NEI: " + (neighborsIp != null));
                 if(neighborsIp != null) {
                     for (String ip : neighborsIp) {
+                        Log.d(TAG, "Messages: " + messagesToBroadcast.size());
                         for(Message m : messagesToBroadcast) {
+                            if(!msgSent.containsKey(ip))
+                                msgSent.put(ip, new ArrayList<Integer>());
+                            else
+                                if(msgSent.get(ip).contains(m.getId()))
+                                    break;
                             try {
                                 JSONObject toSend = new JSONObject();
                                 toSend.put("MESSAGE", m.getJsonObject().toString());
@@ -85,21 +98,19 @@ public class BroadcastMessageTask
                                 BufferedReader sockIn = new BufferedReader(new InputStreamReader(mCliSocket.getInputStream()));
                                 sockIn.readLine();
                                 mCliSocket.close();
+                                msgSent.get(ip).add(m.getId());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
-                            //TODO: New list to have to messages to send
-                            LocalMemory.getInstance().removeDescentralizedMessageToSend(m.getId());
-                            LocalMemory.getInstance().addDecentralizedMessage(m);
+
+                            //LocalMemory.getInstance().removeDescentralizedMessageToSend(m.getId());
+                            //LocalMemory.getInstance().addDecentralizedMessage(m);
                         }
                     }
                 }
-                //###SECCOND STEP
-                //7th verify is someone received the message and remove from the list
-
             }
 
             /*
@@ -109,7 +120,7 @@ public class BroadcastMessageTask
                     Log.d("X", ip);
                     try {
                         SimWifiP2pSocket mCliSocket = new SimWifiP2pSocket(ip,10001 );
-                        mCliSocket.getOutputStream().write(("HEELLOO" + "\n").getBytes());
+                        mCliSocket.getOutputStream().write(("Hello" + "\n").getBytes());
                         BufferedReader sockIn = new BufferedReader(new InputStreamReader(mCliSocket.getInputStream()));
                         sockIn.readLine();
                         mCliSocket.close();
@@ -120,7 +131,7 @@ public class BroadcastMessageTask
             }*/
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -142,13 +153,6 @@ public class BroadcastMessageTask
             Log.d(TAG + " LAT M: ", "" + messageLoc.getLatitude());
             Log.d(TAG + " LON M: ", "" + messageLoc.getLongitude());
             Log.d(TAG + " Radius M: ", "" + messageLoc.getRadious());
-            /*
-            double aux1 = pow((loc.getLatitude() - messageLoc.getLatitude()), 2);
-            double aux2 = pow((loc.getLongitude() - messageLoc.getLongitude()), 2);
-
-            if(aux1 + aux2 < pow(messageLoc.getRadious(), 2)){
-                messagesToReturn.add(m);
-            }*/
 
             double earthRadius = 6371000; //meters
             double dLat = Math.toRadians(loc.getLatitude()- messageLoc.getLatitude());
@@ -172,7 +176,6 @@ public class BroadcastMessageTask
 
     @Override
     public void onGroupInfoAvailable(SimWifiP2pDeviceList devices, SimWifiP2pInfo groupInfo) {
-        //Log.d("X:", "OnGroupInfoAvailable");
         neighborsIp = new ArrayList<>();
         if(groupInfo.getDevicesInNetwork() != null) {
             for (String deviceName : groupInfo.getDevicesInNetwork()) {

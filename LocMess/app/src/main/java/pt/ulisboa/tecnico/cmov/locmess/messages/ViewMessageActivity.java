@@ -1,19 +1,23 @@
     package pt.ulisboa.tecnico.cmov.locmess.messages;
 
     import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+    import android.content.Intent;
+    import android.os.Bundle;
+    import android.support.v7.app.AppCompatActivity;
+    import android.view.View;
+    import android.widget.ArrayAdapter;
+    import android.widget.Button;
+    import android.widget.ListView;
+    import android.widget.TextView;
 
-import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
-import pt.ulisboa.tecnico.cmov.locmess.R;
+    import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
+    import pt.ulisboa.tecnico.cmov.locmess.R;
+    import pt.ulisboa.tecnico.cmov.locmess.locations.ViewLocationActivity;
 
     public class ViewMessageActivity extends AppCompatActivity {
 
      private Context context;
+        private String location = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +29,17 @@ import pt.ulisboa.tecnico.cmov.locmess.R;
         Intent intent = getIntent();
         String id = intent.getStringExtra("ID");
         Message m = LocalMemory.getInstance().getMessage(Integer.parseInt((id)));
+        if (m==null) {
+            m = LocalMemory.getInstance().getDecentralizedMessage(Integer.parseInt((id)));
+            if(m==null)
+                m = LocalMemory.getInstance().getDecentralizedMessageToSend(Integer.parseInt((id)));
+        }
+
 
         TextView tId = (TextView) findViewById(R.id.textViewMId);
         TextView tTitle = (TextView) findViewById(R.id.textViewMTitle);
         TextView tAutor = (TextView) findViewById(R.id.textViewMAutor);
-        TextView tLocation = (TextView) findViewById(R.id.textViewMLocation);
+        Button bLocation = (Button) findViewById(R.id.buttonMLocation);
         TextView tText = (TextView) findViewById(R.id.textViewMText);
         TextView tDelivery = (TextView) findViewById(R.id.textViewMDelivery);
         TextView tPolicy = (TextView) findViewById(R.id.textViewMPolicy);
@@ -41,7 +51,8 @@ import pt.ulisboa.tecnico.cmov.locmess.R;
             tId.setText(""+m.getId());
             tTitle.setText(m.getTitle());
             tAutor.setText(m.getAutor());
-            tLocation.setText(m.getLocation());
+            bLocation.setText(m.getLocation());
+            location=m.getLocation();
             tText.setText(m.getText());
             if(m.isCentralized())
                 tDelivery.setText("Centralized");
@@ -79,5 +90,11 @@ import pt.ulisboa.tecnico.cmov.locmess.R;
 
         }
 
+    }
+
+    public void seeLocation(View v) {
+        Intent intent = new Intent(this, ViewLocationActivity.class);
+        intent.putExtra("LOCATION", location);
+        startActivity(intent);
     }
 }
