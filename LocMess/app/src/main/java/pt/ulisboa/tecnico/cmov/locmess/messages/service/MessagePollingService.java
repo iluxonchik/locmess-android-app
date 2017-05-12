@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import java.util.List;
+
 import pt.ulisboa.tecnico.cmov.locmess.R;
 import pt.ulisboa.tecnico.cmov.locmess.messages.notifications.NewMessageNotificationReceiverActivity;
 
@@ -24,15 +26,20 @@ import pt.ulisboa.tecnico.cmov.locmess.messages.notifications.NewMessageNotifica
  * Please note, this service does not restart automatically, you'll have to do it by yourself.
  */
 public final class MessagePollingService extends IntentService {
+    public final static String LOCATION_TYPE_EXTRA = "type";
+    public final static String SSID_LIST_EXTRA = "ssid_list";
+    public enum LocationType {GPS, SSID};
+
+    private final static String SERVICE_NAME = MessagePollingService.class.getName();
+
+    private final static String LOG_TAG = SERVICE_NAME;
+    private static boolean isWifiRegistered = false;
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
      * @param name Used to name the worker thread, important only for debugging.
      */
-
-    private final static String SERVICE_NAME = MessagePollingService.class.getName();
-    private final static String LOG_TAG = SERVICE_NAME;
-
     public MessagePollingService(String name) {
         super(name);
     }
@@ -44,6 +51,14 @@ public final class MessagePollingService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         Log.d(LOG_TAG, "onHandleIntent()");
+        LocationType locType = (LocationType)intent.getExtras().get(LOCATION_TYPE_EXTRA);
+
+        if (locType.equals(LocationType.SSID)) {
+            handleSSIDMessageLocaion(intent);
+        } else {
+            handleGPSMessageLocation(intent);
+        }
+        
         // poll server for messages in my area
 
         // if message is not in my list already, show it to the user
@@ -51,9 +66,32 @@ public final class MessagePollingService extends IntentService {
 
         // if the user accepts the message, add it to my messages
 
+
+    }
+
+    private void handleGPSMessageLocation(Intent intent) {
+        Log.d(LOG_TAG, "Handling GPS message location");
+    }
+
+    private void handleSSIDMessageLocaion(Intent intent) {
+        Log.d(LOG_TAG, "Handling SSID message location");
+
+        List<String> ssids = (List<String>) intent.getExtras().get(SSID_LIST_EXTRA);
+        Log.d(LOG_TAG, "Got SSID list: " + ssids.toString());
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d(LOG_TAG, "Destroying service...");
+        //Toast.makeText(this, "Destroy serivice...", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
+    }
+
+
+    private void showNotificaiton(String title, String text) {
         // ** Notificaiton Building ** //
         NotificationManager notificationManager =
-                                  (NotificationManager)this.getSystemService(NOTIFICATION_SERVICE);
+                (NotificationManager)this.getSystemService(NOTIFICATION_SERVICE);
 
         // intent that's triggered if the notification is selected
         Intent notifIntent = new Intent(this, NewMessageNotificationReceiverActivity.class);
@@ -61,13 +99,13 @@ public final class MessagePollingService extends IntentService {
                 (int)System.currentTimeMillis(), notifIntent, 0);
 
         Notification notif = new NotificationCompat.Builder(this)
-                            .setContentTitle("Important question")
-                            .setContentText("Would you do it if my name was Dre?")
-                            .setSmallIcon(R.drawable.ic_locmess)
-                            .setContentIntent(pendingIntent)
-                            .setAutoCancel(true)
-                            //.addAction(R.drawable.ic_locmess, "Action 1", newPendingIntent)
-                            .build();
+                .setContentTitle(title)
+                .setContentText(text)
+                .setSmallIcon(R.drawable.ic_locmess)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                //.addAction(R.drawable.ic_locmess, "Action 1", newPendingIntent)
+                .build();
 
         notificationManager.notify(0, notif);
 

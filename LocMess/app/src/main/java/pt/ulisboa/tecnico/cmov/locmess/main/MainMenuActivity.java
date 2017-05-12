@@ -59,10 +59,9 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        Log.d(LOG_TAG, "HEEEELLO");
 
-        //setUpSharedPreferences();
-        //startMessagePollingServiceAlarm();
+        setUpSharedPreferences();
+        startMessagePollingServiceAlarm();
 
 
         context=this;
@@ -104,9 +103,8 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
             AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.add(Calendar.SECOND, 3); // TODO: fix hardcoded values
-            long frequency = 3 * 1000;
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+            long frequency = 60 * 1000; // every minute
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
                                                                         frequency, pendingIntent);
             markMessagePollingServiceAlarmAsSetUp();
         }
