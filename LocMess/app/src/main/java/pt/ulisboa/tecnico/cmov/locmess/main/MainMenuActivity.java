@@ -61,7 +61,7 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
         setContentView(R.layout.activity_main_menu);
 
         setUpSharedPreferences();
-        startMessagePollingServiceAlarm();
+        // startMessagePollingServiceAlarm();
 
 
         context=this;

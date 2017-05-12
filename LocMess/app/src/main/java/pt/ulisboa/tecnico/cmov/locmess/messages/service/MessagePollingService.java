@@ -58,7 +58,7 @@ public final class MessagePollingService extends IntentService {
         } else {
             handleGPSMessageLocation(intent);
         }
-        
+
         // poll server for messages in my area
 
         // if message is not in my list already, show it to the user
