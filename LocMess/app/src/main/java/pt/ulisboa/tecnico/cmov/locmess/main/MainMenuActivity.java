@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.cmov.locmess.main;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -10,10 +11,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Messenger;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -32,13 +37,15 @@ import pt.ulisboa.tecnico.cmov.locmess.R;
 import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.BroadcastMessageTask;
 import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.IncommingCommTask;
 import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.SimWifiP2pBroadcastReceiver;
+import pt.ulisboa.tecnico.cmov.locmess.locations.LocationUpdaterService;
 import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
 import pt.ulisboa.tecnico.cmov.locmess.messages.service.MessagePollingService;
 import pt.ulisboa.tecnico.cmov.locmess.profile.MainProfileActivity;
 
 public class MainMenuActivity extends AppCompatActivity implements PeerListListener {
 
-    private final String LOG_TAG = MainMenuActivity.class.getName();
+    private static final String LOG_TAG = MainMenuActivity.class.getName();
+    private static final int LOCATION_PERMISSION_CODE = 1;
 
     public Context context;
 
@@ -62,7 +69,7 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
 
         setUpSharedPreferences();
         // startMessagePollingServiceAlarm();
-
+        startLocationUpdatesListener();
 
         context=this;
 
@@ -88,6 +95,35 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
         // spawn the broadcast task
         new BroadcastMessageTask(context).executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private void startLocationUpdatesListener() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_CODE);
+        } else {
+            startLocationUpdaterService();
+        }
+    }
+
+    private void startLocationUpdaterService() {
+        Intent i = new Intent(this, LocationUpdaterService.class);
+        startService(i);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                    grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                startLocationUpdaterService();
+            } else {
+                Snackbar.make(this.getCurrentFocus(), "The application needs location permission to function properly.", Snackbar.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void startMessagePollingServiceAlarm() {

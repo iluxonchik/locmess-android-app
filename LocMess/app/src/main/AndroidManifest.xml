@@ -57,6 +57,10 @@
             android:name=".messages.service.MessagePollingService"
             android:exported="false" />
 
+        <service
+            android:name="pt.ulisboa.tecnico.cmov.locmess.locations.LocationUpdaterService"
+            android:exported="false" />
+
         <activity android:name=".messages.notifications.NewMessageNotificationReceiverActivity"></activity>
     </application>
 
