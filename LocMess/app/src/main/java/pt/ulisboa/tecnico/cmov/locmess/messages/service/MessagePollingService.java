@@ -78,6 +78,7 @@ public final class MessagePollingService extends IntentService {
 
         List<String> ssids = (List<String>) intent.getExtras().get(SSID_LIST_EXTRA);
         Log.d(LOG_TAG, "Got SSID list: " + ssids.toString());
+
     }
 
     @Override
