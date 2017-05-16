@@ -39,19 +39,19 @@ public class MainMessagesActivity extends AppCompatActivity {
 
         for(int i=0;i<msgs.size();i++){
             messages.add(msgs.get(i).getId()+":"+msgs.get(i).getTitle());
-            if(msgs.get(i).getAutor().equals(LocalMemory.getInstance().getLoggedUserMail()))
+            if(msgs.get(i).getAuthor().equals(LocalMemory.getInstance().getLoggedUserMail()))
                 my_messages.add(msgs.get(i).getId()+":"+msgs.get(i).getTitle());
         }
 
         for(int i=0;i<msgsD.size();i++){
             messages.add(msgsD.get(i).getId()+":"+msgsD.get(i).getTitle());
-            if(msgsD.get(i).getAutor().equals(LocalMemory.getInstance().getLoggedUserMail()))
+            if(msgsD.get(i).getAuthor().equals(LocalMemory.getInstance().getLoggedUserMail()))
                 my_messages.add(msgsD.get(i).getId()+":"+msgsD.get(i).getTitle());
         }
 
         for(int i=0;i<msgsDTS.size();i++){
             messages.add(msgsDTS.get(i).getId()+":"+msgsDTS.get(i).getTitle());
-            if(msgsDTS.get(i).getAutor().equals(LocalMemory.getInstance().getLoggedUserMail()))
+            if(msgsDTS.get(i).getAuthor().equals(LocalMemory.getInstance().getLoggedUserMail()))
                 my_messages.add(msgsDTS.get(i).getId()+":"+msgsDTS.get(i).getTitle());
         }
 

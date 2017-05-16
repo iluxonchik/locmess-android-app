@@ -9,10 +9,10 @@ import java.util.List;
  * Created by Valentyn on 22-03-2017.
  */
 
-public class Message {
+public final class Message {
     private int id;
     private String title;
-    private String autor;
+    private String author;
     private String location;
     private String text;
     private boolean isCentralized;
@@ -25,7 +25,7 @@ public class Message {
     public Message(int id, String tit, String aut, String loc, String txt, boolean cent, boolean black, List<String> ks,String sDate,String eDate){
         this.id=id;
         title=tit;
-        autor=aut;
+        author =aut;
         location=loc;
         text=txt;
         isCentralized=cent;
@@ -43,8 +43,8 @@ public class Message {
         return title;
     }
 
-    public String getAutor(){
-        return autor;
+    public String getAuthor(){
+        return author;
     }
 
     public String getLocation(){
@@ -80,7 +80,7 @@ public class Message {
         try {
             jo.put("id", id);
             jo.put("title", title);
-            jo.put("author", autor);
+            jo.put("author", author);
             jo.put("location", location);
             jo.put("text", text);
             jo.put("isCentralized", isCentralized);
@@ -95,4 +95,18 @@ public class Message {
     }
 
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Message) {
+            Message other = (Message) obj;
+            return this.getId() == other.getId();
+        } else {
+            return super.equals(obj);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

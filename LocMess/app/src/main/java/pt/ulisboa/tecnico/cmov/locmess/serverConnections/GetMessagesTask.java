@@ -144,8 +144,9 @@ public class GetMessagesTask extends AsyncTask<String, Void, String> implements 
                 Intent intent = new Intent(context, MainMessagesActivity.class);
                 context.startActivity(intent);
             }
-            else
+            else {
                 LocalMemory.getInstance().setRefreshMessagesScreen(true);
+            }
         }
 
         return;

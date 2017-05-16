@@ -23,6 +23,7 @@ public class LocalMemory {
     private List<Message> decentralizedMessages = new ArrayList<>();
     private List<Message> decentralizedMessagesToSend = new ArrayList<>();
 
+
     private SimWifiP2pManager mManager = null;
     private SimWifiP2pManager.Channel mChannel = null;
     private boolean mBound = false;

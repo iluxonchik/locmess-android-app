@@ -50,7 +50,7 @@
         if(m!=null){
             tId.setText(""+m.getId());
             tTitle.setText(m.getTitle());
-            tAutor.setText(m.getAutor());
+            tAutor.setText(m.getAuthor());
             bLocation.setText(m.getLocation());
             location=m.getLocation();
             tText.setText(m.getText());
