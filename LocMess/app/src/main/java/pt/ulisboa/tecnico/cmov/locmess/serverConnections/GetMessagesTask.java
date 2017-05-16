@@ -110,30 +110,7 @@ public class GetMessagesTask extends AsyncTask<String, Void, String> implements 
                 JSONArray jsonArray = new JSONArray(s);
                 for (int i = 0, size = jsonArray.length(); i < size; i++) {
                     JSONObject objectInArray = jsonArray.getJSONObject(i);
-
-                    List<String> prop = new ArrayList<>();
-
-                    JSONObject propJS = objectInArray.getJSONObject("properties");
-                    Iterator<String> keys = propJS.keys();
-                    while(keys.hasNext() ) {
-                        String key = keys.next();
-                        prop.add(key+":"+propJS.get(key));
-                    }
-
-                    LocalMemory.getInstance().addMessage(
-                    new Message(
-                            Integer.parseInt(objectInArray.getString("msg_id")),
-                            objectInArray.getString("title"),
-                            objectInArray.getString("author"),
-                            objectInArray.getString("location"),
-                            objectInArray.getString("text"),
-                            Boolean.valueOf(objectInArray.getString("is_centralized")),
-                            Boolean.valueOf(objectInArray.getString("is_black_list")),
-                            prop,
-                            objectInArray.getString("valid_from"),
-                            objectInArray.getString("valid_until")
-                        )
-                    );
+                    LocalMemory.getInstance().addMessage(Message.fromJSONObject(objectInArray));
                 }
 
             } catch (JSONException e) {

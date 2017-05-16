@@ -5,6 +5,7 @@ package pt.ulisboa.tecnico.cmov.locmess;
  */
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import pt.inesc.termite.wifidirect.SimWifiP2pManager;
@@ -23,6 +24,8 @@ public class LocalMemory {
     private List<Message> decentralizedMessages = new ArrayList<>();
     private List<Message> decentralizedMessagesToSend = new ArrayList<>();
 
+    private HashSet<Message> notYetAcceptedMessages = new HashSet<>();
+    private HashSet<Message> acceptedMessages = new HashSet<>();
 
     private SimWifiP2pManager mManager = null;
     private SimWifiP2pManager.Channel mChannel = null;
@@ -270,8 +273,17 @@ public class LocalMemory {
 
 
     public static synchronized LocalMemory getInstance(){
-        if(instance==null)
+        if(instance == null) {
             instance = new LocalMemory();
+        }
         return instance;
+    }
+
+    public HashSet<Message> getNotYetAcceptedMessages() {
+        return notYetAcceptedMessages;
+    }
+
+    public HashSet<Message> getAcceptedMessages() {
+        return acceptedMessages;
     }
 }

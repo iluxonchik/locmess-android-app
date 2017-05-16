@@ -3,11 +3,9 @@ package pt.ulisboa.tecnico.cmov.locmess.messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
-/**
- * Created by Valentyn on 22-03-2017.
- */
 
 public final class Message {
     private int id;
@@ -108,5 +106,36 @@ public final class Message {
     @Override
     public int hashCode() {
         return id;
+    }
+
+    /**
+     * Creates a new Message instance from a JSON Object.
+     * @param jsonObj - JSON object representing the Message
+     * @return Message instance
+     * @throws JSONException
+     */
+    public static Message fromJSONObject(JSONObject jsonObj) throws JSONException {
+        List<String> prop = new ArrayList<>();
+
+        JSONObject propJS = jsonObj.getJSONObject("properties");
+        Iterator<String> keys = propJS.keys();
+
+        while(keys.hasNext() ) {
+            String key = keys.next();
+            prop.add(key+":"+propJS.get(key));
+        }
+
+        return new Message(
+                Integer.parseInt(jsonObj.getString("msg_id")),
+                jsonObj.getString("title"),
+                jsonObj.getString("author"),
+                jsonObj.getString("location"),
+                jsonObj.getString("text"),
+                Boolean.valueOf(jsonObj.getString("is_centralized")),
+                Boolean.valueOf(jsonObj.getString("is_black_list")),
+                prop,
+                jsonObj.getString("valid_from"),
+                jsonObj.getString("valid_until")
+        );
     }
 }
