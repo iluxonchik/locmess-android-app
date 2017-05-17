@@ -14,6 +14,7 @@ import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.R;
+import pt.ulisboa.tecnico.cmov.locmess.locations.InboxMessagesActivity;
 import pt.ulisboa.tecnico.cmov.locmess.messages.Message;
 import pt.ulisboa.tecnico.cmov.locmess.messages.notifications.NewMessageNotificationReceiverActivity;
 import pt.ulisboa.tecnico.cmov.locmess.serverConnections.MessageGetter;
@@ -118,7 +119,7 @@ public final class MessagePollingService extends IntentService {
                 (NotificationManager)this.getSystemService(NOTIFICATION_SERVICE);
 
         // intent that's triggered if the notification is selected
-        Intent notifIntent = new Intent(this, NewMessageNotificationReceiverActivity.class);
+        Intent notifIntent = new Intent(this, InboxMessagesActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 (int)System.currentTimeMillis(), notifIntent, 0);
 
@@ -128,7 +129,7 @@ public final class MessagePollingService extends IntentService {
                 .setSmallIcon(R.drawable.ic_locmess)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
-                //.addAction(R.drawable.ic_locmess, "Action 1", newPendingIntent)
+                //.addAction(R.drawable.ic_locmess, "Action 1", pendingIntent)
                 .build();
 
         notificationManager.notify(0, notif);
