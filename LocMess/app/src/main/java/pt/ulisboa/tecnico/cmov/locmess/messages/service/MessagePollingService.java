@@ -100,9 +100,27 @@ public final class MessagePollingService extends IntentService {
     }
 
     private void treatNewMessagesAvailable(HashSet<Message> messageHashSet) {
-        LocalMemory.getInstance().addNotYetAcceptedMessages(messageHashSet);
+        LocalMemory locMem = LocalMemory.getInstance();
+        locMem.addNotYetAcceptedMessages(messageHashSet);
+        int size = locMem.getNotYetAcceptedMessages().size();
 
-        showNotificaiton("New Messages Available", messageHashSet.size() + " new message(s) available");
+        if (size < 1) {
+            // no new messages available, don't show notification
+            return;
+        }
+
+        String title;
+        String text;
+
+        if (size > 1) {
+            title = "New Messages Available";
+            text =  size + " new messages available!";
+        } else {
+            title = "New Message Available";
+            text = "1 new message available!";
+        }
+
+        showNotificaiton(title, text);
     }
 
     @Override

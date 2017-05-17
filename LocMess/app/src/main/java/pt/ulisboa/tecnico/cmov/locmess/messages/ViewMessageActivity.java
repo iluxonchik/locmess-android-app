@@ -29,10 +29,19 @@
         Intent intent = getIntent();
         String id = intent.getStringExtra("ID");
         Message m = LocalMemory.getInstance().getMessage(Integer.parseInt((id)));
+        LocalMemory locMem = LocalMemory.getInstance();
+        int intId = Integer.parseInt(id);
+
         if (m==null) {
-            m = LocalMemory.getInstance().getDecentralizedMessage(Integer.parseInt((id)));
-            if(m==null)
-                m = LocalMemory.getInstance().getDecentralizedMessageToSend(Integer.parseInt((id)));
+            m = locMem.getDecentralizedMessage(intId);
+        }
+
+        if(m==null) {
+            m = locMem.getDecentralizedMessageToSend(intId);
+        }
+
+        if (m == null) {
+            m = locMem.getAcceptedMessage(id);
         }
 
 

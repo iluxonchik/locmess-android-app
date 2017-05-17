@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context="pt.ulisboa.tecnico.cmov.locmess.locations.InboxMessagesActivity">
 
+    <TextView
+        android:id="@+id/inbox_no_messages_available"
+        android:text="@string/no_messages_available"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
     <ListView
         android:id="@+id/inbox_list_view"
         android:layout_height="match_parent"

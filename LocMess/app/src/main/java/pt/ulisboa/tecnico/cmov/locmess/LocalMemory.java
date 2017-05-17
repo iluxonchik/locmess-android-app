@@ -5,6 +5,7 @@ package pt.ulisboa.tecnico.cmov.locmess;
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class LocalMemory {
     private List<Message> decentralizedMessagesToSend = new ArrayList<>();
 
     private HashSet<Message> notYetAcceptedMessages = new HashSet<>();
-    private HashSet<Message> acceptedMessages = new HashSet<>();
+    private HashMap<String, Message> acceptedMessages = new HashMap<>();
 
     private SimWifiP2pManager mManager = null;
     private SimWifiP2pManager.Channel mChannel = null;
@@ -45,12 +46,19 @@ public class LocalMemory {
     }
 
     public void addNotYetAcceptedMessages(HashSet<Message> newMsgs) {
-        notYetAcceptedMessages.addAll(newMsgs);
+        String id = null;
+        for (Message msg : newMsgs) {
+            id = new Integer(msg.getId()).toString();
+            if (!acceptedMessages.containsKey(id)) {
+                // only add the message if it's not already been accepted
+                notYetAcceptedMessages.add(msg);
+            }
+        }
     }
 
     public void acceptMessage(Message m) {
         notYetAcceptedMessages.remove(m);
-        acceptedMessages.add(m);
+        acceptedMessages.put(new Integer(m.getId()).toString(), m);
     }
 
     public boolean getRefreshMessagesScreen(){
@@ -292,7 +300,12 @@ public class LocalMemory {
         return notYetAcceptedMessages;
     }
 
-    public HashSet<Message> getAcceptedMessages() {
-        return acceptedMessages;
+
+    public Message getAcceptedMessage(String id) {
+        return acceptedMessages.get(id);
+    }
+
+    public boolean isNotYetAcceptedMessagesAvailable() {
+        return notYetAcceptedMessages.size() > 0;
     }
 }

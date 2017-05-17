@@ -39,6 +39,7 @@
     </string>
     <string name="shared_pref_file_key">pt.ulisboa.tecnico.cmov.locmess.SHARED_PREFERENCE_FILE</string>
     <string name="alarm_set_up_shared_pref">msgPollAlarmSetUp</string>
+    <string name="no_messages_available">No messages available :(</string>
 
 </resources>
 

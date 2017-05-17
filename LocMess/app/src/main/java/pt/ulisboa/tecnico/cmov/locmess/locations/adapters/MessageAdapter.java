@@ -1,6 +1,8 @@
 package pt.ulisboa.tecnico.cmov.locmess.locations.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +13,20 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
+import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.R;
 import pt.ulisboa.tecnico.cmov.locmess.messages.Message;
+import pt.ulisboa.tecnico.cmov.locmess.messages.ViewMessageActivity;
 
 /**
  * Created by iluxo on 17/05/2017.
  */
 
 public class MessageAdapter extends BaseAdapter {
+    private static final String LOG_TAG = MessageAdapter.class.getName();
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<Message> messages;
@@ -58,6 +64,21 @@ public class MessageAdapter extends BaseAdapter {
         title.setText(msg.getTitle());
         text.setText(msg.getText());
         location.setText(msg.getLocation());
+
+        row.setTag(msg);
+
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Message msg = (Message) v.getTag();
+                LocalMemory.getInstance().acceptMessage(msg);
+                Log.d(MessageAdapter.LOG_TAG, "Message with id " + msg.getId() + " accepted!");
+
+                Intent i = new Intent(context, ViewMessageActivity.class);
+                i.putExtra("ID", new Integer(msg.getId()).toString());
+                context.startActivity(i);
+            }
+        });
 
         return row;
     }
