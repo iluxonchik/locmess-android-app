@@ -44,6 +44,15 @@ public class LocalMemory {
 
     }
 
+    public void addNotYetAcceptedMessages(HashSet<Message> newMsgs) {
+        notYetAcceptedMessages.addAll(newMsgs);
+    }
+
+    public void acceptMessage(Message m) {
+        notYetAcceptedMessages.remove(m);
+        acceptedMessages.add(m);
+    }
+
     public boolean getRefreshMessagesScreen(){
         return refreshMessagesScreen;
     }

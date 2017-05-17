@@ -13,6 +13,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import pt.ulisboa.tecnico.cmov.locmess.messages.service.MessagePollingService;
+
 /**
  * Service responsible for retrieving location updates.
  */
@@ -36,7 +38,16 @@ public class LocationUpdaterService extends Service {
         public void onLocationChanged(Location location) {
             Log.d(LOG_TAG, "onLocationChanged: " + location);
             lastLocation.set(location);
-            // TODO: go and get GPS messages
+
+            double latitude = lastLocation.getLatitude();
+            double longitude = lastLocation.getLongitude();
+
+            Intent i = new Intent(getApplicationContext(), MessagePollingService.class);
+            i.putExtra(MessagePollingService.LOCATION_TYPE_EXTRA, MessagePollingService.LocationType.GPS);
+            i.putExtra(MessagePollingService.LATITUDE_EXTRA, latitude);
+            i.putExtra(MessagePollingService.LONGITUDE_EXTRA, longitude);
+
+            startService(i);
         }
 
         @Override

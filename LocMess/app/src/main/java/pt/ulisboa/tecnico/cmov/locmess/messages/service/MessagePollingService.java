@@ -9,10 +9,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import java.util.HashSet;
 import java.util.List;
 
+import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.R;
+import pt.ulisboa.tecnico.cmov.locmess.messages.Message;
 import pt.ulisboa.tecnico.cmov.locmess.messages.notifications.NewMessageNotificationReceiverActivity;
+import pt.ulisboa.tecnico.cmov.locmess.serverConnections.MessageGetter;
 
 /**
  * Created by The Protégé Of The D.R.E. on 07/05/2017.
@@ -28,6 +32,10 @@ import pt.ulisboa.tecnico.cmov.locmess.messages.notifications.NewMessageNotifica
 public final class MessagePollingService extends IntentService {
     public final static String LOCATION_TYPE_EXTRA = "type";
     public final static String SSID_LIST_EXTRA = "ssid_list";
+
+    public final static String LATITUDE_EXTRA = "latitude";
+    public final static String LONGITUDE_EXTRA = "longitude";
+
     public enum LocationType {GPS, SSID};
 
     private final static String SERVICE_NAME = MessagePollingService.class.getName();
@@ -71,6 +79,12 @@ public final class MessagePollingService extends IntentService {
 
     private void handleGPSMessageLocation(Intent intent) {
         Log.d(LOG_TAG, "Handling GPS message location");
+
+        double latitude = intent.getDoubleExtra(MessagePollingService.LATITUDE_EXTRA, 0);
+        double longitude = intent.getDoubleExtra(MessagePollingService.LONGITUDE_EXTRA, 0);
+        Log.d(LOG_TAG, "Latitude: " + latitude + " Longitude: " + longitude);
+        HashSet<Message> messageHashSet = MessageGetter.getGPSMessages(latitude, longitude);
+        treatNewMessagesAvailable(messageHashSet);
     }
 
     private void handleSSIDMessageLocaion(Intent intent) {
@@ -79,6 +93,15 @@ public final class MessagePollingService extends IntentService {
         List<String> ssids = (List<String>) intent.getExtras().get(SSID_LIST_EXTRA);
         Log.d(LOG_TAG, "Got SSID list: " + ssids.toString());
 
+        HashSet<Message> messageHashSet = MessageGetter.getSSIDMessages(ssids);
+
+        treatNewMessagesAvailable(messageHashSet);
+    }
+
+    private void treatNewMessagesAvailable(HashSet<Message> messageHashSet) {
+        LocalMemory.getInstance().addNotYetAcceptedMessages(messageHashSet);
+
+        showNotificaiton("New Messages Available", messageHashSet.size() + " new message(s) available");
     }
 
     @Override

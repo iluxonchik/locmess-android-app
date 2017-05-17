@@ -17,6 +17,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.DoubleBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -45,6 +48,24 @@ public class MessageGetter {
             return null;
         }
         HttpURLConnection conn = createSSIDServerConnection();
+
+        HashSet<Message> messages = retrieveMessagesFromServer(conn, postDataParams);
+        return messages;
+    }
+
+    public static HashSet<Message> getGPSMessages(double latitude, double longitude) {
+        JSONObject postDataParams = createAuthParams();
+        ArrayList<Double> curr_coord = new ArrayList<>(2);
+        curr_coord.add(latitude);
+        curr_coord.add(longitude);
+
+        try {
+            postDataParams.put("curr_coord", new JSONArray(curr_coord));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        HttpURLConnection conn = createGPSServerConnection();
 
         HashSet<Message> messages = retrieveMessagesFromServer(conn, postDataParams);
         return messages;
@@ -123,10 +144,10 @@ public class MessageGetter {
         return postDataParams;
     }
 
-    private static HttpURLConnection createSSIDServerConnection() {
+    private static HttpURLConnection createConnection(URL endpoint) {
         HttpURLConnection conn = null;
         try {
-            conn = (HttpURLConnection) SSID_ENDPOINT.openConnection();
+            conn = (HttpURLConnection) endpoint.openConnection();
             initConnection(conn);
         } catch (ProtocolException e) {
             e.printStackTrace();
@@ -136,18 +157,14 @@ public class MessageGetter {
         return conn;
     }
 
-    private static HttpURLConnection createGPSServerConnection() {
-        HttpURLConnection conn = null;
-        try {
-            conn = (HttpURLConnection) GPS_ENDPOINT.openConnection();
-            initConnection(conn);
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return conn;
+    private static HttpURLConnection createSSIDServerConnection() {
+        return createConnection(SSID_ENDPOINT);
     }
+
+    private static HttpURLConnection createGPSServerConnection() {
+        return createConnection(GPS_ENDPOINT);
+    }
+
 
     private static void initConnection(HttpURLConnection conn) throws ProtocolException {
         conn.setReadTimeout(15000 );

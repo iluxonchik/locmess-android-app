@@ -74,9 +74,6 @@ public class SimWifiP2pBroadcastReceiver extends BroadcastReceiver {
                                                         MessagePollingService.LocationType.SSID);
                     i.putExtra(MessagePollingService.SSID_LIST_EXTRA, (Serializable) ssids);
                     context.startService(i);
-
-                    // now pass the resulting SSID list to the IntentService that will check the
-                    // remote server for new messages
                 }
             });
 
