@@ -60,6 +60,7 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
     protected void onRestart() {
         super.onRestart();
 
+        LocalMemory.setContext(getApplicationContext());
         LocalMemory.getInstance().getManager().populateLocations(this);
         LocalMemory.getInstance().getManager().populateKeys(this);
         setInboxMessagesCount();
@@ -69,6 +70,7 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        LocalMemory.setContext(getApplicationContext());
 
         setUpSharedPreferences();
         // startMessagePollingServiceAlarm();

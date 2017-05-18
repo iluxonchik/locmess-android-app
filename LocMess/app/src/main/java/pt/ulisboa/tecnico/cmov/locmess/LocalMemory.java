@@ -4,6 +4,10 @@ package pt.ulisboa.tecnico.cmov.locmess;
  * Created by Valentyn on 20-03-2017.
  */
 
+import android.content.Context;
+import android.util.Log;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,10 +17,15 @@ import pt.inesc.termite.wifidirect.SimWifiP2pManager;
 import pt.inesc.termite.wifidirect.SimWifiP2pManager.Channel;
 import pt.ulisboa.tecnico.cmov.locmess.locations.Location;
 import pt.ulisboa.tecnico.cmov.locmess.messages.Message;
+import pt.ulisboa.tecnico.cmov.locmess.utils.InternalStorage;
 
 
 public class LocalMemory {
 
+    private static final String LOG_TAG = LocalMemory.class.getName();
+    private static final String NYAM_FILE_NAME = "nyam.data";
+    private static final String AM_FILE_NAME = "am.data";
+    private static Context context;
     private static LocalMemory instance;
     private Manager manager = new Manager();
     private List<String> keys = new ArrayList<>();
@@ -54,11 +63,35 @@ public class LocalMemory {
                 notYetAcceptedMessages.add(msg);
             }
         }
+
+        try {
+            InternalStorage.writeToDisk(context, NYAM_FILE_NAME, notYetAcceptedMessages);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e(LOG_TAG, "Could not save to disk!");
+        }
     }
 
     public void acceptMessage(Message m) {
         notYetAcceptedMessages.remove(m);
         acceptedMessages.put(new Integer(m.getId()).toString(), m);
+
+        try {
+            InternalStorage.writeToDisk(context, NYAM_FILE_NAME, notYetAcceptedMessages);
+            InternalStorage.writeToDisk(context, AM_FILE_NAME, acceptedMessages);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e(LOG_TAG, "Could not save to disk!");
+        }
+    }
+
+    public void setAcceptedMessages(HashMap<String, Message> msgs) {
+        acceptedMessages = msgs;
+    }
+
+    public void setNotYetAcceptedMessages(HashSet<Message> msgs) {
+        notYetAcceptedMessages = msgs;
     }
 
     public boolean getRefreshMessagesScreen(){
@@ -292,6 +325,27 @@ public class LocalMemory {
     public static synchronized LocalMemory getInstance(){
         if(instance == null) {
             instance = new LocalMemory();
+            if (InternalStorage.fileExists(instance.getContext(), NYAM_FILE_NAME)) {
+                try {
+                    Object loaded = InternalStorage.readFromDisk(instance.context, NYAM_FILE_NAME);
+                    instance.setNotYetAcceptedMessages((HashSet<Message>) loaded);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (InternalStorage.fileExists(instance.getContext(), AM_FILE_NAME)) {
+                try {
+                    Object loaded = InternalStorage.readFromDisk(instance.context, AM_FILE_NAME);
+                    instance.setAcceptedMessages((HashMap<String, Message>) loaded);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return instance;
     }
@@ -315,5 +369,13 @@ public class LocalMemory {
         } else {
             return new ArrayList<>(acceptedMessages.values());
         }
+    }
+
+    public static void setContext(Context newContext) {
+        context = newContext;
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }
