@@ -62,6 +62,7 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
 
         LocalMemory.getInstance().getManager().populateLocations(this);
         LocalMemory.getInstance().getManager().populateKeys(this);
+        setInboxMessagesCount();
     }
 
     @Override
@@ -100,10 +101,17 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
                 AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setInboxMessagesCount();
+    }
+
     private void setInboxMessagesCount() {
         Button btn = (Button) findViewById(R.id.button_inbox_messages);
-
-        //btn.setText();
+        LocalMemory localMemory = LocalMemory.getInstance();
+        int inboxCount = localMemory.getNotYetAcceptedMessages().size();
+        btn.setText("Inbox (" + inboxCount + ")");
     }
 
     private void startLocationUpdatesListener() {

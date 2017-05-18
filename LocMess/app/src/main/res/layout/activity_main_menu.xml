@@ -17,44 +17,50 @@
     <Button
         android:layout_width="350dp"
         android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
         style="@style/Widget.AppCompat.Button.Colored"
         android:text="@string/inbox_messages"
-        android:layout_marginTop="60dp"
         android:id="@+id/button_inbox_messages"
-        android:onClick="startInboxActivity"/>
+        android:onClick="startInboxActivity"
+        android:layout_marginTop="24dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="350dp"
         android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
         style="@style/Widget.AppCompat.Button.Colored"
         android:text="Messages"
-        android:layout_marginTop="60dp"
         android:id="@+id/buttonMessagesMenu"
-        android:onClick="messages"/>
+        android:onClick="messages"
+        android:layout_below="@+id/button_inbox_messages"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="17dp" />
 
     <Button
         android:layout_width="350dp"
         android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
         style="@style/Widget.AppCompat.Button.Colored"
         android:text="Locations"
-        android:layout_marginTop="25dp"
         android:id="@+id/buttonLocationsMenu"
+        android:onClick="locations"
         android:layout_below="@+id/buttonMessagesMenu"
-        android:onClick="locations"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="11dp" />
 
     <Button
     android:layout_width="350dp"
     android:layout_height="60dp"
-    android:layout_centerHorizontal="true"
-    style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/Widget.AppCompat.Button.Colored"
     android:text="Profile"
-    android:layout_marginTop="25dp"
-    android:id="@+id/buttonProfileMenu"
-    android:layout_below="@+id/buttonLocationsMenu"
-    android:onClick="profile"/>
+        android:id="@+id/buttonProfileMenu"
+        android:onClick="profile"
+        android:layout_below="@+id/buttonLocationsMenu"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="13dp" />
 
     <Button
         android:layout_width="350dp"
