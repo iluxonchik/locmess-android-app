@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
@@ -19,6 +20,8 @@ public class MainMessagesActivity extends AppCompatActivity {
 
     private List<String> messages;
     private List<String> my_messages;
+    private HashSet<String> authoredMessages;
+
     public Context context;
     private MyMessagesAdapter adapter;
 
@@ -31,6 +34,7 @@ public class MainMessagesActivity extends AppCompatActivity {
 
         messages = new ArrayList<>();
         my_messages = new ArrayList<>();
+        authoredMessages = new HashSet<>();
 
         LocalMemory locMem = LocalMemory.getInstance();
 
@@ -41,39 +45,52 @@ public class MainMessagesActivity extends AppCompatActivity {
 
         List<Message> msgsDTS = LocalMemory.getInstance().getDecentralizedmessagesToSend();
 
+        String msgTitle;
+
         for(int i=0;i<msgs.size();i++){
-            messages.add(msgs.get(i).getId()+":"+msgs.get(i).getTitle());
-            if(msgs.get(i).getAuthor().equals(LocalMemory.getInstance().getLoggedUserMail()))
-                my_messages.add(msgs.get(i).getId()+":"+msgs.get(i).getTitle());
+            msgTitle = msgs.get(i).getId()+": "+msgs.get(i).getTitle();
+            messages.add(msgTitle);
+            if(msgs.get(i).getAuthor().equals(LocalMemory.getInstance().getLoggedUserMail())) {
+                my_messages.add(msgTitle);
+                authoredMessages.add(msgTitle);
+            }
         }
 
         for(int i=0;i<msgsD.size();i++){
-            messages.add(msgsD.get(i).getId()+":"+msgsD.get(i).getTitle());
-            if(msgsD.get(i).getAuthor().equals(LocalMemory.getInstance().getLoggedUserMail()))
-                my_messages.add(msgsD.get(i).getId()+":"+msgsD.get(i).getTitle());
+            msgTitle = msgs.get(i).getId()+": "+msgs.get(i).getTitle();
+            messages.add(msgTitle);
+            if(msgsD.get(i).getAuthor().equals(LocalMemory.getInstance().getLoggedUserMail())) {
+                my_messages.add(msgTitle);
+                authoredMessages.add(msgTitle);
+            }
         }
 
         for(int i=0;i<msgsDTS.size();i++){
-            messages.add(msgsDTS.get(i).getId()+":"+msgsDTS.get(i).getTitle());
-            if(msgsDTS.get(i).getAuthor().equals(LocalMemory.getInstance().getLoggedUserMail()))
-                my_messages.add(msgsDTS.get(i).getId()+":"+msgsDTS.get(i).getTitle());
+            msgTitle = msgs.get(i).getId()+": "+msgs.get(i).getTitle();
+            messages.add(msgTitle);
+            if(msgsDTS.get(i).getAuthor().equals(LocalMemory.getInstance().getLoggedUserMail())) {
+                my_messages.add(msgTitle);
+                authoredMessages.add(msgTitle);
+            }
         }
 
         populateListView(messages);
     }
 
     private void populateListView(List<String> l) {
-        adapter = new MyMessagesAdapter(l,this);
+        adapter = new MyMessagesAdapter(l, this , authoredMessages);
         ListView list = (ListView) findViewById(R.id.listViewMessages);
         list.setAdapter(adapter);
     }
 
     public void showMyMessagesOnly(View v) {
         CheckBox cb = (CheckBox) findViewById(R.id.checkboxSeeMyMessages);
-        if (cb.isChecked())
+        if (cb.isChecked()) {
             populateListView(my_messages);
-        else
+        }
+        else {
             populateListView(messages);
+        }
 
     }
 

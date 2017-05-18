@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
+
 public final class Message {
     private int id;
     private String title;
@@ -18,6 +20,7 @@ public final class Message {
     private List<String> keys;
     private String startDate;
     private String endDate;
+    private boolean isMyMessage;
 
 
     public Message(int id, String tit, String aut, String loc, String txt, boolean cent, boolean black, List<String> ks,String sDate,String eDate){

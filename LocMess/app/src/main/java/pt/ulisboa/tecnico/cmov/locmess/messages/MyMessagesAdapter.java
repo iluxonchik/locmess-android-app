@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
@@ -23,12 +24,12 @@ import pt.ulisboa.tecnico.cmov.locmess.R;
 public class MyMessagesAdapter extends BaseAdapter implements ListAdapter {
     private List<String> list = new ArrayList<String>();
     private Context context;
+    private HashSet<String> authoredMessages;
 
-
-
-    public MyMessagesAdapter(List<String> list, Context context) {
+    public MyMessagesAdapter(List<String> list, Context context, HashSet<String> authoredMessages) {
         this.list = list;
         this.context = context;
+        this.authoredMessages = authoredMessages;
     }
 
     @Override
@@ -58,6 +59,12 @@ public class MyMessagesAdapter extends BaseAdapter implements ListAdapter {
         //Handle buttons and add onClickListeners
         final Button elementBtn = (Button)view.findViewById(R.id.buttonListElement);
         final Button deleteBtn = (Button)view.findViewById(R.id.buttonListRemove);
+
+        final String thisMsgTitle = (String) getItem(position);
+
+        if (!authoredMessages.contains(thisMsgTitle)) {
+            deleteBtn.setVisibility(View.GONE);
+        }
 
         elementBtn.setText(list.get(position));
 
