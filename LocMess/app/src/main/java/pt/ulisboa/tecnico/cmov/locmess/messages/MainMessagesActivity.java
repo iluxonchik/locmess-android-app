@@ -32,8 +32,12 @@ public class MainMessagesActivity extends AppCompatActivity {
         messages = new ArrayList<>();
         my_messages = new ArrayList<>();
 
-        List<Message> msgs = LocalMemory.getInstance().getMessages();
-        List<Message> msgsD = LocalMemory.getInstance().getDecentralizedMessages();
+        LocalMemory locMem = LocalMemory.getInstance();
+
+        List<Message> msgs = locMem.getMessages();
+        List<Message> msgsD = locMem.getDecentralizedMessages();
+        List<Message> acceptedMessages = locMem.getAcceptedMessages();
+        msgs.addAll(acceptedMessages);
 
         List<Message> msgsDTS = LocalMemory.getInstance().getDecentralizedmessagesToSend();
 

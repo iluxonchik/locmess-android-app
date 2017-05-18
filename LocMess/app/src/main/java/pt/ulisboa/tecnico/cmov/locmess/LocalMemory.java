@@ -308,4 +308,12 @@ public class LocalMemory {
     public boolean isNotYetAcceptedMessagesAvailable() {
         return notYetAcceptedMessages.size() > 0;
     }
+
+    public List<Message> getAcceptedMessages() {
+        if (acceptedMessages.isEmpty()) {
+            return new ArrayList<>();
+        } else {
+            return new ArrayList<>(acceptedMessages.values());
+        }
+    }
 }
