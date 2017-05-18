@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
@@ -34,7 +35,7 @@ public class MainMessagesActivity extends AppCompatActivity {
 
         messages = new ArrayList<>();
         my_messages = new ArrayList<>();
-        authoredMessages = new HashSet<>();
+        authoredMessages = new HashSet<>(); // MASSVIE hack
 
         LocalMemory locMem = LocalMemory.getInstance();
 
@@ -42,6 +43,9 @@ public class MainMessagesActivity extends AppCompatActivity {
         List<Message> msgsD = locMem.getDecentralizedMessages();
         List<Message> acceptedMessages = locMem.getAcceptedMessages();
         msgs.addAll(acceptedMessages);
+
+        // remove duplicates
+        msgs = new ArrayList<>(new LinkedHashSet<>(msgs));
 
         List<Message> msgsDTS = LocalMemory.getInstance().getDecentralizedmessagesToSend();
 

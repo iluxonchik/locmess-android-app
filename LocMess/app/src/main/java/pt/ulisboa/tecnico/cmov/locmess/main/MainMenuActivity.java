@@ -22,6 +22,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.Calendar;
 
@@ -37,6 +38,7 @@ import pt.ulisboa.tecnico.cmov.locmess.R;
 import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.BroadcastMessageTask;
 import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.IncommingCommTask;
 import pt.ulisboa.tecnico.cmov.locmess.WifiDirect.SimWifiP2pBroadcastReceiver;
+import pt.ulisboa.tecnico.cmov.locmess.locations.InboxMessagesActivity;
 import pt.ulisboa.tecnico.cmov.locmess.locations.LocationUpdaterService;
 import pt.ulisboa.tecnico.cmov.locmess.locations.MainLocationsActivity;
 import pt.ulisboa.tecnico.cmov.locmess.messages.service.MessagePollingService;
@@ -70,6 +72,7 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
         setUpSharedPreferences();
         // startMessagePollingServiceAlarm();
         startLocationUpdatesListener();
+        setInboxMessagesCount();
 
         context=this;
 
@@ -95,6 +98,12 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
         // spawn the broadcast task
         new BroadcastMessageTask(context).executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private void setInboxMessagesCount() {
+        Button btn = (Button) findViewById(R.id.button_inbox_messages);
+
+        //btn.setText();
     }
 
     private void startLocationUpdatesListener() {
@@ -243,5 +252,10 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
                     }
                 })
                 .show();
+    }
+
+    public void startInboxActivity(View view) {
+        Intent intent = new Intent(this, InboxMessagesActivity.class);
+        startActivity(intent);
     }
 }

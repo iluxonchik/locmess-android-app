@@ -16,6 +16,7 @@ import java.util.List;
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.Manager;
 import pt.ulisboa.tecnico.cmov.locmess.R;
+import pt.ulisboa.tecnico.cmov.locmess.locations.adapters.MessageAdapter;
 
 /**
  * Created by Valentyn on 22-03-2017.
@@ -44,8 +45,8 @@ public class MyMessagesAdapter extends BaseAdapter implements ListAdapter {
 
     @Override
     public long getItemId(int pos) {
-        return 0;
         //just return 0 if your list items do not have an Id variable.
+        return 0;
     }
 
     @Override
@@ -91,7 +92,6 @@ public class MyMessagesAdapter extends BaseAdapter implements ListAdapter {
 
                 Manager m = LocalMemory.getInstance().getManager();
                 m.removeMessage(context,Integer.parseInt(splited[0]));
-
             }
         });
 
