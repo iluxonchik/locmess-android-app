@@ -60,6 +60,7 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
     protected void onRestart() {
         super.onRestart();
 
+        LocalMemory.setContext(getApplicationContext());
         LocalMemory.getInstance().getManager().populateLocations(this);
         LocalMemory.getInstance().getManager().populateKeys(this);
         setInboxMessagesCount();
@@ -67,8 +68,10 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LocalMemory.setContext(context);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        LocalMemory.setContext(getApplicationContext());
 
         setUpSharedPreferences();
         // startMessagePollingServiceAlarm();
@@ -79,26 +82,28 @@ public class MainMenuActivity extends AppCompatActivity implements PeerListListe
 
         LocalMemory.getInstance().getManager().populateLocations(this);
         LocalMemory.getInstance().getManager().populateKeys(this);
+        if(!LocalMemory.getInstance().isUnique()) {
+            LocalMemory.getInstance().setUnique();
+            SimWifiP2pSocketManager.Init(getApplicationContext());
 
-        SimWifiP2pSocketManager.Init(getApplicationContext());
+            // register broadcast receiver
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_STATE_CHANGED_ACTION);
+            filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_PEERS_CHANGED_ACTION);
+            filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_NETWORK_MEMBERSHIP_CHANGED_ACTION);
+            filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_GROUP_OWNERSHIP_CHANGED_ACTION);
+            mReceiver = new SimWifiP2pBroadcastReceiver(this);
+            registerReceiver(mReceiver, filter);
+            enableWifiDirect();
 
-        // register broadcast receiver
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_STATE_CHANGED_ACTION);
-        filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_PEERS_CHANGED_ACTION);
-        filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_NETWORK_MEMBERSHIP_CHANGED_ACTION);
-        filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_GROUP_OWNERSHIP_CHANGED_ACTION);
-        mReceiver = new SimWifiP2pBroadcastReceiver(this);
-        registerReceiver(mReceiver, filter);
-        enableWifiDirect();
+            // spawn the server task
+            new IncommingCommTask(context).executeOnExecutor(
+                    AsyncTask.THREAD_POOL_EXECUTOR);
 
-        // spawn the server task
-        new IncommingCommTask(context).executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR);
-
-        // spawn the broadcast task
-        new BroadcastMessageTask(context).executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR);
+            // spawn the broadcast task
+            new BroadcastMessageTask(context).executeOnExecutor(
+                    AsyncTask.THREAD_POOL_EXECUTOR);
+        }
     }
 
     @Override

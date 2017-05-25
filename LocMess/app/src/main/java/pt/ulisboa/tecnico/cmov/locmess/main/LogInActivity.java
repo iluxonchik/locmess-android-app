@@ -34,6 +34,8 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
+        LocalMemory.setContext(context);
+
     }
 
     public void register(View v) {
@@ -46,6 +48,7 @@ public class LogInActivity extends AppCompatActivity {
         EditText userE = (EditText) findViewById(R.id.etUser);
         EditText passE = (EditText) findViewById(R.id.etPassword);
 
+        LocalMemory.setContext(getApplicationContext());
         Manager m = LocalMemory.getInstance().getManager();
         m.login(context,userE.getText().toString(),passE.getText().toString());
     }

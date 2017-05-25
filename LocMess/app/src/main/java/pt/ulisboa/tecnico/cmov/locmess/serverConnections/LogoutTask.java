@@ -2,6 +2,7 @@ package pt.ulisboa.tecnico.cmov.locmess.serverConnections;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +34,8 @@ public class LogoutTask extends AsyncTask<String, Void, String> implements Serve
         this.delegate = delegate;
         try {
             url = new URL(SERVERINFO + LOGOUTURI);
+            Log.d("lol" , url.toString());
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -42,10 +45,14 @@ public class LogoutTask extends AsyncTask<String, Void, String> implements Serve
     protected String doInBackground(String... s) {
         JSONObject postDataParams = new JSONObject();
         try {
+            Log.d("lol" , s[0]);
+            Log.d("lol" , s[1]);
+
             postDataParams.put("username", s[0]);
             postDataParams.put("token", s[1]);
 
             HttpURLConnection conn = serverConnection();
+            Log.d("lol" , "kkkk");
 
             OutputStream os = conn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));

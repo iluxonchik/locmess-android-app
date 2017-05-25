@@ -22,6 +22,7 @@ public class AddMessageActivity extends AppCompatActivity {
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LocalMemory.setContext(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_message);
 

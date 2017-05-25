@@ -28,6 +28,7 @@ public class MainMessagesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LocalMemory.setContext(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_messages);
 
@@ -42,7 +43,7 @@ public class MainMessagesActivity extends AppCompatActivity {
         List<Message> msgs = locMem.getMessages();
         List<Message> msgsD = locMem.getDecentralizedMessages();
         List<Message> acceptedMessages = locMem.getAcceptedMessages();
-        msgs.addAll(acceptedMessages);
+        //msgs.addAll(acceptedMessages);
 
         // remove duplicates
         msgs = new ArrayList<>(new LinkedHashSet<>(msgs));
@@ -50,6 +51,16 @@ public class MainMessagesActivity extends AppCompatActivity {
         List<Message> msgsDTS = LocalMemory.getInstance().getDecentralizedmessagesToSend();
 
         String msgTitle;
+
+        for(int i=0;i<acceptedMessages.size();i++){
+            msgTitle = acceptedMessages.get(i).getId()+": "+acceptedMessages.get(i).getTitle();
+            messages.add(msgTitle);
+            if(acceptedMessages.get(i).getAuthor().equals(LocalMemory.getInstance().getLoggedUserMail())) {
+                my_messages.add(msgTitle);
+                authoredMessages.add(msgTitle);
+            }
+        }
+
 
         for(int i=0;i<msgs.size();i++){
             msgTitle = msgs.get(i).getId()+": "+msgs.get(i).getTitle();
@@ -68,6 +79,7 @@ public class MainMessagesActivity extends AppCompatActivity {
                 authoredMessages.add(msgTitle);
             }
         }
+        //This for is making app crash
 
         for(int i=0;i<msgsDTS.size();i++){
             msgTitle = msgs.get(i).getId()+": "+msgs.get(i).getTitle();

@@ -25,6 +25,7 @@ import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 import pt.ulisboa.tecnico.cmov.locmess.locations.GetGpsLocation;
 import pt.ulisboa.tecnico.cmov.locmess.locations.GpsLocation;
 import pt.ulisboa.tecnico.cmov.locmess.locations.Location;
+import pt.ulisboa.tecnico.cmov.locmess.locations.WifiLocation;
 import pt.ulisboa.tecnico.cmov.locmess.messages.Message;
 
 import static java.lang.Math.pow;
@@ -40,6 +41,7 @@ public class BroadcastMessageTask
     Context context;
     GetGpsLocation getGpsLocation;
     List<String> neighborsIp;
+    List<String> ssidsAvalilable;
 
     private SimWifiP2pManager mManager = null;
     private SimWifiP2pManager.Channel mChannel = null;
@@ -171,7 +173,6 @@ public class BroadcastMessageTask
 
     @Override
     public void onPeersAvailable(SimWifiP2pDeviceList simWifiP2pDeviceList) {
-
     }
 
     @Override

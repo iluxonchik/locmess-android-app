@@ -111,7 +111,6 @@ public class IncommingCommTask extends AsyncTask<Void, String, Void> {
 
 
         //Notification for alerting the user of new message received
-        //TODO: make it possible for the user to accpet or reject the message
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_notification)

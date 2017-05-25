@@ -3,13 +3,14 @@ package pt.ulisboa.tecnico.cmov.locmess.messages;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import pt.ulisboa.tecnico.cmov.locmess.LocalMemory;
 
-public final class Message {
+public final class Message implements Serializable {
     private int id;
     private String title;
     private String author;

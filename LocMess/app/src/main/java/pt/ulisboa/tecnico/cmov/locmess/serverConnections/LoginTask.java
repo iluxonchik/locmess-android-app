@@ -52,7 +52,6 @@ public class LoginTask extends AsyncTask<String, Void, String> implements Server
             Log.e("params",postDataParams.toString());
 
             HttpURLConnection conn = serverConnection();
-
             OutputStream os = conn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
             writer.write(postDataParams.toString());

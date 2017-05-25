@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.List;
@@ -60,7 +61,7 @@ public class Manager implements TaskDelegate{
 
 
     public void register(Context context, String user, String pass, String confirm_pass){
-        if(pass.length()<6) {
+        if(pass.length()<3) {
             Toast.makeText(context, "The password must have at least 6 characters.", Toast.LENGTH_LONG).show();
             return;
         }
@@ -228,11 +229,13 @@ public class Manager implements TaskDelegate{
 
     @Override
     public void LogoutTaskComplete(String result, Context context) {
+        Log.d("xxx" , "xxx");
         if(result.equals("401"))
             Toast.makeText(context, "Some problem occurred in logout.", Toast.LENGTH_LONG).show();
 
         LocalMemory.getInstance().setLoggedUserMail("");
         LocalMemory.getInstance().setLoggedUserPass("");
+        LocalMemory.getInstance().setSessionKey("");
 
         Intent intent = new Intent(context, LogInActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
